@@ -1,0 +1,2783 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arpit Pandey - Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ===== GOOGLE FONTS ===== */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
+
+        /* ===== CSS VARIABLES ===== */
+        :root {
+            --primary: #4361ee;
+            --primary-dark: #3a56d4;
+            --primary-light: #5f75f0;
+            --secondary: #2b2d42;
+            --secondary-light: #404258;
+            --accent: #f72585;
+            --success: #4cc9f0;
+            --light: #f8f9fa;
+            --dark: #2b2d42;
+            --gray: #8d99ae;
+            --white: #ffffff;
+            --card: #ffffff;
+            --muted-card: #f1f3f8;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.12);
+            --radius: 12px;
+            --radius-lg: 16px;
+            --font-main: 'Inter', system-ui, -apple-system, sans-serif;
+            --font-heading: 'Poppins', system-ui;
+            --transition: all 0.3s ease;
+            --transition-fast: all 0.15s ease;
+        }
+
+        /* Dark theme variables */
+        :root[data-theme="dark"] {
+            --primary: #5f75f0;
+            --primary-dark: #4361ee;
+            --primary-light: #7c8df2;
+            --secondary: #e9ecef;
+            --secondary-light: #dee2e6;
+            --accent: #f72585;
+            --success: #4cc9f0;
+            --light: #121212;
+            --dark: #e9ecef;
+            --gray: #adb5bd;
+            --white: #f8f9fa;
+            --card: #1e1e1e;
+            --muted-card: #2d2d2d;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+            --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.35);
+        }
+
+        /* ===== BASE STYLES ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: var(--font-main);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+            -webkit-tap-highlight-color: transparent;
+            transition: background-color 0.4s ease, color 0.4s ease;
+            font-weight: 400;
+        }
+
+        body.modal-open {
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        /* ===== LAYOUT ===== */
+        .container {
+            max-width: 100%;
+            padding: 20px;
+            transition: filter 0.4s ease;
+            background-color: transparent;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .container::-webkit-scrollbar {
+            display: none;
+        }
+
+        body.modal-open .container {
+            filter: blur(5px);
+            pointer-events: none;
+        }
+
+        /* ===== HEADER & PROFILE ===== */
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-top: 10px;
+            position: relative;
+        }
+
+        .top-icons {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            padding: 0 5px;
+        }
+
+        .icon-button {
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            background-color: var(--card);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 1.2rem;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .icon-button:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+            background-color: var(--primary);
+            color: var(--white);
+        }
+
+        .icon-button:active {
+            transform: translateY(0);
+        }
+
+        .profile-container {
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            margin-bottom: 30px;
+        }
+
+        .profile-bg {
+            width: 100%;
+            height: 220px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: var(--radius-lg);
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .profile-banner-image {
+            display: none;
+        }
+
+        .profile-main {
+            position: absolute;
+            inset: 0;
+            padding: 20px 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 16px;
+        }
+
+        .profile-top-row {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            width: 100%;
+        }
+
+        .profile-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: #e0e0e0;
+            border: 4px solid var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+            transition: var(--transition);
+        }
+
+        .profile-image:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .profile-picture {
+            width: 90%;
+            height: 90%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .intro-column {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .intro-name {
+            font-family: var(--font-heading);
+            font-size: 1.6rem;
+            color: var(--white);
+            line-height: 1.15;
+            font-weight: 700;
+        }
+
+        .intro-role {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-top: 4px;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 5px;
+        }
+
+        .social-icon {
+            min-width: 48px;
+            min-height: 48px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            border: 1px solid transparent;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+            font-size: 20px;
+            color: var(--primary);
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+            transition: var(--transition);
+        }
+
+        .social-icon:hover {
+            background-color: var(--primary);
+            color: var(--white);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .social-icon:active {
+            transform: translateY(0);
+        }
+
+        /* ===== SKILLS SECTION ===== */
+        .skills-section {
+            background-color: var(--card);
+            border-radius: var(--radius);
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .skills-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .skill-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 11px;
+            background-color: var(--muted-card);
+            border-radius: 12px;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+            border: 2px solid transparent;
+            transition: var(--transition);
+        }
+
+        .skill-item:hover {
+            background-color: var(--primary);
+            border-color: var(--primary);
+            color: var(--white);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .skill-item:hover .skill-icon {
+            color: var(--white);
+        }
+
+        .skill-icon {
+            font-size: 1.8rem;
+            color: var(--primary);
+            transition: var(--transition);
+        }
+
+        .skill-name {
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        /* ===== PROJECTS SECTION ===== */
+        .projects-section {
+            background-color: var(--card);
+            border-radius: var(--radius);
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .projects-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .project-card {
+            background-color: var(--muted-card);
+            border-radius: 16px;
+            padding: 25px 20px;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            min-height: 150px;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .project-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .project-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .project-card:active {
+            transform: translateY(-2px);
+        }
+
+        .project-number-circle {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            color: white;
+            font-weight: bold;
+            font-size: 1.3rem;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+        }
+
+        .project-card:hover .project-number-circle {
+            transform: scale(1.1);
+        }
+
+        .project-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--secondary);
+            line-height: 1.3;
+            margin: 0;
+        }
+
+        .show-more-btn {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--white);
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+            -webkit-tap-highlight-color: transparent;
+            transition: var(--transition);
+            box-shadow: 0 4px 12px rgba(67, 97, 238, 0.3);
+        }
+
+        .show-more-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .show-more-btn:active {
+            transform: translateY(0);
+        }
+
+        /* ===== CTA SECTION ===== */
+        .cta-section {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: var(--radius);
+            padding: 24px 20px;
+            margin-bottom: 25px;
+            color: var(--white);
+            text-align: center;
+            box-shadow: var(--shadow-lg);
+            transition: var(--transition);
+        }
+
+        .cta-text {
+            margin-bottom: 16px;
+        }
+
+        .cta-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .cta-actions {
+            display: flex;
+            align-items: stretch;
+            justify-content: center;
+            flex-wrap: nowrap;
+            gap: 12px;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background-color: var(--white);
+            color: var(--primary);
+            padding: 12px 18px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            margin-top: 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border: none;
+            font-size: 0.95rem;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+            white-space: nowrap;
+            flex: 1;
+            min-width: 0;
+            transition: var(--transition);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .secondary-cta {
+            background-color: transparent;
+            color: var(--white);
+            border: 2px solid rgba(255, 255, 255, 0.85);
+            box-shadow: none;
+        }
+
+        .secondary-cta:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .resume-text-desktop {
+            display: inline;
+        }
+
+        .resume-text-mobile {
+            display: none;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        /* ===== MODALS ===== */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-y: auto;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal.active {
+            display: flex;
+            animation: modalFadeIn 0.4s ease;
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .modal-content {
+            background-color: var(--card);
+            border-radius: var(--radius-lg);
+            padding: 25px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+            animation: modalSlideIn 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            max-height: 90vh;
+            overflow-y: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            position: relative;
+        }
+
+        .modal-content::-webkit-scrollbar {
+            display: none;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--secondary);
+        }
+
+        .close-button {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--gray);
+            cursor: pointer;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            -webkit-tap-highlight-color: transparent;
+            transition: var(--transition);
+        }
+
+        .close-button:hover {
+            background-color: var(--muted-card);
+            color: var(--accent);
+            transform: rotate(90deg);
+        }
+
+        /* ===== PROJECT DETAIL SCREEN (MOBILE) ===== */
+        .project-detail-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--card);
+            z-index: 3000;
+            overflow-y: auto;
+            transform: translateX(100%);
+            transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            padding: 0;
+        }
+
+        .project-detail-screen.active {
+            transform: translateX(0);
+        }
+
+        .project-detail-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            padding: 70px 20px 30px;
+            color: white;
+            position: relative;
+            min-height: 200px;
+        }
+
+        .project-detail-header.with-banner {
+            background: var(--muted-card);
+            border-bottom: 3px solid var(--primary);
+        }
+
+        .project-banner {
+            width: 100%;
+            height: 180px;
+            background-color: var(--muted-card);
+            border-radius: 12px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray);
+            border: 2px dashed var(--primary);
+            overflow: hidden;
+        }
+
+        .project-banner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+        }
+
+        .project-detail-header.with-banner .back-button {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateX(-3px);
+        }
+
+        .project-detail-header.with-banner .back-button:hover {
+            background: var(--primary-dark);
+        }
+
+        .project-detail-number {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.5rem;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .project-detail-header.with-banner .project-detail-number {
+            background: var(--primary);
+            color: var(--white);
+            border: 2px solid var(--primary-light);
+        }
+
+        .project-detail-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            margin-top: 20px;
+            color: var(--white);
+        }
+
+        .project-detail-header.with-banner .project-detail-title {
+            color: var(--secondary);
+        }
+
+        .project-detail-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .project-detail-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 18px;
+            background-color: rgba(255, 255, 255, 0.9);
+            color: var(--primary);
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .project-detail-header.with-banner .project-detail-link {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+
+        .project-detail-link:hover {
+            background-color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .project-detail-header.with-banner .project-detail-link:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .project-detail-body {
+            padding: 30px 20px;
+        }
+
+        .project-detail-description {
+            margin-bottom: 30px;
+        }
+
+        .project-detail-description p {
+            color: var(--dark);
+            line-height: 1.7;
+            font-size: 1.05rem;
+        }
+
+        .project-detail-tech {
+            margin-bottom: 30px;
+        }
+
+        .project-detail-tech h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: var(--secondary);
+        }
+
+        .project-tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .tech-tag {
+            background-color: var(--muted-card);
+            color: var(--secondary);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .tech-tag:hover {
+            background-color: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .project-detail-images {
+            margin-bottom: 20px;
+        }
+
+        .project-detail-images h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: var(--secondary);
+        }
+
+        .project-images-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .project-image-placeholder {
+            width: 100%;
+            height: 120px;
+            background-color: var(--muted-card);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray);
+            border: 2px dashed rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .project-image-placeholder:hover {
+            transform: scale(1.03);
+            border-color: var(--primary);
+        }
+
+        .project-image-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* ===== IMPROVED CONTACT MODAL ===== */
+        .contact-modal-content {
+            max-width: 900px;
+            padding: 30px;
+        }
+
+        .contact-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .contact-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--secondary);
+        }
+
+        .contact-body {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .contact-left {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .contact-qr-section {
+            text-align: center;
+        }
+
+        .contact-qr-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 15px;
+        }
+
+        .contact-qr-subtitle {
+            font-size: 0.95rem;
+            color: var(--gray);
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .qr-codes-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .qr-code-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            padding: 20px;
+            background: var(--muted-card);
+            border-radius: 12px;
+            transition: var(--transition);
+        }
+
+        .qr-code-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+
+        .qr-code-image {
+            width: 140px;
+            height: 140px;
+            border-radius: 10px;
+            background: white;
+            padding: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .qr-code-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .qr-platform {
+            font-weight: 600;
+            color: var(--secondary);
+            font-size: 1rem;
+        }
+
+        .contact-right {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: var(--secondary);
+            font-size: 0.9rem;
+        }
+
+        .form-input,
+        .form-textarea {
+            padding: 14px 16px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            font-size: 1rem;
+            background-color: var(--muted-card);
+            color: var(--dark);
+            transition: var(--transition);
+            font-family: var(--font-main);
+        }
+
+        .form-input:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            background-color: var(--card);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .form-textarea {
+            min-height: 120px;
+            resize: none;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--white);
+            border: none;
+            padding: 16px;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 10px;
+            -webkit-tap-highlight-color: transparent;
+            transition: var(--transition);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        /* ===== ABOUT DETAIL MODAL ===== */
+        .about-detail-content {
+            max-width: 700px;
+        }
+
+        .about-profile-section {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .about-profile-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            overflow: hidden;
+            flex-shrink: 0;
+            border: 4px solid var(--primary);
+            box-shadow: var(--shadow);
+        }
+
+        .about-profile-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .about-profile-info {
+            flex: 1;
+        }
+
+        .about-profile-name {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--secondary);
+            margin: 0 0 8px 0;
+            line-height: 1.1;
+        }
+
+        .about-profile-role {
+            font-size: 1.2rem;
+            color: var(--primary);
+            margin: 0;
+            font-weight: 600;
+        }
+
+        .about-detail-section {
+            margin-bottom: 25px;
+        }
+
+        .about-detail-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 15px;
+        }
+
+        .about-detail-text {
+            color: var(--dark);
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+
+        .tech-stack-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 15px;
+        }
+
+        .tech-stack-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 10px;
+            background-color: var(--muted-card);
+            border-radius: 12px;
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .tech-stack-item:hover {
+            transform: translateY(-5px);
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .tech-stack-item:hover i {
+            color: white;
+        }
+
+        .tech-stack-item i {
+            font-size: 2rem;
+            color: var(--primary);
+            transition: var(--transition);
+        }
+
+        .tech-stack-item span {
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .certificates-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .certificate-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 15px;
+            background-color: var(--muted-card);
+            border-radius: 10px;
+            transition: var(--transition);
+        }
+
+        .certificate-item:hover {
+            transform: translateX(5px);
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .certificate-item:hover i {
+            color: white;
+        }
+
+        .certificate-item i {
+            color: var(--primary);
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+
+        .about-detail-actions {
+            display: flex;
+            justify-content: center;
+            margin-top: 25px;
+        }
+
+        .about-resume-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: var(--transition);
+            box-shadow: 0 4px 12px rgba(67, 97, 238, 0.3);
+        }
+
+        .about-resume-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        /* ===== SHARE MODAL ===== */
+        .share-modal-content {
+            max-width: 500px;
+        }
+
+        .share-options {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .share-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            padding: 15px 10px;
+            background-color: var(--muted-card);
+            border-radius: 12px;
+            cursor: pointer;
+            border: 1px solid transparent;
+            -webkit-tap-highlight-color: transparent;
+            transition: var(--transition);
+        }
+
+        .share-option:hover {
+            background-color: var(--primary);
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            color: white;
+        }
+
+        .share-option:hover .share-icon {
+            background-color: white;
+            color: var(--primary);
+        }
+
+        .share-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 1.3rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: var(--transition);
+        }
+
+        .share-icon.facebook {
+            background: linear-gradient(135deg, #3b5998, #4c70ba);
+        }
+
+        .share-icon.twitter {
+            background: linear-gradient(135deg, #1da1f2, #4ab8f8);
+        }
+
+        .share-icon.linkedin {
+            background: linear-gradient(135deg, #0077b5, #0091e6);
+        }
+
+        .share-icon.whatsapp {
+            background: linear-gradient(135deg, #25d366, #48e578);
+        }
+
+        .share-icon.link {
+            background: linear-gradient(135deg, var(--primary), #7c8df2);
+        }
+
+        .share-icon.email {
+            background: linear-gradient(135deg, var(--accent), #f957a1);
+        }
+
+        .share-icon.telegram {
+            background: linear-gradient(135deg, #0088cc, #26a5e4);
+        }
+
+        .share-icon.messenger {
+            background: linear-gradient(135deg, #006aff, #3d8bff);
+        }
+
+        .share-option span {
+            font-size: 0.8rem;
+            text-align: center;
+            color: var(--secondary);
+            font-weight: 600;
+        }
+
+        .share-option:hover span {
+            color: white;
+        }
+
+        /* ===== SEARCH MODAL ===== */
+        .search-modal-content {
+            max-width: 500px;
+        }
+
+        .search-container {
+            margin-bottom: 20px;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            background-color: var(--muted-card);
+            border-radius: 50px;
+            padding: 14px 20px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .search-box:focus-within {
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .search-box i {
+            color: var(--gray);
+            margin-right: 10px;
+        }
+
+        .search-box input {
+            flex: 1;
+            border: none;
+            background: none;
+            outline: none;
+            font-size: 1rem;
+            color: var(--dark);
+        }
+
+        .search-results {
+            max-height: 300px;
+            overflow-y: auto;
+            padding-right: 5px;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .search-results::-webkit-scrollbar {
+            display: none;
+        }
+
+        .search-result {
+            padding: 15px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            cursor: pointer;
+            border-radius: 10px;
+            -webkit-tap-highlight-color: transparent;
+            transition: var(--transition);
+        }
+
+        .search-result:hover {
+            background-color: var(--muted-card);
+            transform: translateX(5px);
+        }
+
+        .search-result-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--secondary);
+        }
+
+        .search-result-desc {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        /* ===== IMPROVED TOAST NOTIFICATION ===== */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--white);
+            padding: 14px 24px;
+            border-radius: 50px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            z-index: 3000;
+            opacity: 0;
+            max-width: 90%;
+            text-align: center;
+            font-size: 0.9rem;
+            line-height: 1.4;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        :root[data-theme="dark"] .toast {
+            background: linear-gradient(135deg, var(--primary-dark), var(--secondary-light));
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* ===== UTILITY CLASSES ===== */
+        .no-select {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, .3);
+            border-radius: 50%;
+            border-top-color: var(--white);
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 10px;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .desktop-warning {
+            display: none !important;
+        }
+
+        /* ===== DESKTOP STYLES ===== */
+        @media (min-width: 768px) {
+            body {
+                background: linear-gradient(135deg, #f5f7fa 0%, #e4e7ec 100%);
+                display: flex;
+                justify-content: center;
+                align-items: flex-start;
+                padding: 40px 20px;
+                min-height: 100vh;
+            }
+
+            :root[data-theme="dark"] body {
+                background: linear-gradient(135deg, #121212 0%, #1e1e1e 100%);
+            }
+
+            .container {
+                max-width: 1200px;
+                margin: 0 auto;
+                background: var(--card);
+                border-radius: 24px;
+                box-shadow: 0 25px 60px rgba(0, 0, 0, 0.1);
+                padding: 40px 50px 45px;
+                position: relative;
+                overflow-y: auto;
+                max-height: calc(100vh - 80px);
+            }
+
+            .header {
+                text-align: left;
+                margin-bottom: 40px;
+                padding-top: 10px;
+            }
+
+            .top-icons {
+                justify-content: flex-end;
+                gap: 15px;
+                margin-bottom: 15px;
+            }
+
+            .profile-container {
+                width: 100%;
+                margin-bottom: 20px;
+            }
+
+            .profile-bg {
+                height: 280px;
+                border-radius: 24px;
+            }
+
+            .profile-banner-image {
+                display: block;
+                position: absolute;
+                right: 50px;
+                top: 25px;
+                width: 350px;
+                max-width: 40%;
+                height: 230px;
+                border-radius: 20px;
+                object-fit: cover;
+                border: 3px solid rgba(255, 255, 255, 0.9);
+                box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+                transition: var(--transition);
+            }
+
+            .profile-banner-image:hover {
+                transform: translateY(-8px);
+                box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            }
+
+            .profile-main {
+                padding: 40px 400px 40px 50px;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: center;
+                gap: 20px;
+            }
+
+            .profile-top-row {
+                align-items: flex-start;
+                gap: 40px;
+                margin-top: 20px;
+            }
+
+            .profile-image {
+                width: 140px;
+                height: 140px;
+                border-width: 5px;
+            }
+
+            .intro-column {
+                align-items: flex-start;
+            }
+
+            .intro-name {
+                font-size: 2.5rem;
+            }
+
+            .intro-role {
+                font-size: 1.2rem;
+                margin-top: 6px;
+            }
+
+            .social-icons {
+                justify-content: flex-start;
+                margin-top: 10px;
+                gap: 15px;
+            }
+
+            .skills-section,
+            .projects-section,
+            .cta-section {
+                margin-bottom: 35px;
+            }
+
+            .skills-grid {
+                grid-template-columns: repeat(6, 1fr);
+            }
+
+            .projects-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .project-card {
+                min-height: 180px;
+            }
+
+            .cta-section {
+                text-align: left;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 30px;
+                padding: 30px 30px;
+            }
+
+            .cta-text {
+                margin-bottom: 0;
+                flex: 1;
+            }
+
+            .cta-section p {
+                max-width: 500px;
+            }
+
+            .cta-actions {
+                justify-content: flex-end;
+                max-width: 400px;
+            }
+
+            .cta-button {
+                padding: 14px 28px;
+                font-size: 1rem;
+            }
+
+            .footer {
+                text-align: right;
+                padding: 15px 0 0;
+            }
+
+            .resume-text-desktop {
+                display: inline;
+            }
+
+            .resume-text-mobile {
+                display: none;
+            }
+
+            /* Desktop modals */
+            .modal-content {
+                max-width: 700px;
+                padding: 30px;
+            }
+
+            .project-detail-modal .modal-content {
+                max-width: 800px;
+            }
+
+            .about-detail-content {
+                max-width: 700px;
+            }
+
+            .contact-modal-content {
+                max-width: 900px;
+                padding: 40px;
+            }
+
+            /* Desktop project detail header */
+            .project-detail-modal .project-detail-header {
+                padding: 30px 30px 20px;
+                min-height: auto;
+            }
+
+            .project-detail-modal .project-banner {
+                height: 200px;
+            }
+        }
+
+        /* Mobile specific adjustments */
+        @media (max-width: 767px) {
+            .resume-text-desktop {
+                display: none;
+            }
+
+            .resume-text-mobile {
+                display: inline;
+            }
+
+            .contact-body {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+
+            .qr-codes-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Desktop Warning (hidden) -->
+    <div class="desktop-warning">
+        <div class="warning-content">
+            <div class="warning-title">Mobile Only Website</div>
+            <p>This website is designed for mobile devices only. Please view it on a smartphone for the best experience.
+            </p>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast"></div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="top-icons">
+                <div class="icon-button share-top no-select" aria-label="Share portfolio">
+                    <i class="fas fa-share-alt"></i>
+                </div>
+                <div class="icon-button search-top no-select" aria-label="Search projects">
+                    <i class="fas fa-search"></i>
+                </div>
+                <div class="icon-button theme-toggle no-select" aria-label="Toggle theme">
+                    <i class="fas fa-moon"></i>
+                </div>
+            </div>
+
+            <!-- Profile banner -->
+            <div class="profile-container">
+                <div class="profile-bg">
+                    <!-- Right-side banner image (desktop only) -->
+                    <img src="../images/home-banner.png" alt="Frontend Developer Illustration"
+                        class="profile-banner-image">
+
+                    <!-- Main content inside banner -->
+                    <div class="profile-main">
+                        <!-- Top row: circle image + name/role -->
+                        <div class="profile-top-row">
+                            <div class="profile-image no-select" id="aboutProfileImage">
+                                <img src="../images/Profile Picture.png" class="profile-picture" alt="Profile Picture">
+                            </div>
+                            <div class="intro-column">
+                                <h1 class="intro-name">Arpit Pandey</h1>
+                                <p class="intro-role">Frontend Developer</p>
+                            </div>
+                        </div>
+
+                        <!-- Social icons row -->
+                        <div class="social-icons" role="navigation" aria-label="Social links">
+                            <button class="social-icon" data-platform="github" aria-label="Open GitHub">
+                                <i class="fab fa-github" aria-hidden="true"></i>
+                            </button>
+                            <button class="social-icon" data-platform="linkedin" aria-label="Open LinkedIn">
+                                <i class="fab fa-linkedin-in" aria-hidden="true"></i>
+                            </button>
+                            <button class="social-icon" data-platform="telegram" aria-label="Open Telegram">
+                                <i class="fab fa-telegram" aria-hidden="true"></i>
+                            </button>
+                            <button class="social-icon" data-platform="instagram" aria-label="Open Instagram">
+                                <i class="fab fa-instagram" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Skills Section -->
+        <section class="skills-section">
+            <h2 class="skills-title">Technical Skills</h2>
+            <div class="skills-grid">
+                <div class="skill-item no-select">
+                    <i class="fab fa-html5 skill-icon"></i>
+                    <span class="skill-name">HTML5</span>
+                </div>
+                <div class="skill-item no-select">
+                    <i class="fab fa-css3-alt skill-icon"></i>
+                    <span class="skill-name">CSS3</span>
+                </div>
+                <div class="skill-item no-select">
+                    <i class="fab fa-js skill-icon"></i>
+                    <span class="skill-name">JavaScript</span>
+                </div>
+                <div class="skill-item no-select">
+                    <i class="fab fa-react skill-icon"></i>
+                    <span class="skill-name">React</span>
+                </div>
+                <div class="skill-item no-select">
+                    <i class="fab fa-node-js skill-icon"></i>
+                    <span class="skill-name">Node.js</span>
+                </div>
+                <div class="skill-item no-select">
+                    <i class="fas fa-database skill-icon"></i>
+                    <span class="skill-name">MongoDB</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section class="projects-section">
+            <h2 class="projects-title">My Projects</h2>
+            <div class="projects-grid" id="projectsGrid">
+                <!-- Projects are injected by JavaScript -->
+            </div>
+            <button class="show-more-btn no-select" id="showMoreBtn">
+                Load More Projects
+            </button>
+        </section>
+
+        <!-- Contact / CTA Section -->
+        <section class="cta-section">
+            <div class="cta-text">
+                <h2 class="cta-title">Let's Work Together</h2>
+                <p>Have a project in mind? I'd love to hear about it and discuss how we can bring your ideas to life.
+                </p>
+            </div>
+            <div class="cta-actions">
+                <button class="cta-button no-select" id="contactBtn">
+                    <i class="fas fa-paper-plane" aria-hidden="true"></i>
+                    <span>Get In Touch</span>
+                </button>
+                <a href="assets/Arpit_Pandey_Resume.pdf" class="cta-button secondary-cta no-select" id="resumeBtn"
+                    download>
+                    <i class="fas fa-download" aria-hidden="true"></i>
+                    <span class="resume-text-desktop">Download Resume</span>
+                    <span class="resume-text-mobile">Resume</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>© 2025 Arpit Pandey. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <!-- Improved Contact Form Modal -->
+    <div class="modal" id="contactModal">
+        <div class="modal-content contact-modal-content">
+            <div class="contact-header">
+                <h3 class="contact-title">Get In Touch</h3>
+                <button class="close-button no-select">&times;</button>
+            </div>
+            <div class="contact-body">
+                <div class="contact-right">
+                    <form class="contact-form" id="contactForm">
+                        <div class="form-group">
+                            <label class="form-label" for="name">Your Name</label>
+                            <input type="text" id="name" name="name" class="form-input" placeholder="Enter your name"
+                                required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="email">Your Email</label>
+                            <input type="email" id="email" name="email" class="form-input" placeholder="Enter your email"
+                                required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="subject">Subject</label>
+                            <input type="text" id="subject" name="subject" class="form-input" placeholder="Enter subject"
+                                required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="message">Your Message</label>
+                            <textarea id="message" name="message" class="form-textarea" placeholder="Enter your message"
+                                required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn no-select" id="submitBtn">
+                            <span id="submitText">Send Message</span>
+                        </button>
+                    </form>
+                </div>
+                <div class="contact-left">
+                    <div class="contact-qr-section">
+                        <h3 class="contact-qr-title">Quick Connect</h3>
+                        <p class="contact-qr-subtitle">Scan these QR codes to message me directly with a pre-filled
+                            template. Just hit send to get in touch instantly!</p>
+
+                        <div class="qr-codes-container">
+                            <div class="qr-code-item">
+                                <div class="qr-code-image">
+                                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://www.instagram.com/direct/t/17844798572123456/?text=Hi%20Arpit!%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20discuss%20a%20project%20opportunity."
+                                        alt="Instagram QR Code">
+                                </div>
+                                <div class="qr-platform">Instagram</div>
+                            </div>
+
+                            <div class="qr-code-item">
+                                <div class="qr-code-image">
+                                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://t.me/juss_erty?text=Hi%20Arpit!%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20discuss%20a%20project%20opportunity."
+                                        alt="Telegram QR Code">
+                                </div>
+                                <div class="qr-platform">Telegram</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Share Modal -->
+    <div class="modal" id="shareModal">
+        <div class="modal-content share-modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Share Portfolio</h3>
+                <button class="close-button no-select">&times;</button>
+            </div>
+
+            <div class="share-options">
+                <div class="share-option no-select" data-platform="whatsapp">
+                    <div class="share-icon whatsapp">
+                        <i class="fab fa-whatsapp"></i>
+                    </div>
+                    <span>WhatsApp</span>
+                </div>
+                <div class="share-option no-select" data-platform="telegram">
+                    <div class="share-icon telegram">
+                        <i class="fab fa-telegram"></i>
+                    </div>
+                    <span>Telegram</span>
+                </div>
+                <div class="share-option no-select" data-platform="facebook">
+                    <div class="share-icon facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </div>
+                    <span>Facebook</span>
+                </div>
+                <div class="share-option no-select" data-platform="twitter">
+                    <div class="share-icon twitter">
+                        <i class="fab fa-twitter"></i>
+                    </div>
+                    <span>Twitter</span>
+                </div>
+                <div class="share-option no-select" data-platform="linkedin">
+                    <div class="share-icon linkedin">
+                        <i class="fab fa-linkedin-in"></i>
+                    </div>
+                    <span>LinkedIn</span>
+                </div>
+                <div class="share-option no-select" data-platform="email">
+                    <div class="share-icon email">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <span>Email</span>
+                </div>
+                <div class="share-option no-select" data-platform="messenger">
+                    <div class="share-icon messenger">
+                        <i class="fab fa-facebook-messenger"></i>
+                    </div>
+                    <span>Messenger</span>
+                </div>
+                <div class="share-option no-select" id="copyLinkBtn">
+                    <div class="share-icon link">
+                        <i class="fas fa-link"></i>
+                    </div>
+                    <span>Copy Link</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search Modal -->
+    <div class="modal" id="searchModal">
+        <div class="modal-content search-modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Search Projects</h3>
+                <button class="close-button no-select">&times;</button>
+            </div>
+            <div class="search-container">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Search for projects, skills..." autocomplete="off">
+                </div>
+                <div class="search-results" id="searchResults">
+                    <!-- Search results are injected by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Project Detail Screen (Mobile) -->
+    <div class="project-detail-screen" id="projectDetailScreen">
+        <div class="project-detail-header with-banner" id="projectDetailHeader">
+            <button class="back-button no-select" id="projectBackButton">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <div class="project-detail-number" id="projectDetailNumber">
+                <!-- Number injected by JavaScript -->
+            </div>
+
+            <div class="project-banner" id="projectBanner">
+                <!-- Banner placeholder for image -->
+                <span>Project Banner Image</span>
+            </div>
+
+            <h1 class="project-detail-title" id="projectDetailTitle">
+                <!-- Title injected by JavaScript -->
+            </h1>
+            <div class="project-detail-links" id="projectDetailLinks">
+                <!-- Links injected by JavaScript -->
+            </div>
+        </div>
+        <div class="project-detail-body" id="projectDetailBody">
+            <!-- Content injected by JavaScript -->
+        </div>
+    </div>
+
+    <!-- Project Detail Modal (Desktop) -->
+    <div class="modal project-detail-modal" id="projectDetailModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Project Details</h3>
+                <button class="close-button no-select">&times;</button>
+            </div>
+            <div class="project-detail-header with-banner">
+                <div class="project-detail-number" id="projectDetailModalNumber">
+                    <!-- Number injected by JavaScript -->
+                </div>
+
+                <div class="project-banner" id="projectModalBanner">
+                    <!-- Banner placeholder for image -->
+                    <span>Project Banner Image</span>
+                </div>
+
+                <h1 class="project-detail-title" id="projectDetailModalTitle">
+                    <!-- Title injected by JavaScript -->
+                </h1>
+                <div class="project-detail-links" id="projectDetailModalLinks">
+                    <!-- Links injected by JavaScript -->
+                </div>
+            </div>
+            <div class="project-detail-body" id="projectDetailModalBody">
+                <!-- Content injected by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- About Detail Modal -->
+    <div class="modal" id="aboutDetailModal">
+        <div class="modal-content about-detail-content">
+            <div class="modal-header">
+                <h3 class="modal-title">About Me</h3>
+                <button class="close-button no-select">&times;</button>
+            </div>
+            <div class="about-detail-body">
+                <div class="about-profile-section">
+                    <div class="about-profile-image">
+                        <img src="../images/Profile Picture.png" alt="Arpit Pandey">
+                    </div>
+                    <div class="about-profile-info">
+                        <h2 class="about-profile-name">Arpit Pandey</h2>
+                        <p class="about-profile-role">Frontend Developer</p>
+                    </div>
+                </div>
+
+                <div class="about-detail-section">
+                    <h3 class="about-detail-title">About Me</h3>
+                    <p class="about-detail-text">
+                        Hello! I'm Arpit Pandey, a passionate full-stack developer with over 6 months of experience
+                        building
+                        web applications. I specialize in creating responsive, user-friendly interfaces and robust
+                        backend systems.
+                    </p>
+                    <p class="about-detail-text">
+                        I enjoy turning complex problems into simple, beautiful designs. When I'm not coding, you can
+                        find me
+                        exploring new technologies, contributing to open-source projects, or sharing knowledge with the
+                        developer community.
+                    </p>
+                </div>
+
+                <div class="about-detail-section">
+                    <h3 class="about-detail-title">My Tech Stack</h3>
+                    <div class="tech-stack-grid">
+                        <div class="tech-stack-item">
+                            <i class="fab fa-html5"></i>
+                            <span>HTML5</span>
+                        </div>
+                        <div class="tech-stack-item">
+                            <i class="fab fa-css3-alt"></i>
+                            <span>CSS3</span>
+                        </div>
+                        <div class="tech-stack-item">
+                            <i class="fab fa-js"></i>
+                            <span>JavaScript</span>
+                        </div>
+                        <div class="tech-stack-item">
+                            <i class="fab fa-react"></i>
+                            <span>React</span>
+                        </div>
+                        <div class="tech-stack-item">
+                            <i class="fab fa-node-js"></i>
+                            <span>Node.js</span>
+                        </div>
+                        <div class="tech-stack-item">
+                            <i class="fas fa-database"></i>
+                            <span>MongoDB</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="about-detail-section">
+                    <h3 class="about-detail-title">Certificates</h3>
+                    <div class="certificates-list">
+                        <div class="certificate-item">
+                            <i class="fas fa-certificate"></i>
+                            <span>Frontend Development Certification</span>
+                        </div>
+                        <div class="certificate-item">
+                            <i class="fas fa-certificate"></i>
+                            <span>JavaScript Advanced Concepts</span>
+                        </div>
+                        <div class="certificate-item">
+                            <i class="fas fa-certificate"></i>
+                            <span>React Developer Certification</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="about-detail-actions">
+                    <a href="assets/Arpit_Pandey_Resume.pdf" class="about-resume-btn" download>
+                        <i class="fas fa-download"></i>
+                        Download Resume
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // -------- Project Data --------
+        const projects = [
+            {
+                id: 1,
+                title: "E-Life Platform",
+                displayTitle: "E-Life Platform",
+                description: "A fully responsive front-end e-commerce interface built using HTML, CSS, and JavaScript, featuring user-friendly product browsing, cart interaction, and smooth UI flow.",
+                technologies: ["HTML", "CSS", "Javascript"],
+                github: "https://github.com/apandey-dev/elife-platform",
+                demo: "https://elife-platform.vercel.app/",
+                images: ["image1.jpg", "image2.jpg", "image3.jpg"],
+                banner: "../images/projects/elife-banner.jpg"
+            },
+            {
+                id: 2,
+                title: "Portfolio 1",
+                displayTitle: "Portfolio 1",
+                description: "A clean and modern portfolio showcasing my skills, projects, and journey as a frontend web developer. Focused on creating responsive and user-friendly digital experiences.",
+                technologies: ["JavaScript", "HTML5", "CSS3"],
+                github: "https://github.com/apandey-dev/devfolio-one.io",
+                demo: "https://devfolio-one-xi.vercel.app/",
+                images: ["image1.jpg", "image2.jpg"],
+                banner: "../images/projects/portfolio1-banner.jpg"
+            },
+            {
+                id: 3,
+                title: "Portfolio 2",
+                displayTitle: "Portfolio 2",
+                description: "A dedicated project-based portfolio featuring my real-world web development work, creative UI ideas, and hands-on experiments with modern web technologies.",
+                technologies: ["JavaScript", "HTML5", "CSS3"],
+                github: "https://github.com/apandey-dev/devfolio-second.io",
+                demo: "https://devfolio-second.vercel.app/",
+                images: ["image1.jpg", "image2.jpg", "image3.jpg"],
+                banner: "../images/projects/portfolio2-banner.jpg"
+            },
+            {
+                id: 4,
+                title: "Weather Dashboard",
+                displayTitle: "Weather Dashboard",
+                description: "A responsive weather application that displays current conditions and forecasts for multiple cities.",
+                technologies: ["JavaScript", "API", "Bootstrap"],
+                github: "https://github.com/arpitpandey/weather-dashboard",
+                demo: "https://weather-arpitpandey.vercel.app",
+                images: ["image1.jpg", "image2.jpg"],
+                banner: "../images/projects/weather-banner.jpg"
+            }
+        ];
+
+        // -------- Global URLs and Messages --------
+        const portfolioUrl = "https://mobile-devfolio.vercel.app";
+        const githubUrl = "https://github.com/apandey-dev";
+        const shareMessage = "🚀 Explore Arpit Pandey's Portfolio! He's a dynamic full-stack developer showcasing high-quality projects, modern tech skills, and strong problem-solving abilities. Definitely worth checking out! 💻🔥";
+
+        // -------- DOM References --------
+        const shareModal = document.getElementById("shareModal");
+        const searchModal = document.getElementById("searchModal");
+        const contactModal = document.getElementById("contactModal");
+        const projectDetailScreen = document.getElementById("projectDetailScreen");
+        const projectDetailModal = document.getElementById("projectDetailModal");
+        const aboutDetailModal = document.getElementById("aboutDetailModal");
+        const closeButtons = document.querySelectorAll(".close-button");
+        const body = document.body;
+        const toast = document.getElementById("toast");
+
+        const projectsGrid = document.getElementById("projectsGrid");
+        const showMoreBtn = document.getElementById("showMoreBtn");
+        const contactBtn = document.getElementById("contactBtn");
+        const searchInput = document.getElementById("searchInput");
+        const searchResults = document.getElementById("searchResults");
+        const contactForm = document.getElementById("contactForm");
+        const copyLinkBtn = document.getElementById("copyLinkBtn");
+        const submitBtn = document.getElementById("submitBtn");
+        const submitText = document.getElementById("submitText");
+        const resumeBtn = document.getElementById("resumeBtn");
+        const themeToggleBtn = document.querySelector(".theme-toggle");
+        const aboutProfileImage = document.getElementById("aboutProfileImage");
+        const projectBackButton = document.getElementById("projectBackButton");
+        const projectDetailNumber = document.getElementById("projectDetailNumber");
+        const projectDetailTitle = document.getElementById("projectDetailTitle");
+        const projectDetailLinks = document.getElementById("projectDetailLinks");
+        const projectDetailBody = document.getElementById("projectDetailBody");
+        const projectBanner = document.getElementById("projectBanner");
+        const projectDetailModalNumber = document.getElementById("projectDetailModalNumber");
+        const projectDetailModalTitle = document.getElementById("projectDetailModalTitle");
+        const projectDetailModalLinks = document.getElementById("projectDetailModalLinks");
+        const projectDetailModalBody = document.getElementById("projectDetailModalBody");
+        const projectModalBanner = document.getElementById("projectModalBanner");
+
+        // -------- State Variables --------
+        const INITIAL_VISIBLE_MOBILE = 4;
+        const INITIAL_VISIBLE_DESKTOP = 6;
+        let visibleProjects = 0;
+        let isExpanded = false;
+        let isSubmitting = false;
+        let modalHistory = [];
+        let isMobile = window.innerWidth < 768;
+
+        // -------- Utility: Toast --------
+        function showToast(message, duration = 3000) {
+            if (!toast) return;
+            toast.textContent = message;
+            toast.classList.add("show");
+
+            setTimeout(() => {
+                toast.classList.remove("show");
+            }, duration);
+        }
+
+        // -------- Theme Helpers --------
+        function getStoredTheme() {
+            return localStorage.getItem("theme");
+        }
+
+        function getPreferredTheme() {
+            const stored = getStoredTheme();
+            if (stored) return stored;
+
+            if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+                return "dark";
+            }
+            return "light";
+        }
+
+        function updateThemeToggleIcon(theme) {
+            if (!themeToggleBtn) return;
+            const icon = themeToggleBtn.querySelector("i");
+            if (!icon) return;
+
+            icon.classList.remove("fa-sun", "fa-moon");
+            if (theme === "dark") {
+                icon.classList.add("fa-sun");
+            } else {
+                icon.classList.add("fa-moon");
+            }
+        }
+
+        function applyTheme(theme) {
+            document.documentElement.setAttribute("data-theme", theme);
+            localStorage.setItem("theme", theme);
+            updateThemeToggleIcon(theme);
+        }
+
+        // -------- Modal Helpers --------
+        function openModal(modal) {
+            if (!modal) return;
+            modal.classList.add("active");
+            body.classList.add("modal-open");
+            modalHistory.push(modal);
+
+            // When opening search modal, show random suggestions
+            if (modal === searchModal && searchInput) {
+                searchInput.value = "";
+                searchInput.focus();
+                searchProjects("");
+            }
+        }
+
+        function closeModal(modal) {
+            if (!modal) return;
+            modal.classList.remove("active");
+            modalHistory = modalHistory.filter((m) => m !== modal);
+
+            if (modalHistory.length === 0) {
+                body.classList.remove("modal-open");
+            }
+        }
+
+        function closeAllModals() {
+            [shareModal, searchModal, contactModal, projectDetailModal, aboutDetailModal].forEach((m) => {
+                if (m && m.classList.contains("active")) m.classList.remove("active");
+            });
+            body.classList.remove("modal-open");
+            modalHistory = [];
+        }
+
+        function handleBackButton() {
+            if (modalHistory.length > 0) {
+                const currentModal = modalHistory.pop();
+                currentModal.classList.remove("active");
+
+                if (modalHistory.length === 0) {
+                    body.classList.remove("modal-open");
+                } else {
+                    const previousModal = modalHistory[modalHistory.length - 1];
+                    previousModal.classList.add("active");
+                }
+            }
+        }
+
+        // -------- Project Detail Screens --------
+        function openProjectDetail(project) {
+            if (isMobile) {
+                // Mobile: Use full screen
+                projectDetailNumber.innerHTML = `<span>${project.id}</span>`;
+                projectDetailTitle.textContent = project.displayTitle;
+
+                // Set banner image if available
+                if (project.banner) {
+                    projectBanner.innerHTML = `<img src="${project.banner}" alt="${project.displayTitle} Banner" onerror="this.style.display='none'; this.parentElement.innerHTML='<span>Project Banner Image</span>'">`;
+                } else {
+                    projectBanner.innerHTML = '<span>Project Banner Image</span>';
+                }
+
+                projectDetailLinks.innerHTML = `
+                    <a href="${project.github}" target="_blank" class="project-detail-link">
+                        <i class="fab fa-github"></i>
+                        GitHub
+                    </a>
+                    <a href="${project.demo}" target="_blank" class="project-detail-link">
+                        <i class="fas fa-external-link-alt"></i>
+                        Live Demo
+                    </a>
+                `;
+
+                projectDetailBody.innerHTML = `
+                    <div class="project-detail-description">
+                        <p>${project.description}</p>
+                    </div>
+                    <div class="project-detail-tech">
+                        <h3>Technologies Used</h3>
+                        <div class="project-tech-tags">
+                            ${project.technologies
+                        .map((tech) => `<span class="tech-tag">${tech}</span>`)
+                        .join("")}
+                        </div>
+                    </div>
+                    <div class="project-detail-images">
+                        <h3>Project Screenshots</h3>
+                        <div class="project-images-container">
+                            ${project.images.map(img => `
+                                <div class="project-image-placeholder">
+                                    <img src="../images/projects/${img}" alt="${project.displayTitle} screenshot" onerror="this.style.display='none'">
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+
+                projectDetailScreen.classList.add("active");
+                body.classList.add("modal-open");
+            } else {
+                // Desktop: Use modal
+                projectDetailModalNumber.innerHTML = `<span>${project.id}</span>`;
+                projectDetailModalTitle.textContent = project.displayTitle;
+
+                // Set banner image if available
+                if (project.banner) {
+                    projectModalBanner.innerHTML = `<img src="${project.banner}" alt="${project.displayTitle} Banner" onerror="this.style.display='none'; this.parentElement.innerHTML='<span>Project Banner Image</span>'">`;
+                } else {
+                    projectModalBanner.innerHTML = '<span>Project Banner Image</span>';
+                }
+
+                projectDetailModalLinks.innerHTML = `
+                    <a href="${project.github}" target="_blank" class="project-detail-link">
+                        <i class="fab fa-github"></i>
+                        GitHub
+                    </a>
+                    <a href="${project.demo}" target="_blank" class="project-detail-link">
+                        <i class="fas fa-external-link-alt"></i>
+                        Live Demo
+                    </a>
+                `;
+
+                projectDetailModalBody.innerHTML = `
+                    <div class="project-detail-description">
+                        <p>${project.description}</p>
+                    </div>
+                    <div class="project-detail-tech">
+                        <h3>Technologies Used</h3>
+                        <div class="project-tech-tags">
+                            ${project.technologies
+                        .map((tech) => `<span class="tech-tag">${tech}</span>`)
+                        .join("")}
+                        </div>
+                    </div>
+                    <div class="project-detail-images">
+                        <h3>Project Screenshots</h3>
+                        <div class="project-images-container">
+                            ${project.images.map(img => `
+                                <div class="project-image-placeholder">
+                                    <img src="../images/projects/${img}" alt="${project.displayTitle} screenshot" onerror="this.style.display='none'">
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+
+                openModal(projectDetailModal);
+            }
+        }
+
+        // -------- Project Rendering --------
+        function renderProjects(projectsToRender, container) {
+            if (!container) return;
+
+            container.innerHTML = "";
+
+            projectsToRender.forEach((project, index) => {
+                const projectCard = document.createElement("div");
+                projectCard.className = "project-card no-select";
+                projectCard.id = `project-${project.id}`;
+
+                // Stagger animation for each card
+                projectCard.style.transitionDelay = `${index * 80}ms`;
+
+                projectCard.innerHTML = `
+                    <div class="project-number-circle">
+                        <span class="project-number">${project.id}</span>
+                    </div>
+                    <h3 class="project-title">${project.displayTitle}</h3>
+                `;
+
+                projectCard.addEventListener("click", () => {
+                    openProjectDetail(project);
+                });
+
+                container.appendChild(projectCard);
+
+                // Trigger enter animation
+                setTimeout(() => {
+                    projectCard.classList.add("visible");
+                }, 50);
+            });
+        }
+
+        function toggleProjectsView() {
+            if (!projectsGrid) return;
+
+            const prevScroll = window.pageYOffset || document.documentElement.scrollTop;
+
+            if (!isExpanded) {
+                visibleProjects = projects.length;
+                isExpanded = true;
+                showMoreBtn.textContent = "Show Less";
+                showMoreBtn.setAttribute("aria-label", "Show fewer projects");
+            } else {
+                visibleProjects = isMobile ? INITIAL_VISIBLE_MOBILE : INITIAL_VISIBLE_DESKTOP;
+                isExpanded = false;
+                showMoreBtn.textContent = "Load More Projects";
+                showMoreBtn.setAttribute("aria-label", "Show more projects");
+            }
+
+            const toRender = projects.slice(0, visibleProjects);
+            renderProjects(toRender, projectsGrid);
+
+            // Keep approximate scroll position stable on toggle
+            window.scrollTo({
+                top: prevScroll
+            });
+        }
+
+        // -------- Search Functionality --------
+        function getRandomProjects(count) {
+            const shuffled = [...projects];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled.slice(0, count);
+        }
+
+        function searchProjects(query) {
+            if (!searchResults) return;
+
+            const trimmed = query.trim().toLowerCase();
+            searchResults.innerHTML = "";
+
+            // Empty query -> random recommendations
+            if (trimmed === "") {
+                const suggestions = getRandomProjects(4);
+                suggestions.forEach((project) => {
+                    const result = document.createElement("div");
+                    result.className = "search-result no-select";
+                    result.innerHTML = `
+                        <div class="search-result-title">${project.displayTitle}</div>
+                        <div class="search-result-desc">${project.description}</div>
+                    `;
+
+                    result.addEventListener("click", () => {
+                        showToast(`Opening project: ${project.displayTitle}`);
+                        closeModal(searchModal);
+
+                        setTimeout(() => {
+                            openProjectDetail(project);
+                        }, 400);
+                    });
+
+                    searchResults.appendChild(result);
+                });
+
+                return;
+            }
+
+            // Non-empty query -> filter normally
+            const filteredProjects = projects.filter(
+                (project) =>
+                    project.title.toLowerCase().includes(trimmed) ||
+                    project.displayTitle.toLowerCase().includes(trimmed) ||
+                    project.description.toLowerCase().includes(trimmed) ||
+                    project.technologies.some((tech) =>
+                        tech.toLowerCase().includes(trimmed)
+                    )
+            );
+
+            if (filteredProjects.length === 0) {
+                searchResults.innerHTML =
+                    '<div class="search-result">No projects found matching your search.</div>';
+                return;
+            }
+
+            filteredProjects.forEach((project) => {
+                const result = document.createElement("div");
+                result.className = "search-result no-select";
+                result.innerHTML = `
+                    <div class="search-result-title">${project.displayTitle}</div>
+                    <div class="search-result-desc">${project.description}</div>
+                `;
+
+                // Click from search -> open project detail
+                result.addEventListener("click", () => {
+                    showToast(`Opening project: ${project.displayTitle}`);
+                    closeModal(searchModal);
+
+                    setTimeout(() => {
+                        openProjectDetail(project);
+                    }, 400);
+                });
+
+                searchResults.appendChild(result);
+            });
+        }
+
+        // -------- Share Functionality --------
+        function shareOnPlatform(platform) {
+            const encodedMessage = encodeURIComponent(shareMessage);
+            const encodedUrl = encodeURIComponent(portfolioUrl);
+            const fullMessage = `${shareMessage} ${portfolioUrl}`;
+            const encodedFullMessage = encodeURIComponent(fullMessage);
+
+            let shareUrl = "";
+
+            switch (platform) {
+                case "whatsapp":
+                    shareUrl = `https://wa.me/?text=${encodedFullMessage}`;
+                    break;
+                case "telegram":
+                    shareUrl = `https://t.me/share/url?url=${encodedUrl}&text=${encodedMessage}`;
+                    break;
+                case "facebook":
+                    shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`;
+                    break;
+                case "twitter":
+                    shareUrl = `https://twitter.com/intent/tweet?text=${encodedFullMessage}`;
+                    break;
+                case "linkedin":
+                    shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`;
+                    break;
+                case "email":
+                    shareUrl = `mailto:?subject=${encodeURIComponent(
+                        "Check out this portfolio"
+                    )}&body=${encodedFullMessage}`;
+                    break;
+                case "messenger":
+                    shareUrl = `fb-messenger://share?link=${encodedUrl}`;
+                    break;
+                default:
+                    return;
+            }
+
+            showToast(`Opening ${platform} share...`);
+
+            setTimeout(() => {
+                window.open(shareUrl, "_blank", "width=600,height=400");
+            }, 500);
+
+            setTimeout(() => {
+                closeModal(shareModal);
+            }, 1000);
+        }
+
+        function copyToClipboard() {
+            showToast("Portfolio link copied to clipboard!");
+
+            setTimeout(() => {
+                if (navigator.clipboard) {
+                    navigator.clipboard.writeText(portfolioUrl).catch((err) => {
+                        console.error("Failed to copy: ", err);
+                    });
+                } else {
+                    const textArea = document.createElement("textarea");
+                    textArea.value = portfolioUrl;
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    document.execCommand("copy");
+                    document.body.removeChild(textArea);
+                }
+            }, 300);
+
+            setTimeout(() => {
+                closeModal(shareModal);
+            }, 1500);
+        }
+
+        // -------- Initialization --------
+        function init() {
+            // Initial theme
+            const initialTheme = getPreferredTheme();
+            applyTheme(initialTheme);
+
+            // Set initial visible projects based on screen size
+            isMobile = window.innerWidth < 768;
+            visibleProjects = isMobile ? INITIAL_VISIBLE_MOBILE : INITIAL_VISIBLE_DESKTOP;
+
+            // Initial project render
+            renderProjects(projects.slice(0, visibleProjects), projectsGrid);
+
+            // About profile image click opens about detail modal
+            aboutProfileImage?.addEventListener("click", () => openModal(aboutDetailModal));
+
+            // Top buttons
+            document
+                .querySelector(".share-top")
+                ?.addEventListener("click", () => openModal(shareModal));
+            document
+                .querySelector(".search-top")
+                ?.addEventListener("click", () => openModal(searchModal));
+
+            // Contact button
+            contactBtn?.addEventListener("click", () => openModal(contactModal));
+
+            // Resume button feedback
+            resumeBtn?.addEventListener("click", () => {
+                showToast("Downloading resume...");
+            });
+
+            // Theme toggle
+            themeToggleBtn?.addEventListener("click", () => {
+                const current =
+                    document.documentElement.getAttribute("data-theme") || "light";
+                const next = current === "light" ? "dark" : "light";
+                applyTheme(next);
+                showToast(
+                    next === "dark" ? "Dark mode enabled" : "Light mode enabled"
+                );
+            });
+
+            // Show more / less projects
+            if (showMoreBtn) {
+                showMoreBtn.addEventListener("click", toggleProjectsView);
+            }
+
+            // Social icons links
+            document.querySelectorAll(".social-icon").forEach((icon) => {
+                icon.addEventListener("click", function () {
+                    const platform = this.getAttribute("data-platform");
+                    let url = "";
+
+                    switch (platform) {
+                        case "github":
+                            url = "https://github.com/apandey-dev";
+                            break;
+                        case "linkedin":
+                            url = "https://linkedin.com/in/apandey-dev";
+                            break;
+                        case "telegram":
+                            url = "https://t.me/juss_erty";
+                            break;
+                        case "instagram":
+                            url = "https://instagram.com/juss.erty";
+                            break;
+                    }
+
+                    showToast("Opening " + platform + "...");
+                    setTimeout(() => window.open(url, "_blank"), 600);
+                });
+            });
+
+            // Share options
+            document
+                .querySelectorAll(".share-option[data-platform]")
+                .forEach((option) => {
+                    option.addEventListener("click", function () {
+                        const platform = this.getAttribute("data-platform");
+                        shareOnPlatform(platform);
+                    });
+                });
+
+            // Copy portfolio URL
+            copyLinkBtn?.addEventListener("click", copyToClipboard);
+
+            // Close modals via close buttons
+            closeButtons.forEach((button) => {
+                button.addEventListener("click", closeAllModals);
+            });
+
+            // Close modals on outside click
+            window.addEventListener("click", (event) => {
+                if (event.target === shareModal) closeModal(shareModal);
+                if (event.target === searchModal) closeModal(searchModal);
+                if (event.target === contactModal) closeModal(contactModal);
+                if (event.target === projectDetailModal) closeModal(projectDetailModal);
+                if (event.target === aboutDetailModal) closeModal(aboutDetailModal);
+            });
+
+            // Project detail back button (mobile)
+            projectBackButton?.addEventListener("click", () => {
+                projectDetailScreen.classList.remove("active");
+                body.classList.remove("modal-open");
+            });
+
+            // Escape key -> back behavior
+            document.addEventListener("keydown", (event) => {
+                if (event.key === "Escape") {
+                    if (projectDetailScreen.classList.contains("active")) {
+                        projectDetailScreen.classList.remove("active");
+                        body.classList.remove("modal-open");
+                    } else {
+                        handleBackButton();
+                    }
+                }
+            });
+
+            // Search input handler
+            if (searchInput) {
+                searchInput.addEventListener("input", (e) => {
+                    searchProjects(e.target.value);
+                });
+            }
+
+            // Contact form fake submit
+            if (contactForm) {
+                contactForm.addEventListener("submit", (e) => {
+                    e.preventDefault();
+
+                    if (isSubmitting) return;
+
+                    const formData = new FormData(contactForm);
+                    const name = formData.get("name");
+                    const email = formData.get("email");
+                    const subject = formData.get("subject");
+                    const message = formData.get("message");
+
+                    isSubmitting = true;
+                    submitBtn.disabled = true;
+                    submitText.innerHTML =
+                        '<span class="loading"></span>Sending...';
+
+                    setTimeout(() => {
+                        console.log("Contact Form Submission:", {
+                            name,
+                            email,
+                            subject,
+                            message
+                        });
+
+                        isSubmitting = false;
+                        submitBtn.disabled = false;
+                        submitText.textContent = "Send Message";
+
+                        showToast(
+                            "Message sent successfully! I'll get back to you soon."
+                        );
+                        closeModal(contactModal);
+                        contactForm.reset();
+                    }, 2000);
+                });
+            }
+
+            // Handle window resize to adjust project grid
+            window.addEventListener('resize', function () {
+                const newIsMobile = window.innerWidth < 768;
+                if (newIsMobile !== isMobile) {
+                    isMobile = newIsMobile;
+                    if (!isExpanded) {
+                        visibleProjects = isMobile ? INITIAL_VISIBLE_MOBILE : INITIAL_VISIBLE_DESKTOP;
+                        renderProjects(projects.slice(0, visibleProjects), projectsGrid);
+                    }
+                }
+            });
+        }
+
+        // Initialize when DOM is ready
+        document.addEventListener("DOMContentLoaded", () => {
+            init();
+
+            // Hide desktop warning
+            const warning = document.querySelector(".desktop-warning");
+            if (warning) {
+                warning.style.display = "none";
+            }
+        });
+    </script>
+</body>
+
+</html>
