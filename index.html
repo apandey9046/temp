@@ -2,326 +2,441 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Lao Note</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Lao Note Premium</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Playpen+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
     
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
     <style>
-        /* --- CSS VARIABLES & RESET --- */
+        /* --- HIGH END CSS VARIABLES --- */
         :root {
-            --font-head: 'Fredoka', sans-serif;
-            --font-body: 'Playpen Sans', cursive;
+            --primary-font: 'Fredoka', sans-serif;
+            --body-font: 'Nunito', sans-serif;
             
-            --bg-color: #F8F9FD;
-            --text-dark: #1A1A1A;
-            --text-grey: #888888;
-            --nav-bg: #000000;
+            --bg-body: #F2F4F8;
+            --bg-white: #FFFFFF;
             
-            /* Card Colors based on image */
-            --card-red-bg: #FFF0EB;
-            --card-red-accent: #FF7D54;
+            /* Exact Colors from UI */
+            --black-ui: #0D0D0D;
+            --grey-text: #9E9E9E;
+            --grey-light: #F0F0F0;
             
-            --card-yellow-bg: #FFF8E6;
-            --card-yellow-accent: #FFC107;
+            /* Card Palettes */
+            --red-bg: #FFF0EB;   --red-accent: #FF7D54;
+            --yel-bg: #FFF8E6;   --yel-accent: #FFC107;
+            --grn-bg: #E8F5E9;   --grn-accent: #4CAF50;
+            --blu-bg: #E3F2FD;   --blu-accent: #2196F3;
+            --pur-bg: #F3E5F5;   --pur-accent: #AB47BC;
+
+            --shadow-soft: 0 10px 40px -10px rgba(0,0,0,0.08);
+            --shadow-float: 0 15px 35px rgba(0,0,0,0.15);
             
-            --card-green-bg: #E8F5E9;
-            --card-green-accent: #4CAF50;
-            
-            --card-blue-bg: #E3F2FD;
-            --card-blue-accent: #2196F3;
+            --radius-xl: 32px;
+            --radius-lg: 24px;
+            --radius-md: 16px;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
         
         body {
-            font-family: var(--font-body);
-            background-color: #eee; /* Outer bg */
+            margin: 0; padding: 0;
+            font-family: var(--body-font);
+            background-color: #EEF1F5;
+            height: 100vh;
             display: flex;
             justify-content: center;
-            height: 100vh;
+            align-items: center;
             overflow: hidden;
+            color: var(--black-ui);
         }
 
-        /* Mobile Container Simulation */
-        #app-container {
-            background-color: var(--bg-color);
-            width: 100%;
-            max-width: 450px; /* Mobile width constraint */
-            height: 100%;
+        /* Mobile Simulation Container */
+        #mobile-frame {
+            width: 100%; height: 100%;
+            max-width: 430px; /* iPhone Pro Max width */
+            max-height: 932px;
+            background: var(--bg-white);
             position: relative;
             overflow: hidden;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            box-shadow: 0 0 50px rgba(0,0,0,0.2);
         }
+        
+        /* Notch Safe Area */
+        .safe-area { padding-top: max(20px, env(safe-area-inset-top)); padding-left: 20px; padding-right: 20px; }
 
         /* --- SPLASH SCREEN --- */
-        #splash-screen {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-color: #000;
-            z-index: 100;
+        #splash {
+            position: absolute; inset: 0;
+            background: #000;
+            z-index: 999;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             color: white;
-            transition: opacity 0.5s ease;
+            transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
-        .logo-area { text-align: center; margin-bottom: 20px; }
-        .logo-icon { font-size: 64px; margin-bottom: 10px; }
-        .logo-text { font-family: var(--font-head); font-size: 28px; font-weight: 600; letter-spacing: 1px; }
-        .tagline { font-size: 14px; opacity: 0.7; max-width: 250px; text-align: center; margin-top: 10px; line-height: 1.5; }
-        .loader { margin-top: 50px; border: 3px solid rgba(255,255,255,0.3); border-top: 3px solid white; border-radius: 50%; width: 24px; height: 24px; animation: spin 1s linear infinite; }
-        
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .splash-logo { font-size: 80px; margin-bottom: 10px; }
+        .splash-title { font-family: var(--primary-font); font-size: 32px; font-weight: 700; letter-spacing: 0.5px; }
+        .splash-sub { font-size: 14px; opacity: 0.6; margin-top: 10px; max-width: 70%; text-align: center; line-height: 1.5; font-weight: 400; }
+        .spinner {
+            width: 40px; height: 40px; margin-top: 60px;
+            border: 3px solid rgba(255,255,255,0.1);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 0.8s ease-in-out infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* --- LAYOUT & SCROLLING --- */
+        /* --- PAGES & TRANSITIONS --- */
         .page {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            padding: 20px 20px 100px 20px; /* Bottom padding for Nav */
+            position: absolute; inset: 0;
             overflow-y: auto;
-            display: none; /* Hidden by default */
-            opacity: 0;
-            transition: opacity 0.3s ease;
+            overflow-x: hidden;
+            background: var(--bg-white);
+            padding-bottom: 120px; /* Space for Nav */
+            opacity: 0; pointer-events: none;
+            transform: translateY(20px);
+            transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+            display: flex; flex-direction: column;
         }
+        
+        .page.active { opacity: 1; pointer-events: auto; transform: translateY(0); z-index: 10; }
+        .page.on-top { z-index: 20; } /* For overlays */
 
-        .page.active { display: block; opacity: 1; }
-
-        /* Hide scrollbar but allow scrolling */
+        /* Hide Scrollbar */
         .page::-webkit-scrollbar { display: none; }
 
         /* --- HEADER --- */
-        header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-top: 15px; }
-        .header-logo { display: flex; align-items: center; gap: 8px; font-family: var(--font-head); font-weight: 700; font-size: 20px; }
-        .header-icons { display: flex; gap: 15px; }
-        .icon-btn { font-size: 24px; cursor: pointer; }
+        header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; margin-top: 10px; }
+        .brand { display: flex; align-items: center; gap: 8px; font-family: var(--primary-font); font-weight: 700; font-size: 22px; }
+        .icon-btn { font-size: 26px; padding: 8px; border-radius: 50%; cursor: pointer; transition: background 0.2s; color: #333; }
+        .icon-btn:active { background: #f0f0f0; }
 
-        /* --- TABS (HOME) --- */
-        .tabs { display: flex; gap: 15px; margin-bottom: 20px; align-items: center; }
-        .tab { padding: 8px 20px; border-radius: 20px; font-size: 14px; font-weight: 600; cursor: pointer; transition: 0.3s; }
-        .tab.active { background-color: #000; color: #fff; }
-        .tab.inactive { color: #ccc; background: transparent; }
-        .filter-sort { margin-left: auto; font-size: 12px; color: var(--text-grey); display: flex; align-items: center; gap: 4px; }
-
-        /* --- NOTE CARDS --- */
-        .note-card {
-            border-radius: 20px;
-            padding: 20px;
-            margin-bottom: 15px;
-            cursor: pointer;
-            transition: transform 0.2s;
-            position: relative;
-        }
-        .note-card:active { transform: scale(0.98); }
-        
-        .note-card h3 { font-family: var(--font-head); margin-bottom: 8px; font-size: 18px; display: flex; justify-content: space-between; }
-        .note-card p { font-size: 13px; color: #555; line-height: 1.6; margin-bottom: 15px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-        
-        .card-footer { display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: var(--text-grey); }
-        .tags { display: flex; gap: 10px; }
-        .edit-icon { position: absolute; top: 20px; right: 20px; color: white; border-radius: 50%; padding: 4px; font-size: 12px; }
-
-        /* Color Variants */
-        .card-red { background-color: var(--card-red-bg); }
-        .card-red .edit-icon { background-color: var(--card-red-accent); }
-        
-        .card-yellow { background-color: var(--card-yellow-bg); }
-        .card-yellow .edit-icon { display: none; } /* Based on design */
-        
-        .card-green { background-color: var(--card-green-bg); }
-        .card-green .add-btn { background-color: #000; color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; position: absolute; right: 20px; bottom: 20px; font-size: 20px;}
-
-        /* --- CATEGORIES PAGE --- */
-        .categories-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 10px; }
-        .cat-card { background: white; padding: 20px; border-radius: 20px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.03); display: flex; flex-direction: column; align-items: center; gap: 10px; }
-        .cat-icon-box { width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px; color: white; margin-bottom: 5px; }
-        .cat-name { font-family: var(--font-head); font-weight: 600; font-size: 16px; }
-        .cat-count { font-size: 12px; color: var(--text-grey); }
-
-        /* --- BOTTOM NAVIGATION --- */
-        .bottom-nav {
-            position: absolute;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 90%;
-            background-color: var(--nav-bg);
+        /* --- TABS --- */
+        .tab-container { display: flex; gap: 10px; margin-bottom: 25px; }
+        .tab {
+            padding: 10px 24px;
             border-radius: 30px;
-            height: 70px;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            padding: 0 10px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-            z-index: 50;
-        }
-
-        .nav-item {
-            color: #666;
-            font-size: 24px;
-            padding: 10px;
+            font-family: var(--primary-font);
+            font-weight: 600;
+            font-size: 14px;
             cursor: pointer;
             transition: 0.3s;
         }
+        .tab.active { background: var(--black-ui); color: white; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+        .tab.inactive { color: var(--grey-text); background: transparent; }
+
+        /* --- SECTIONS --- */
+        .section-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .section-title { font-family: var(--primary-font); font-weight: 600; font-size: 18px; }
+        .sort-btn { font-size: 13px; color: var(--grey-text); display: flex; align-items: center; gap: 4px; font-weight: 600; }
+
+        /* --- CARDS (The Main Attraction) --- */
+        .card {
+            border-radius: var(--radius-xl);
+            padding: 24px;
+            margin-bottom: 18px;
+            position: relative;
+            transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+            cursor: pointer;
+        }
+        .card:active { transform: scale(0.96); }
+
+        .card h3 {
+            font-family: var(--primary-font);
+            margin: 0 0 10px 0;
+            font-size: 18px;
+            line-height: 1.4;
+            padding-right: 30px; /* Space for edit icon */
+        }
         
-        .nav-item.active { color: white; }
-        .nav-item:hover { color: #aaa; }
+        .card p {
+            font-size: 14px;
+            color: #555; /* Slightly darker for better contrast */
+            line-height: 1.6;
+            margin: 0 0 20px 0;
+            display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+            font-weight: 600; /* Making text slightly bolder like design */
+            opacity: 0.7;
+        }
+
+        .meta { display: flex; justify-content: space-between; align-items: center; font-size: 12px; font-weight: 700; opacity: 0.6; }
+        .tags { display: flex; gap: 8px; }
+        
+        /* Card Variants */
+        .c-red { background: var(--red-bg); }
+        .c-yel { background: var(--yel-bg); }
+        .c-grn { background: var(--grn-bg); }
+        .c-blu { background: var(--blu-bg); }
+
+        /* Decoration */
+        .edit-circle {
+            position: absolute; top: 24px; right: 24px;
+            width: 28px; height: 28px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 14px;
+        }
+        
+        .fab-black {
+            position: absolute; bottom: 20px; right: 20px;
+            width: 48px; height: 48px;
+            background: #000;
+            border-radius: 50%;
+            color: white;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        /* --- CATEGORIES GRID --- */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 10px; }
+        .cat-box {
+            background: white;
+            padding: 24px 15px;
+            border-radius: var(--radius-lg);
+            display: flex; flex-direction: column; align-items: center; gap: 12px;
+            text-align: center;
+            box-shadow: var(--shadow-soft);
+            transition: transform 0.2s;
+        }
+        .cat-box:active { transform: scale(0.95); }
+        
+        .cat-icon {
+            width: 56px; height: 56px;
+            border-radius: 18px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 28px; color: white;
+            margin-bottom: 5px;
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1); /* Subtle color shadow */
+        }
+        
+        /* --- BOTTOM NAVIGATION --- */
+        .dock {
+            position: absolute;
+            bottom: 30px; left: 20px; right: 20px;
+            height: 75px;
+            background: #000;
+            border-radius: 40px;
+            display: flex; justify-content: space-around; align-items: center;
+            z-index: 50;
+            box-shadow: var(--shadow-float);
+            padding: 0 15px;
+        }
+        .dock-item {
+            color: #666;
+            font-size: 26px;
+            padding: 12px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+        }
+        .dock-item.active { color: white; transform: translateY(-3px); }
+        .dock-item.active::after {
+            content: ''; position: absolute; bottom: 5px; left: 50%; transform: translateX(-50%);
+            width: 5px; height: 5px; background: white; border-radius: 50%;
+        }
 
         /* --- EDITOR VIEW (Overlay) --- */
-        #editor-page {
-            background-color: #fff;
-            z-index: 60; /* Above nav */
+        #editor-view {
+            background: white;
+            z-index: 100;
+            padding-top: max(20px, env(safe-area-inset-top));
         }
-        .editor-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        .editor-title { font-family: var(--font-head); font-size: 24px; font-weight: 700; border: none; width: 100%; outline: none; margin-bottom: 10px; background: transparent; }
-        .editor-content { width: 100%; height: 70%; border: none; outline: none; font-family: var(--font-body); font-size: 16px; line-height: 1.8; resize: none; color: #444; }
         
-        .editor-toolbar {
-            position: absolute;
-            bottom: 30px; left: 50%; transform: translateX(-50%);
-            background: #000;
-            border-radius: 20px;
-            padding: 10px 20px;
-            display: flex; gap: 20px;
-            color: white;
+        .editor-top {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 10px 20px 20px 20px;
         }
 
-        /* Helpers */
-        .bg-blue { background-color: #2196F3; }
-        .bg-yellow { background-color: #FFC107; }
-        .bg-green { background-color: #4CAF50; }
-        .bg-purple { background-color: #E040FB; }
+        .title-inp {
+            font-family: var(--primary-font);
+            font-size: 26px; font-weight: 700;
+            border: none; background: transparent; width: 100%;
+            padding: 0 20px; margin-bottom: 15px;
+        }
+        
+        .body-inp {
+            width: 100%; height: 60%;
+            border: none; background: transparent;
+            padding: 0 20px;
+            font-family: var(--body-font);
+            font-size: 17px; line-height: 1.8; color: #333;
+            resize: none;
+        }
+        
+        /* Editor Highlight Simulation */
+        .highlighted-text {
+            background-color: rgba(33, 150, 243, 0.2);
+            color: #1976D2;
+            border-radius: 4px;
+            padding: 0 2px;
+        }
+
+        /* Floating Context Menu (Color Dots) */
+        .context-menu {
+            position: absolute; top: 40%; right: 40px;
+            background: #111;
+            padding: 10px 15px;
+            border-radius: 12px;
+            display: flex; gap: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        @keyframes popIn { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        
+        .dot { width: 14px; height: 14px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; }
+        .dot:hover { transform: scale(1.2); }
+
+        /* Editor Bottom Toolbar */
+        .editor-toolbar {
+            position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
+            background: #000;
+            border-radius: 25px;
+            padding: 15px 30px;
+            display: flex; gap: 25px;
+            color: #fff;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            font-size: 20px;
+            width: 90%;
+            justify-content: space-between;
+        }
 
     </style>
 </head>
 <body>
 
-    <div id="app-container">
+    <div id="mobile-frame">
         
-        <div id="splash-screen">
-            <div class="logo-area">
-                <i class="ph-fill ph-note-pencil logo-icon"></i>
-                <div class="logo-text">LAO NOTE</div>
-            </div>
-            <div class="tagline">Easily Manage Your Notes On Your Phone & You Can Have Infinite Notes</div>
-            <div class="loader"></div>
-            <div style="margin-top:auto; margin-bottom: 40px; font-size: 10px; color: #555;">Loading...</div>
+        <div id="splash">
+            <i class="ph-fill ph-note-pencil splash-logo"></i>
+            <div class="splash-title">LAO NOTE</div>
+            <div class="splash-sub">Easily Manage Your Notes On Your Phone & Have Infinite Notes</div>
+            <div class="spinner"></div>
         </div>
 
-        <div id="home-page" class="page">
+        <div id="page-home" class="page safe-area">
             <header>
-                <div class="header-logo"><i class="ph-fill ph-note-pencil"></i> Lao Note</div>
-                <div class="header-icons">
+                <div class="brand"><i class="ph-fill ph-note-pencil"></i> Lao Note</div>
+                <div style="display: flex; gap: 15px;">
                     <i class="ph ph-magnifying-glass icon-btn"></i>
                     <i class="ph ph-user-circle icon-btn"></i>
                 </div>
             </header>
 
-            <div class="tabs">
+            <div class="tab-container">
                 <div class="tab active">Notes</div>
                 <div class="tab inactive">Highlights</div>
-                <div class="tab inactive">Favorite Notes</div>
+                <div class="tab inactive">Favs</div>
             </div>
 
-            <div style="display:flex; justify-content:space-between; margin-bottom: 10px; align-items:center;">
-                <h4 style="font-family: var(--font-head);">List Notes</h4>
-                <div class="filter-sort">All Notes <i class="ph-bold ph-caret-up-down"></i></div>
+            <div class="section-head">
+                <div class="section-title">List Notes</div>
+                <div class="sort-btn">All Notes <i class="ph-bold ph-caret-up-down"></i></div>
             </div>
 
-            <div class="note-card card-red" onclick="openEditor('How To Draw A Professional Wireframe?', 'For Wireframe Design, You Need To Have A Pen And Paper With You, And Using These Two, You Can Design The Idea You Want...')">
-                <i class="ph-bold ph-pencil-simple edit-icon"></i>
+            <div class="card c-red" onclick="openEditor('How To Draw A Professional Wireframe?', 'For Wireframe Design, You Need To Have A Pen And Paper With You. Simply Put, A Wireframe Is A Two-Dimensional Image Of The Screen to give the program a more accurate visual concept.')">
+                <div class="edit-circle" style="background: var(--red-accent);"><i class="ph-bold ph-pencil-simple"></i></div>
                 <h3>How To Draw A Professional Wireframe?</h3>
-                <p>For Wireframe Design, You Need To Have A Pen And Paper With You, And Using These Two, You Can Design The Idea You Want On Paper For Web Or Mobile, Just Learn...</p>
-                <div class="card-footer">
-                    <div class="tags">Design &nbsp; Wireframe</div>
-                    <div class="date">2026/01/12</div>
+                <p>For Wireframe Design, You Need To Have A Pen And Paper With You. <span style="background:#ffccbc; padding:0 2px; border-radius:2px;">Wireframe is not the final design</span> of the app, but it shows how it will work...</p>
+                <div class="meta" style="color: var(--red-accent);">
+                    <div class="tags">Design &bull; Wireframe</div>
+                    <div>2020/05/09</div>
                 </div>
             </div>
 
-            <div class="note-card card-yellow" onclick="openEditor('Ways To Succeed Early', 'Success is not final; failure is not fatal: It is the courage to continue that counts. Set goals early and review them daily.')">
+            <div class="card c-yel" onclick="openEditor('Ways To Succeed Early', 'Focus on your goals and never let small failures stop you. The key is consistency over intensity.')">
                 <h3>Ways To Succeed Early</h3>
-                <div class="card-footer" style="margin-top: 20px;">
-                    <div class="tags">Succeed &nbsp; Goals</div>
-                    <div class="date">2026/01/09</div>
+                <div class="meta" style="margin-top: 30px; color: #D4A000;">
+                    <div class="tags">Succeed &bull; Goals</div>
+                    <div>2020/05/09</div>
                 </div>
             </div>
 
-            <div class="note-card card-green" style="height: 120px; position:relative;">
+            <div class="card c-grn" style="height: 140px;">
                 <h3>Scientific Facts Of Space</h3>
-                <div class="card-footer" style="margin-top: 10px;">
-                    <div class="tags">Scientific &nbsp; Space</div>
-                    <div class="date">2025/12/28</div>
+                <div class="meta" style="margin-top: 25px; color: var(--grn-accent);">
+                    <div class="tags">Scientific &bull; Space</div>
+                    <div>2020/05/08</div>
                 </div>
-                <div class="add-btn"><i class="ph-bold ph-plus"></i></div>
+                <div class="fab-black"><i class="ph-bold ph-plus"></i></div>
             </div>
             
-             <div class="note-card card-blue" style="height: 100px;">
-                <h3>Next Month Plan</h3>
-                <div class="card-footer" style="margin-top: 10px;">
-                    <div class="tags">Planning</div>
-                    <div class="date">2025/12/20</div>
+             <div class="card c-blu">
+                <h3>App Development</h3>
+                <div class="meta" style="margin-top: 25px; color: var(--blu-accent);">
+                    <div class="tags">Coding &bull; Mobile</div>
+                    <div>2020/05/01</div>
                 </div>
             </div>
         </div>
 
-        <div id="categories-page" class="page">
+        <div id="page-cats" class="page safe-area">
              <header>
-                <div class="header-logo" style="margin: 0 auto;">Categories</div>
-                <div class="header-icons" style="position:absolute; right: 20px;">
-                    <i class="ph-bold ph-plus-circle icon-btn"></i>
+                <div class="brand" style="margin: 0 auto; font-size: 20px;">Categories</div>
+                <div style="position:absolute; right: 20px;">
+                    <i class="ph-bold ph-plus icon-btn"></i>
                 </div>
             </header>
 
-            <div style="display:flex; justify-content:space-between; margin-bottom: 10px; align-items:center;">
-                <h4 style="font-family: var(--font-head);">List Categories</h4>
-                <div class="filter-sort">New <i class="ph-bold ph-caret-up-down"></i></div>
+            <div class="section-head" style="margin-top: 10px;">
+                <div class="section-title">List Categories</div>
+                <div class="sort-btn">New <i class="ph-bold ph-caret-up-down"></i></div>
             </div>
 
-            <div class="categories-grid">
-                <div class="cat-card">
-                    <div class="cat-icon-box bg-blue"><i class="ph-fill ph-folder"></i></div>
-                    <div class="cat-name">Design</div>
-                    <div class="cat-count">15 Notes</div>
+            <div class="grid-2">
+                <div class="cat-box">
+                    <div class="cat-icon" style="background: var(--blu-accent);"><i class="ph-fill ph-folder"></i></div>
+                    <div class="section-title" style="font-size:16px;">Design</div>
+                    <div class="sort-btn">15 Notes</div>
                 </div>
-                <div class="cat-card">
-                    <div class="cat-icon-box bg-yellow"><i class="ph-fill ph-folder"></i></div>
-                    <div class="cat-name">Success</div>
-                    <div class="cat-count">45 Notes</div>
+                <div class="cat-box">
+                    <div class="cat-icon" style="background: var(--yel-accent);"><i class="ph-fill ph-folder"></i></div>
+                    <div class="section-title" style="font-size:16px;">Success</div>
+                    <div class="sort-btn">45 Notes</div>
                 </div>
-                <div class="cat-card">
-                    <div class="cat-icon-box bg-green"><i class="ph-fill ph-folder"></i></div>
-                    <div class="cat-name">Scientific</div>
-                    <div class="cat-count">29 Notes</div>
+                <div class="cat-box">
+                    <div class="cat-icon" style="background: var(--grn-accent);"><i class="ph-fill ph-folder"></i></div>
+                    <div class="section-title" style="font-size:16px;">Scientific</div>
+                    <div class="sort-btn">29 Notes</div>
                 </div>
-                <div class="cat-card">
-                    <div class="cat-icon-box bg-purple"><i class="ph-fill ph-folder"></i></div>
-                    <div class="cat-name">Freelancer</div>
-                    <div class="cat-count">19 Notes</div>
+                <div class="cat-box">
+                    <div class="cat-icon" style="background: var(--pur-accent);"><i class="ph-fill ph-folder"></i></div>
+                    <div class="section-title" style="font-size:16px;">Freelancer</div>
+                    <div class="sort-btn">19 Notes</div>
+                </div>
+                 <div class="cat-box">
+                    <div class="cat-icon" style="background: #FF5252;"><i class="ph-fill ph-heart"></i></div>
+                    <div class="section-title" style="font-size:16px;">Personal</div>
+                    <div class="sort-btn">12 Notes</div>
                 </div>
             </div>
         </div>
 
-        <div id="editor-page" class="page">
-            <div class="editor-header">
-                <i class="ph-bold ph-arrow-left icon-btn" onclick="closeEditor()"></i>
+        <div id="editor-view" class="page">
+            <div class="editor-top">
+                <i class="ph-bold ph-caret-left icon-btn" onclick="closeEditor()" style="font-size: 28px;"></i>
                 <div style="display:flex; gap:15px;">
                     <i class="ph-bold ph-magnifying-glass icon-btn"></i>
                     <i class="ph-bold ph-dots-three-circle icon-btn"></i>
                 </div>
             </div>
-            <input type="text" id="editor-title-input" class="editor-title" value="Note Title">
-            <textarea id="editor-content-input" class="editor-content">Start writing here...</textarea>
+            
+            <input type="text" id="ed-title" class="title-inp" value="Note Title">
+            <div style="padding: 0 20px; font-size: 12px; color: #888; margin-bottom: 20px; font-weight: 600;">Design &nbsp;|&nbsp; Wireframe &nbsp;&nbsp;&nbsp;&nbsp; 2020/05/09</div>
+            
+            <textarea id="ed-body" class="body-inp">Content goes here...</textarea>
 
-            <div style="background:black; color:white; border-radius:10px; padding:8px 15px; position:absolute; top:35%; right:20px; display:flex; gap:10px; align-items:center;">
-                 <span style="width:10px; height:10px; background:#2196F3; border-radius:50%;"></span>
-                 <span style="width:10px; height:10px; background:#FFC107; border-radius:50%;"></span>
-                 <span style="width:10px; height:10px; background:#E040FB; border-radius:50%;"></span>
+            <div class="context-menu">
+                 <div class="dot" style="background:#2196F3; border-color:white;"></div>
+                 <div class="dot" style="background:#FFC107;"></div>
+                 <div class="dot" style="background:#E040FB;"></div>
             </div>
 
             <div class="editor-toolbar">
@@ -329,70 +444,93 @@
                 <i class="ph-bold ph-text-italic"></i>
                 <i class="ph-bold ph-text-underline"></i>
                 <i class="ph-bold ph-list-dashes"></i>
-                <i class="ph-fill ph-circle"></i>
+                <i class="ph-fill ph-circle" style="color:#2196F3; border: 2px solid white; border-radius: 50%;"></i>
                 <i class="ph-bold ph-link"></i>
             </div>
         </div>
 
-        <nav class="bottom-nav">
-            <i class="ph-fill ph-house nav-item active" onclick="switchTab('home')"></i>
-            <i class="ph-bold ph-crown nav-item" onclick="switchTab('home')"></i>
-            <i class="ph-bold ph-squares-four nav-item" onclick="switchTab('categories')"></i>
-            <i class="ph-bold ph-gear nav-item" onclick="alert('Settings Page')"></i>
-        </nav>
+        <div class="dock" id="nav-dock">
+            <i class="ph-fill ph-house dock-item active" onclick="nav('home', this)"></i>
+            <i class="ph-bold ph-crown dock-item" onclick="nav('home', this)"></i>
+            <i class="ph-bold ph-squares-four dock-item" onclick="nav('cats', this)"></i>
+            <i class="ph-bold ph-gear dock-item" onclick="alert('Settings')"></i>
+        </div>
 
     </div>
 
     <script>
-        // --- LOGIC ---
+        // --- PROPER APP LOGIC ---
 
-        // 1. Splash Screen Logic
-        window.onload = function() {
+        // 1. App Launch
+        window.addEventListener('load', () => {
+            const splash = document.getElementById('splash');
+            const home = document.getElementById('page-home');
+            
             setTimeout(() => {
-                const splash = document.getElementById('splash-screen');
                 splash.style.opacity = '0';
                 setTimeout(() => {
                     splash.style.display = 'none';
-                    switchTab('home'); // Show home after splash
-                }, 500);
-            }, 2500); // 2.5s Delay
-        };
+                    home.classList.add('active'); // Slide up animation trigger
+                }, 600);
+            }, 2000);
+        });
 
-        // 2. Navigation Logic
-        function switchTab(tabName) {
-            // Hide all pages
-            document.querySelectorAll('.page').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+        // 2. Navigation Handler
+        function nav(target, el) {
+            // UI Update
+            document.querySelectorAll('.dock-item').forEach(i => {
+                i.classList.remove('active');
+                i.classList.remove('ph-fill');
+                i.classList.add('ph-bold');
+            });
+            
+            el.classList.add('active');
+            el.classList.remove('ph-bold');
+            el.classList.add('ph-fill');
 
-            // Show selected page
-            if(tabName === 'home') {
-                document.getElementById('home-page').classList.add('active');
-                document.querySelector('.ph-house').classList.add('active');
-            } else if (tabName === 'categories') {
-                document.getElementById('categories-page').classList.add('active');
-                document.querySelector('.ph-squares-four').classList.add('active');
-            }
+            // Page Switch
+            const pages = document.querySelectorAll('.page:not(#editor-view)');
+            pages.forEach(p => p.classList.remove('active'));
+
+            if(target === 'home') document.getElementById('page-home').classList.add('active');
+            if(target === 'cats') document.getElementById('page-cats').classList.add('active');
         }
 
-        // 3. Editor Logic
-        function openEditor(title, content) {
-            const editor = document.getElementById('editor-page');
-            const titleInput = document.getElementById('editor-title-input');
-            const contentInput = document.getElementById('editor-content-input');
+        // 3. Editor Animations
+        function openEditor(title, body) {
+            const ed = document.getElementById('editor-view');
+            const dock = document.getElementById('nav-dock');
             
-            titleInput.value = title;
-            contentInput.value = content;
+            document.getElementById('ed-title').value = title;
+            document.getElementById('ed-body').value = body;
             
-            editor.classList.add('active');
-            
-            // Hide bottom nav when in editor
-            document.querySelector('.bottom-nav').style.display = 'none';
+            // Highlight simulation
+            if(body.includes("Wireframe")) {
+                 document.getElementById('ed-body').style.display = 'none'; // Hide textarea for demo
+                 const demoDiv = document.createElement('div');
+                 demoDiv.id = 'demo-text';
+                 demoDiv.className = 'body-inp';
+                 demoDiv.style.display = 'block';
+                 demoDiv.innerHTML = `For Wireframe Design, You Need To Have A Pen And Paper With You. <span class="highlighted-text">Simply Put, A Wireframe Is A Two-Dimensional Image Of The Screen</span> To Give The Program A More Accurate Visual Concept.`;
+                 document.getElementById('ed-title').parentNode.insertBefore(demoDiv, document.getElementById('ed-body'));
+            } else {
+                 const existingDemo = document.getElementById('demo-text');
+                 if(existingDemo) existingDemo.remove();
+                 document.getElementById('ed-body').style.display = 'block';
+            }
+
+            dock.style.transform = "translateY(100px)"; // Hide Dock smoothly
+            setTimeout(() => ed.classList.add('active'), 100);
         }
 
         function closeEditor() {
-            document.getElementById('editor-page').classList.remove('active');
-            // Show bottom nav again
-            document.querySelector('.bottom-nav').style.display = 'flex';
+            const ed = document.getElementById('editor-view');
+            const dock = document.getElementById('nav-dock');
+            
+            ed.classList.remove('active');
+            setTimeout(() => {
+                dock.style.transform = "translateY(0)"; // Show Dock
+            }, 300);
         }
     </script>
 </body>
