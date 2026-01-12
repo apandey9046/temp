@@ -3,25 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wix Studio Style Portfolio</title>
+    <title>Wix Studio Stacking Portfolio</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;500&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
 
     <style>
-        /* --- CSS STYLES --- */
         :root {
             --bg-color: #0e0e0e;
+            --card-bg: #1a1a1a;
             --text-color: #ffffff;
-            --accent-color: #d1f2eb; /* Soft mint for accents */
-            --padding: 5vw;
+            --accent: #d4f21e; /* Acid Green for contrast */
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            cursor: none; /* Hide default cursor */
+            cursor: none; /* Custom cursor active */
         }
 
         body {
@@ -31,205 +30,184 @@
             overflow-x: hidden;
         }
 
-        /* Custom Cursor */
-        .cursor-dot, .cursor-outline {
-            position: fixed;
-            top: 0;
-            left: 0;
-            transform: translate(-50%, -50%);
-            border-radius: 50%;
-            z-index: 9999;
-            pointer-events: none;
-        }
-
+        /* --- Custom Cursor --- */
         .cursor-dot {
             width: 8px;
             height: 8px;
-            background-color: white;
+            background: #fff;
+            position: fixed;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
         }
-
-        .cursor-outline {
+        .cursor-circle {
             width: 40px;
             height: 40px;
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            transition: width 0.2s, height 0.2s;
+            border: 1px solid rgba(255,255,255,0.5);
+            position: fixed;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s, background-color 0.3s;
         }
 
-        /* Navigation */
+        /* --- Navigation --- */
         nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 30px 50px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 30px var(--padding);
-            position: fixed;
-            width: 100%;
-            top: 0;
             mix-blend-mode: difference;
-            z-index: 100;
+            z-index: 1000;
         }
+        .logo { font-family: 'Syne'; font-weight: 800; font-size: 24px; text-transform: uppercase; }
+        .menu { font-size: 14px; text-transform: uppercase; letter-spacing: 1px; }
 
-        .logo {
-            font-family: 'Syne', sans-serif;
-            font-weight: 800;
-            font-size: 1.5rem;
-            text-transform: uppercase;
-        }
-
-        .menu-btn {
-            font-size: 1rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        /* Hero Section */
+        /* --- Hero Section --- */
         .hero {
             height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            padding: 0 var(--padding);
-            position: relative;
+            align-items: center;
+            text-align: center;
         }
-
         .hero h1 {
-            font-family: 'Syne', sans-serif;
-            font-size: 11vw;
+            font-family: 'Syne';
+            font-size: 10vw;
             line-height: 0.9;
-            font-weight: 800;
             text-transform: uppercase;
         }
-
-        .hero h1 span {
-            display: block;
-            color: transparent;
-            -webkit-text-stroke: 1px #fff;
-            transition: 0.5s;
-        }
-
-        .hero h1 span:hover {
-            color: #fff;
-            -webkit-text-stroke: 0px;
-        }
-
-        .sub-text {
-            margin-top: 20px;
-            font-size: 1.2rem;
-            max-width: 400px;
-            opacity: 0.7;
-        }
-
-        /* Infinite Marquee Strip */
-        .marquee-container {
-            width: 100%;
-            background: #fff;
-            color: #000;
-            padding: 15px 0;
-            overflow: hidden;
-            white-space: nowrap;
-            transform: rotate(-2deg) scale(1.05);
-            margin: 50px 0;
-        }
-
-        .marquee-content {
-            display: inline-block;
-            animation: scroll 20s linear infinite;
-            font-family: 'Syne', sans-serif;
-            font-weight: 700;
-            font-size: 2rem;
+        .hero p { margin-top: 20px; font-size: 1.2rem; color: #aaa; }
+        .scroll-indicator {
+            margin-top: 50px;
+            font-size: 14px;
             text-transform: uppercase;
+            animation: bounce 2s infinite;
         }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(10px); } }
 
-        @keyframes scroll {
-            from { transform: translateX(0); }
-            to { transform: translateX(-50%); }
-        }
-
-        /* Portfolio Grid */
-        .portfolio {
-            padding: 100px var(--padding);
-        }
-
-        .section-title {
-            font-family: 'Syne', sans-serif;
-            font-size: 3rem;
-            margin-bottom: 50px;
-            border-bottom: 1px solid rgba(255,255,255,0.2);
-            padding-bottom: 20px;
-        }
-
-        .gallery {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr); /* 2 Column layout */
-            gap: 40px;
-        }
-
-        .project {
+        /* --- STACKING CARDS LOGIC (Main Request) --- */
+        .stack-area {
+            padding: 50px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
             position: relative;
-            overflow: hidden;
-            border-radius: 20px;
-            height: 500px; /* Fixed height for uniformity */
         }
 
-        .project img {
+        .stack-header {
+            text-align: center;
+            margin-bottom: 100px;
+            font-family: 'Syne';
+            font-size: 3rem;
+        }
+
+        .card {
+            /* This makes the stacking magic happen */
+            position: sticky; 
+            top: 10vh; /* Sticks 10% from top */
+            
+            height: 80vh; /* Takes 80% of screen height */
             width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-            filter: grayscale(100%);
+            background: var(--card-bg);
+            border-radius: 30px;
+            margin-bottom: 5vh; /* Space between end of one card and start of next */
+            border: 1px solid rgba(255,255,255,0.1);
+            overflow: hidden;
+            box-shadow: 0 -10px 40px rgba(0,0,0,0.5); /* Shadow on top to separate cards */
+            display: flex;
+            transition: transform 0.5s;
         }
 
-        .project:hover img {
-            transform: scale(1.1);
+        /* Staggering the 'top' slightly so they stack nicely like a deck */
+        .card:nth-child(1) { top: 10vh; }
+        .card:nth-child(2) { top: 12vh; }
+        .card:nth-child(3) { top: 14vh; }
+        .card:nth-child(4) { top: 16vh; }
+
+        .card-content {
+            flex: 1;
+            padding: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .card-img {
+            flex: 1.5;
+            background-size: cover;
+            background-position: center;
+            filter: grayscale(100%);
+            transition: filter 0.5s;
+        }
+        .card:hover .card-img {
             filter: grayscale(0%);
         }
 
-        .overlay {
+        .card h2 {
+            font-family: 'Syne';
+            font-size: 4rem;
+            margin-bottom: 20px;
+            color: var(--text-color);
+        }
+        .card p {
+            font-size: 1.2rem;
+            color: #ccc;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        .card-num {
+            font-family: 'Syne';
+            font-size: 8rem;
+            opacity: 0.1;
             position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            padding: 30px;
-            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
-            opacity: 0;
-            transform: translateY(20px);
-            transition: 0.4s;
+            top: 20px;
+            left: 30px;
         }
-
-        .project:hover .overlay {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .overlay h3 {
-            font-family: 'Syne', sans-serif;
-            font-size: 2rem;
-            margin-bottom: 5px;
-        }
-
-        /* Footer */
-        footer {
-            padding: 100px var(--padding);
-            text-align: center;
-            background: #111;
-        }
-
-        .big-link {
-            font-family: 'Syne', sans-serif;
-            font-size: 8vw;
-            text-decoration: none;
+        .btn {
+            display: inline-block;
+            padding: 15px 40px;
+            border: 1px solid #fff;
             color: #fff;
+            text-decoration: none;
+            border-radius: 50px;
+            text-transform: uppercase;
+            font-weight: bold;
+            width: fit-content;
             transition: 0.3s;
         }
-
-        .big-link:hover {
-            color: #aaa;
+        .btn:hover {
+            background: #fff;
+            color: #000;
         }
 
-        /* Mobile Responsive */
+        /* Colors for each card content */
+        .c1 { background: #111; }
+        .c2 { background: #161616; }
+        .c3 { background: #0f0f0f; }
+        .c4 { background: #050505; }
+
+        /* --- Footer --- */
+        footer {
+            height: 50vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #000;
+            border-top: 1px solid #333;
+        }
+        .footer-text { font-family: 'Syne'; font-size: 5vw; }
+
+        /* Mobile Adjustments */
         @media (max-width: 768px) {
-            .hero h1 { font-size: 15vw; }
-            .gallery { grid-template-columns: 1fr; }
-            .cursor-dot, .cursor-outline { display: none; } /* No custom cursor on touch */
+            .card { flex-direction: column-reverse; height: auto; min-height: 80vh; }
+            .card-img { height: 300px; flex: none; }
+            .card h2 { font-size: 2.5rem; }
+            .cursor-dot, .cursor-circle { display: none; }
             * { cursor: auto; }
         }
     </style>
@@ -237,131 +215,101 @@
 <body>
 
     <div class="cursor-dot"></div>
-    <div class="cursor-outline"></div>
+    <div class="cursor-circle"></div>
 
     <nav>
-        <div class="logo">Grim.</div>
-        <div class="menu-btn">Menu</div>
+        <div class="logo">PORTFOLIO.</div>
+        <div class="menu">Menu</div>
     </nav>
 
     <section class="hero">
-        <h1>
-            Creative<br>
-            <span>Developer</span>
-        </h1>
-        <p class="sub-text">
-            Designing immersive digital experiences and 3D interactions.
-            Based in the Metaverse.
-        </p>
+        <h1>Creative<br>Developer</h1>
+        <p>Scroll down to see the stacking effect</p>
+        <div class="scroll-indicator">↓ Scroll ↓</div>
     </section>
 
-    <div class="marquee-container">
-        <div class="marquee-content">
-            WEB DESIGN — 3D ARTIST — BRANDING — UI/UX DESIGN — DEVELOPMENT — WEB DESIGN — 3D ARTIST — BRANDING — UI/UX DESIGN — DEVELOPMENT —
+    <section class="stack-area">
+        <h2 class="stack-header">SELECTED WORKS</h2>
+
+        <div class="card c1">
+            <span class="card-num">01</span>
+            <div class="card-content">
+                <h2>Neon Cyber</h2>
+                <p>A futuristic 3D environment built for a gaming studio. Features interactive lighting and WebGL effects.</p>
+                <a href="#" class="btn">View Project</a>
+            </div>
+            <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2670&auto=format&fit=crop');"></div>
         </div>
-    </div>
 
-    <section class="portfolio">
-        <h2 class="section-title">Selected Works</h2>
-        
-        <div class="gallery">
-            <div class="project">
-                <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop" alt="Abstract Art">
-                <div class="overlay">
-                    <h3>Neon Dreams</h3>
-                    <p>3D Rendering / Art Direction</p>
-                </div>
+        <div class="card c2">
+            <span class="card-num">02</span>
+            <div class="card-content">
+                <h2>Abstract Void</h2>
+                <p>Motion graphics portfolio focusing on fluid dynamics and dark aesthetic visuals.</p>
+                <a href="#" class="btn">View Project</a>
             </div>
-
-            <div class="project">
-                <img src="https://images.unsplash.com/photo-1634152962476-4b8a00e1915c?q=80&w=2488&auto=format&fit=crop" alt="Dark 3D">
-                <div class="overlay">
-                    <h3>Void Structure</h3>
-                    <p>Web Design / Development</p>
-                </div>
-            </div>
-
-            <div class="project">
-                <img src="https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=2670&auto=format&fit=crop" alt="Tech">
-                <div class="overlay">
-                    <h3>Cyber Interface</h3>
-                    <p>UI/UX Design</p>
-                </div>
-            </div>
-
-            <div class="project">
-                <img src="https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?q=80&w=2670&auto=format&fit=crop" alt="Fluid">
-                <div class="overlay">
-                    <h3>Fluid Motion</h3>
-                    <p>Animation / Interaction</p>
-                </div>
-            </div>
+            <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop');"></div>
         </div>
+
+        <div class="card c3">
+            <span class="card-num">03</span>
+            <div class="card-content">
+                <h2>Tech Core</h2>
+                <p>Product design showcase for a high-end tech gadget. Clean lines and minimalist typography.</p>
+                <a href="#" class="btn">View Project</a>
+            </div>
+            <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2670&auto=format&fit=crop');"></div>
+        </div>
+
+        <div class="card c4">
+            <span class="card-num">04</span>
+            <div class="card-content">
+                <h2>Liquid Art</h2>
+                <p>An experimental website using Three.js to create water-like distortion effects on scroll.</p>
+                <a href="#" class="btn">View Project</a>
+            </div>
+            <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1604871000636-074fa5117945?q=80&w=2487&auto=format&fit=crop');"></div>
+        </div>
+
     </section>
 
     <footer>
-        <p>HAVE AN IDEA?</p>
-        <a href="mailto:hello@example.com" class="big-link">LET'S TALK</a>
+        <h1 class="footer-text">Let's Talk</h1>
     </footer>
 
     <script>
-        // --- JAVASCRIPT ---
-
         // Custom Cursor Logic
-        const cursorDot = document.querySelector('.cursor-dot');
-        const cursorOutline = document.querySelector('.cursor-outline');
+        const dot = document.querySelector('.cursor-dot');
+        const circle = document.querySelector('.cursor-circle');
 
-        window.addEventListener('mousemove', function(e) {
+        window.addEventListener('mousemove', (e) => {
             const posX = e.clientX;
             const posY = e.clientY;
 
-            // Dot follows instantly
-            cursorDot.style.left = `${posX}px`;
-            cursorDot.style.top = `${posY}px`;
+            dot.style.left = `${posX}px`;
+            dot.style.top = `${posY}px`;
 
-            // Outline follows with slight delay (animation)
-            cursorOutline.animate({
+            // Little delay for the circle for smoothness
+            circle.animate({
                 left: `${posX}px`,
                 top: `${posY}px`
             }, { duration: 500, fill: "forwards" });
         });
 
-        // Hover Effect on Links (Make cursor bigger)
-        const links = document.querySelectorAll('a, .project');
+        // Hover Effect to make cursor bigger
+        const links = document.querySelectorAll('a, .card');
         links.forEach(link => {
             link.addEventListener('mouseenter', () => {
-                cursorOutline.style.width = '80px';
-                cursorOutline.style.height = '80px';
-                cursorOutline.style.backgroundColor = 'rgba(255,255,255,0.1)';
+                circle.style.width = '80px';
+                circle.style.height = '80px';
+                circle.style.backgroundColor = 'rgba(255,255,255,0.1)';
             });
             link.addEventListener('mouseleave', () => {
-                cursorOutline.style.width = '40px';
-                cursorOutline.style.height = '40px';
-                cursorOutline.style.backgroundColor = 'transparent';
+                circle.style.width = '40px';
+                circle.style.height = '40px';
+                circle.style.backgroundColor = 'transparent';
             });
         });
-
-        // Smooth Scroll Reveal
-        const observerOptions = {
-            threshold: 0.1
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.project').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(50px)';
-            el.style.transition = 'all 0.8s ease-out';
-            observer.observe(el);
-        });
-
     </script>
 </body>
 </html>
