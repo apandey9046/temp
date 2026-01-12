@@ -2,314 +2,398 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wix Studio Stacking Portfolio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Lao Note</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;500&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Playpen+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
     <style>
+        /* --- CSS VARIABLES & RESET --- */
         :root {
-            --bg-color: #0e0e0e;
-            --card-bg: #1a1a1a;
-            --text-color: #ffffff;
-            --accent: #d4f21e; /* Acid Green for contrast */
+            --font-head: 'Fredoka', sans-serif;
+            --font-body: 'Playpen Sans', cursive;
+            
+            --bg-color: #F8F9FD;
+            --text-dark: #1A1A1A;
+            --text-grey: #888888;
+            --nav-bg: #000000;
+            
+            /* Card Colors based on image */
+            --card-red-bg: #FFF0EB;
+            --card-red-accent: #FF7D54;
+            
+            --card-yellow-bg: #FFF8E6;
+            --card-yellow-accent: #FFC107;
+            
+            --card-green-bg: #E8F5E9;
+            --card-green-accent: #4CAF50;
+            
+            --card-blue-bg: #E3F2FD;
+            --card-blue-accent: #2196F3;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            cursor: none; /* Custom cursor active */
-        }
-
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+        
         body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            font-family: 'Manrope', sans-serif;
-            overflow-x: hidden;
-        }
-
-        /* --- Custom Cursor --- */
-        .cursor-dot {
-            width: 8px;
-            height: 8px;
-            background: #fff;
-            position: fixed;
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 9999;
-            transform: translate(-50%, -50%);
-        }
-        .cursor-circle {
-            width: 40px;
-            height: 40px;
-            border: 1px solid rgba(255,255,255,0.5);
-            position: fixed;
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 9999;
-            transform: translate(-50%, -50%);
-            transition: width 0.3s, height 0.3s, background-color 0.3s;
-        }
-
-        /* --- Navigation --- */
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            padding: 30px 50px;
+            font-family: var(--font-body);
+            background-color: #eee; /* Outer bg */
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            mix-blend-mode: difference;
-            z-index: 1000;
-        }
-        .logo { font-family: 'Syne'; font-weight: 800; font-size: 24px; text-transform: uppercase; }
-        .menu { font-size: 14px; text-transform: uppercase; letter-spacing: 1px; }
-
-        /* --- Hero Section --- */
-        .hero {
+            justify-content: center;
             height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Mobile Container Simulation */
+        #app-container {
+            background-color: var(--bg-color);
+            width: 100%;
+            max-width: 450px; /* Mobile width constraint */
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        /* --- SPLASH SCREEN --- */
+        #splash-screen {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: #000;
+            z-index: 100;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
-            text-align: center;
+            justify-content: center;
+            color: white;
+            transition: opacity 0.5s ease;
         }
-        .hero h1 {
-            font-family: 'Syne';
-            font-size: 10vw;
-            line-height: 0.9;
-            text-transform: uppercase;
-        }
-        .hero p { margin-top: 20px; font-size: 1.2rem; color: #aaa; }
-        .scroll-indicator {
-            margin-top: 50px;
-            font-size: 14px;
-            text-transform: uppercase;
-            animation: bounce 2s infinite;
-        }
-        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(10px); } }
+        
+        .logo-area { text-align: center; margin-bottom: 20px; }
+        .logo-icon { font-size: 64px; margin-bottom: 10px; }
+        .logo-text { font-family: var(--font-head); font-size: 28px; font-weight: 600; letter-spacing: 1px; }
+        .tagline { font-size: 14px; opacity: 0.7; max-width: 250px; text-align: center; margin-top: 10px; line-height: 1.5; }
+        .loader { margin-top: 50px; border: 3px solid rgba(255,255,255,0.3); border-top: 3px solid white; border-radius: 50%; width: 24px; height: 24px; animation: spin 1s linear infinite; }
+        
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-        /* --- STACKING CARDS LOGIC (Main Request) --- */
-        .stack-area {
-            padding: 50px 20px;
-            max-width: 1200px;
-            margin: 0 auto;
+        /* --- LAYOUT & SCROLLING --- */
+        .page {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            padding: 20px 20px 100px 20px; /* Bottom padding for Nav */
+            overflow-y: auto;
+            display: none; /* Hidden by default */
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .page.active { display: block; opacity: 1; }
+
+        /* Hide scrollbar but allow scrolling */
+        .page::-webkit-scrollbar { display: none; }
+
+        /* --- HEADER --- */
+        header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-top: 15px; }
+        .header-logo { display: flex; align-items: center; gap: 8px; font-family: var(--font-head); font-weight: 700; font-size: 20px; }
+        .header-icons { display: flex; gap: 15px; }
+        .icon-btn { font-size: 24px; cursor: pointer; }
+
+        /* --- TABS (HOME) --- */
+        .tabs { display: flex; gap: 15px; margin-bottom: 20px; align-items: center; }
+        .tab { padding: 8px 20px; border-radius: 20px; font-size: 14px; font-weight: 600; cursor: pointer; transition: 0.3s; }
+        .tab.active { background-color: #000; color: #fff; }
+        .tab.inactive { color: #ccc; background: transparent; }
+        .filter-sort { margin-left: auto; font-size: 12px; color: var(--text-grey); display: flex; align-items: center; gap: 4px; }
+
+        /* --- NOTE CARDS --- */
+        .note-card {
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: transform 0.2s;
             position: relative;
         }
+        .note-card:active { transform: scale(0.98); }
+        
+        .note-card h3 { font-family: var(--font-head); margin-bottom: 8px; font-size: 18px; display: flex; justify-content: space-between; }
+        .note-card p { font-size: 13px; color: #555; line-height: 1.6; margin-bottom: 15px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+        
+        .card-footer { display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: var(--text-grey); }
+        .tags { display: flex; gap: 10px; }
+        .edit-icon { position: absolute; top: 20px; right: 20px; color: white; border-radius: 50%; padding: 4px; font-size: 12px; }
 
-        .stack-header {
-            text-align: center;
-            margin-bottom: 100px;
-            font-family: 'Syne';
-            font-size: 3rem;
-        }
+        /* Color Variants */
+        .card-red { background-color: var(--card-red-bg); }
+        .card-red .edit-icon { background-color: var(--card-red-accent); }
+        
+        .card-yellow { background-color: var(--card-yellow-bg); }
+        .card-yellow .edit-icon { display: none; } /* Based on design */
+        
+        .card-green { background-color: var(--card-green-bg); }
+        .card-green .add-btn { background-color: #000; color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; position: absolute; right: 20px; bottom: 20px; font-size: 20px;}
 
-        .card {
-            /* This makes the stacking magic happen */
-            position: sticky; 
-            top: 10vh; /* Sticks 10% from top */
-            
-            height: 80vh; /* Takes 80% of screen height */
-            width: 100%;
-            background: var(--card-bg);
-            border-radius: 30px;
-            margin-bottom: 5vh; /* Space between end of one card and start of next */
-            border: 1px solid rgba(255,255,255,0.1);
-            overflow: hidden;
-            box-shadow: 0 -10px 40px rgba(0,0,0,0.5); /* Shadow on top to separate cards */
-            display: flex;
-            transition: transform 0.5s;
-        }
+        /* --- CATEGORIES PAGE --- */
+        .categories-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 10px; }
+        .cat-card { background: white; padding: 20px; border-radius: 20px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.03); display: flex; flex-direction: column; align-items: center; gap: 10px; }
+        .cat-icon-box { width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px; color: white; margin-bottom: 5px; }
+        .cat-name { font-family: var(--font-head); font-weight: 600; font-size: 16px; }
+        .cat-count { font-size: 12px; color: var(--text-grey); }
 
-        /* Staggering the 'top' slightly so they stack nicely like a deck */
-        .card:nth-child(1) { top: 10vh; }
-        .card:nth-child(2) { top: 12vh; }
-        .card:nth-child(3) { top: 14vh; }
-        .card:nth-child(4) { top: 16vh; }
-
-        .card-content {
-            flex: 1;
-            padding: 60px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-        .card-img {
-            flex: 1.5;
-            background-size: cover;
-            background-position: center;
-            filter: grayscale(100%);
-            transition: filter 0.5s;
-        }
-        .card:hover .card-img {
-            filter: grayscale(0%);
-        }
-
-        .card h2 {
-            font-family: 'Syne';
-            font-size: 4rem;
-            margin-bottom: 20px;
-            color: var(--text-color);
-        }
-        .card p {
-            font-size: 1.2rem;
-            color: #ccc;
-            margin-bottom: 30px;
-            line-height: 1.6;
-        }
-        .card-num {
-            font-family: 'Syne';
-            font-size: 8rem;
-            opacity: 0.1;
+        /* --- BOTTOM NAVIGATION --- */
+        .bottom-nav {
             position: absolute;
-            top: 20px;
-            left: 30px;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            background-color: var(--nav-bg);
+            border-radius: 30px;
+            height: 70px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 0 10px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            z-index: 50;
         }
-        .btn {
-            display: inline-block;
-            padding: 15px 40px;
-            border: 1px solid #fff;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 50px;
-            text-transform: uppercase;
-            font-weight: bold;
-            width: fit-content;
+
+        .nav-item {
+            color: #666;
+            font-size: 24px;
+            padding: 10px;
+            cursor: pointer;
             transition: 0.3s;
         }
-        .btn:hover {
-            background: #fff;
-            color: #000;
+        
+        .nav-item.active { color: white; }
+        .nav-item:hover { color: #aaa; }
+
+        /* --- EDITOR VIEW (Overlay) --- */
+        #editor-page {
+            background-color: #fff;
+            z-index: 60; /* Above nav */
         }
-
-        /* Colors for each card content */
-        .c1 { background: #111; }
-        .c2 { background: #161616; }
-        .c3 { background: #0f0f0f; }
-        .c4 { background: #050505; }
-
-        /* --- Footer --- */
-        footer {
-            height: 50vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .editor-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .editor-title { font-family: var(--font-head); font-size: 24px; font-weight: 700; border: none; width: 100%; outline: none; margin-bottom: 10px; background: transparent; }
+        .editor-content { width: 100%; height: 70%; border: none; outline: none; font-family: var(--font-body); font-size: 16px; line-height: 1.8; resize: none; color: #444; }
+        
+        .editor-toolbar {
+            position: absolute;
+            bottom: 30px; left: 50%; transform: translateX(-50%);
             background: #000;
-            border-top: 1px solid #333;
+            border-radius: 20px;
+            padding: 10px 20px;
+            display: flex; gap: 20px;
+            color: white;
         }
-        .footer-text { font-family: 'Syne'; font-size: 5vw; }
 
-        /* Mobile Adjustments */
-        @media (max-width: 768px) {
-            .card { flex-direction: column-reverse; height: auto; min-height: 80vh; }
-            .card-img { height: 300px; flex: none; }
-            .card h2 { font-size: 2.5rem; }
-            .cursor-dot, .cursor-circle { display: none; }
-            * { cursor: auto; }
-        }
+        /* Helpers */
+        .bg-blue { background-color: #2196F3; }
+        .bg-yellow { background-color: #FFC107; }
+        .bg-green { background-color: #4CAF50; }
+        .bg-purple { background-color: #E040FB; }
+
     </style>
 </head>
 <body>
 
-    <div class="cursor-dot"></div>
-    <div class="cursor-circle"></div>
-
-    <nav>
-        <div class="logo">PORTFOLIO.</div>
-        <div class="menu">Menu</div>
-    </nav>
-
-    <section class="hero">
-        <h1>Creative<br>Developer</h1>
-        <p>Scroll down to see the stacking effect</p>
-        <div class="scroll-indicator">↓ Scroll ↓</div>
-    </section>
-
-    <section class="stack-area">
-        <h2 class="stack-header">SELECTED WORKS</h2>
-
-        <div class="card c1">
-            <span class="card-num">01</span>
-            <div class="card-content">
-                <h2>Neon Cyber</h2>
-                <p>A futuristic 3D environment built for a gaming studio. Features interactive lighting and WebGL effects.</p>
-                <a href="#" class="btn">View Project</a>
+    <div id="app-container">
+        
+        <div id="splash-screen">
+            <div class="logo-area">
+                <i class="ph-fill ph-note-pencil logo-icon"></i>
+                <div class="logo-text">LAO NOTE</div>
             </div>
-            <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2670&auto=format&fit=crop');"></div>
+            <div class="tagline">Easily Manage Your Notes On Your Phone & You Can Have Infinite Notes</div>
+            <div class="loader"></div>
+            <div style="margin-top:auto; margin-bottom: 40px; font-size: 10px; color: #555;">Loading...</div>
         </div>
 
-        <div class="card c2">
-            <span class="card-num">02</span>
-            <div class="card-content">
-                <h2>Abstract Void</h2>
-                <p>Motion graphics portfolio focusing on fluid dynamics and dark aesthetic visuals.</p>
-                <a href="#" class="btn">View Project</a>
+        <div id="home-page" class="page">
+            <header>
+                <div class="header-logo"><i class="ph-fill ph-note-pencil"></i> Lao Note</div>
+                <div class="header-icons">
+                    <i class="ph ph-magnifying-glass icon-btn"></i>
+                    <i class="ph ph-user-circle icon-btn"></i>
+                </div>
+            </header>
+
+            <div class="tabs">
+                <div class="tab active">Notes</div>
+                <div class="tab inactive">Highlights</div>
+                <div class="tab inactive">Favorite Notes</div>
             </div>
-            <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop');"></div>
+
+            <div style="display:flex; justify-content:space-between; margin-bottom: 10px; align-items:center;">
+                <h4 style="font-family: var(--font-head);">List Notes</h4>
+                <div class="filter-sort">All Notes <i class="ph-bold ph-caret-up-down"></i></div>
+            </div>
+
+            <div class="note-card card-red" onclick="openEditor('How To Draw A Professional Wireframe?', 'For Wireframe Design, You Need To Have A Pen And Paper With You, And Using These Two, You Can Design The Idea You Want...')">
+                <i class="ph-bold ph-pencil-simple edit-icon"></i>
+                <h3>How To Draw A Professional Wireframe?</h3>
+                <p>For Wireframe Design, You Need To Have A Pen And Paper With You, And Using These Two, You Can Design The Idea You Want On Paper For Web Or Mobile, Just Learn...</p>
+                <div class="card-footer">
+                    <div class="tags">Design &nbsp; Wireframe</div>
+                    <div class="date">2026/01/12</div>
+                </div>
+            </div>
+
+            <div class="note-card card-yellow" onclick="openEditor('Ways To Succeed Early', 'Success is not final; failure is not fatal: It is the courage to continue that counts. Set goals early and review them daily.')">
+                <h3>Ways To Succeed Early</h3>
+                <div class="card-footer" style="margin-top: 20px;">
+                    <div class="tags">Succeed &nbsp; Goals</div>
+                    <div class="date">2026/01/09</div>
+                </div>
+            </div>
+
+            <div class="note-card card-green" style="height: 120px; position:relative;">
+                <h3>Scientific Facts Of Space</h3>
+                <div class="card-footer" style="margin-top: 10px;">
+                    <div class="tags">Scientific &nbsp; Space</div>
+                    <div class="date">2025/12/28</div>
+                </div>
+                <div class="add-btn"><i class="ph-bold ph-plus"></i></div>
+            </div>
+            
+             <div class="note-card card-blue" style="height: 100px;">
+                <h3>Next Month Plan</h3>
+                <div class="card-footer" style="margin-top: 10px;">
+                    <div class="tags">Planning</div>
+                    <div class="date">2025/12/20</div>
+                </div>
+            </div>
         </div>
 
-        <div class="card c3">
-            <span class="card-num">03</span>
-            <div class="card-content">
-                <h2>Tech Core</h2>
-                <p>Product design showcase for a high-end tech gadget. Clean lines and minimalist typography.</p>
-                <a href="#" class="btn">View Project</a>
+        <div id="categories-page" class="page">
+             <header>
+                <div class="header-logo" style="margin: 0 auto;">Categories</div>
+                <div class="header-icons" style="position:absolute; right: 20px;">
+                    <i class="ph-bold ph-plus-circle icon-btn"></i>
+                </div>
+            </header>
+
+            <div style="display:flex; justify-content:space-between; margin-bottom: 10px; align-items:center;">
+                <h4 style="font-family: var(--font-head);">List Categories</h4>
+                <div class="filter-sort">New <i class="ph-bold ph-caret-up-down"></i></div>
             </div>
-            <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2670&auto=format&fit=crop');"></div>
+
+            <div class="categories-grid">
+                <div class="cat-card">
+                    <div class="cat-icon-box bg-blue"><i class="ph-fill ph-folder"></i></div>
+                    <div class="cat-name">Design</div>
+                    <div class="cat-count">15 Notes</div>
+                </div>
+                <div class="cat-card">
+                    <div class="cat-icon-box bg-yellow"><i class="ph-fill ph-folder"></i></div>
+                    <div class="cat-name">Success</div>
+                    <div class="cat-count">45 Notes</div>
+                </div>
+                <div class="cat-card">
+                    <div class="cat-icon-box bg-green"><i class="ph-fill ph-folder"></i></div>
+                    <div class="cat-name">Scientific</div>
+                    <div class="cat-count">29 Notes</div>
+                </div>
+                <div class="cat-card">
+                    <div class="cat-icon-box bg-purple"><i class="ph-fill ph-folder"></i></div>
+                    <div class="cat-name">Freelancer</div>
+                    <div class="cat-count">19 Notes</div>
+                </div>
+            </div>
         </div>
 
-        <div class="card c4">
-            <span class="card-num">04</span>
-            <div class="card-content">
-                <h2>Liquid Art</h2>
-                <p>An experimental website using Three.js to create water-like distortion effects on scroll.</p>
-                <a href="#" class="btn">View Project</a>
+        <div id="editor-page" class="page">
+            <div class="editor-header">
+                <i class="ph-bold ph-arrow-left icon-btn" onclick="closeEditor()"></i>
+                <div style="display:flex; gap:15px;">
+                    <i class="ph-bold ph-magnifying-glass icon-btn"></i>
+                    <i class="ph-bold ph-dots-three-circle icon-btn"></i>
+                </div>
             </div>
-            <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1604871000636-074fa5117945?q=80&w=2487&auto=format&fit=crop');"></div>
+            <input type="text" id="editor-title-input" class="editor-title" value="Note Title">
+            <textarea id="editor-content-input" class="editor-content">Start writing here...</textarea>
+
+            <div style="background:black; color:white; border-radius:10px; padding:8px 15px; position:absolute; top:35%; right:20px; display:flex; gap:10px; align-items:center;">
+                 <span style="width:10px; height:10px; background:#2196F3; border-radius:50%;"></span>
+                 <span style="width:10px; height:10px; background:#FFC107; border-radius:50%;"></span>
+                 <span style="width:10px; height:10px; background:#E040FB; border-radius:50%;"></span>
+            </div>
+
+            <div class="editor-toolbar">
+                <i class="ph-bold ph-text-b"></i>
+                <i class="ph-bold ph-text-italic"></i>
+                <i class="ph-bold ph-text-underline"></i>
+                <i class="ph-bold ph-list-dashes"></i>
+                <i class="ph-fill ph-circle"></i>
+                <i class="ph-bold ph-link"></i>
+            </div>
         </div>
 
-    </section>
+        <nav class="bottom-nav">
+            <i class="ph-fill ph-house nav-item active" onclick="switchTab('home')"></i>
+            <i class="ph-bold ph-crown nav-item" onclick="switchTab('home')"></i>
+            <i class="ph-bold ph-squares-four nav-item" onclick="switchTab('categories')"></i>
+            <i class="ph-bold ph-gear nav-item" onclick="alert('Settings Page')"></i>
+        </nav>
 
-    <footer>
-        <h1 class="footer-text">Let's Talk</h1>
-    </footer>
+    </div>
 
     <script>
-        // Custom Cursor Logic
-        const dot = document.querySelector('.cursor-dot');
-        const circle = document.querySelector('.cursor-circle');
+        // --- LOGIC ---
 
-        window.addEventListener('mousemove', (e) => {
-            const posX = e.clientX;
-            const posY = e.clientY;
+        // 1. Splash Screen Logic
+        window.onload = function() {
+            setTimeout(() => {
+                const splash = document.getElementById('splash-screen');
+                splash.style.opacity = '0';
+                setTimeout(() => {
+                    splash.style.display = 'none';
+                    switchTab('home'); // Show home after splash
+                }, 500);
+            }, 2500); // 2.5s Delay
+        };
 
-            dot.style.left = `${posX}px`;
-            dot.style.top = `${posY}px`;
+        // 2. Navigation Logic
+        function switchTab(tabName) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
 
-            // Little delay for the circle for smoothness
-            circle.animate({
-                left: `${posX}px`,
-                top: `${posY}px`
-            }, { duration: 500, fill: "forwards" });
-        });
+            // Show selected page
+            if(tabName === 'home') {
+                document.getElementById('home-page').classList.add('active');
+                document.querySelector('.ph-house').classList.add('active');
+            } else if (tabName === 'categories') {
+                document.getElementById('categories-page').classList.add('active');
+                document.querySelector('.ph-squares-four').classList.add('active');
+            }
+        }
 
-        // Hover Effect to make cursor bigger
-        const links = document.querySelectorAll('a, .card');
-        links.forEach(link => {
-            link.addEventListener('mouseenter', () => {
-                circle.style.width = '80px';
-                circle.style.height = '80px';
-                circle.style.backgroundColor = 'rgba(255,255,255,0.1)';
-            });
-            link.addEventListener('mouseleave', () => {
-                circle.style.width = '40px';
-                circle.style.height = '40px';
-                circle.style.backgroundColor = 'transparent';
-            });
-        });
+        // 3. Editor Logic
+        function openEditor(title, content) {
+            const editor = document.getElementById('editor-page');
+            const titleInput = document.getElementById('editor-title-input');
+            const contentInput = document.getElementById('editor-content-input');
+            
+            titleInput.value = title;
+            contentInput.value = content;
+            
+            editor.classList.add('active');
+            
+            // Hide bottom nav when in editor
+            document.querySelector('.bottom-nav').style.display = 'none';
+        }
+
+        function closeEditor() {
+            document.getElementById('editor-page').classList.remove('active');
+            // Show bottom nav again
+            document.querySelector('.bottom-nav').style.display = 'flex';
+        }
     </script>
 </body>
 </html>
