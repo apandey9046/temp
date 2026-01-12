@@ -3,244 +3,365 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mobile Fintech Dashboard</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: { sans: ['Inter', 'sans-serif'] },
-                    colors: {
-                        dark: '#111827',
-                        primary: '#3B82F6',
-                        bg: '#F3F4F6',
-                        surface: '#FFFFFF'
-                    }
-                }
-            }
-        }
-    </script>
+    <title>Wix Studio Style Portfolio</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;500&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+
     <style>
-        /* Hide scrollbar for Chrome, Safari and Opera */
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        /* Hide scrollbar for IE, Edge and Firefox */
-        .no-scrollbar { -ms-overflow-style: none;  scrollbar-width: none; }
-        
-        .glass-nav {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(12px);
-            border-top: 1px solid rgba(229, 231, 235, 0.5);
+        /* --- CSS STYLES --- */
+        :root {
+            --bg-color: #0e0e0e;
+            --text-color: #ffffff;
+            --accent-color: #d1f2eb; /* Soft mint for accents */
+            --padding: 5vw;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: none; /* Hide default cursor */
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Manrope', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Custom Cursor */
+        .cursor-dot, .cursor-outline {
+            position: fixed;
+            top: 0;
+            left: 0;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            z-index: 9999;
+            pointer-events: none;
+        }
+
+        .cursor-dot {
+            width: 8px;
+            height: 8px;
+            background-color: white;
+        }
+
+        .cursor-outline {
+            width: 40px;
+            height: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            transition: width 0.2s, height 0.2s;
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 30px var(--padding);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            mix-blend-mode: difference;
+            z-index: 100;
+        }
+
+        .logo {
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            font-size: 1.5rem;
+            text-transform: uppercase;
+        }
+
+        .menu-btn {
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 var(--padding);
+            position: relative;
+        }
+
+        .hero h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: 11vw;
+            line-height: 0.9;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .hero h1 span {
+            display: block;
+            color: transparent;
+            -webkit-text-stroke: 1px #fff;
+            transition: 0.5s;
+        }
+
+        .hero h1 span:hover {
+            color: #fff;
+            -webkit-text-stroke: 0px;
+        }
+
+        .sub-text {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            max-width: 400px;
+            opacity: 0.7;
+        }
+
+        /* Infinite Marquee Strip */
+        .marquee-container {
+            width: 100%;
+            background: #fff;
+            color: #000;
+            padding: 15px 0;
+            overflow: hidden;
+            white-space: nowrap;
+            transform: rotate(-2deg) scale(1.05);
+            margin: 50px 0;
+        }
+
+        .marquee-content {
+            display: inline-block;
+            animation: scroll 20s linear infinite;
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            font-size: 2rem;
+            text-transform: uppercase;
+        }
+
+        @keyframes scroll {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
+        }
+
+        /* Portfolio Grid */
+        .portfolio {
+            padding: 100px var(--padding);
+        }
+
+        .section-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 3rem;
+            margin-bottom: 50px;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            padding-bottom: 20px;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* 2 Column layout */
+            gap: 40px;
+        }
+
+        .project {
+            position: relative;
+            overflow: hidden;
+            border-radius: 20px;
+            height: 500px; /* Fixed height for uniformity */
+        }
+
+        .project img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+            filter: grayscale(100%);
+        }
+
+        .project:hover img {
+            transform: scale(1.1);
+            filter: grayscale(0%);
+        }
+
+        .overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 30px;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: 0.4s;
+        }
+
+        .project:hover .overlay {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .overlay h3 {
+            font-family: 'Syne', sans-serif;
+            font-size: 2rem;
+            margin-bottom: 5px;
+        }
+
+        /* Footer */
+        footer {
+            padding: 100px var(--padding);
+            text-align: center;
+            background: #111;
+        }
+
+        .big-link {
+            font-family: 'Syne', sans-serif;
+            font-size: 8vw;
+            text-decoration: none;
+            color: #fff;
+            transition: 0.3s;
+        }
+
+        .big-link:hover {
+            color: #aaa;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 15vw; }
+            .gallery { grid-template-columns: 1fr; }
+            .cursor-dot, .cursor-outline { display: none; } /* No custom cursor on touch */
+            * { cursor: auto; }
         }
     </style>
 </head>
-<body class="bg-gray-200 h-screen w-full flex items-center justify-center font-sans text-gray-800">
+<body>
 
-    <div class="relative w-full max-w-[375px] h-[812px] bg-[#F8F9FA] shadow-2xl rounded-[40px] overflow-hidden border-[8px] border-gray-900 flex flex-col">
-        
-        <div class="h-12 w-full flex justify-between items-center px-6 absolute top-0 z-20 text-gray-800 text-xs font-semibold">
-            <span>9:41</span>
-            <div class="flex gap-1.5 items-center">
-                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
-                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M15.67 4H14V2h-4v2H8.33C7.6 4 7 4.6 7 5.33v15.33C7 21.4 7.6 22 8.33 22h7.33c.73 0 1.33-.6 1.33-1.33V5.33C17 4.6 16.4 4 15.67 4z"/></svg>
-            </div>
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <nav>
+        <div class="logo">Grim.</div>
+        <div class="menu-btn">Menu</div>
+    </nav>
+
+    <section class="hero">
+        <h1>
+            Creative<br>
+            <span>Developer</span>
+        </h1>
+        <p class="sub-text">
+            Designing immersive digital experiences and 3D interactions.
+            Based in the Metaverse.
+        </p>
+    </section>
+
+    <div class="marquee-container">
+        <div class="marquee-content">
+            WEB DESIGN — 3D ARTIST — BRANDING — UI/UX DESIGN — DEVELOPMENT — WEB DESIGN — 3D ARTIST — BRANDING — UI/UX DESIGN — DEVELOPMENT —
         </div>
-
-        <div class="flex-1 overflow-y-auto overflow-x-hidden no-scrollbar pb-24 pt-12">
-            
-            <div class="px-6 mb-6 flex justify-between items-center">
-                <div>
-                    <p class="text-gray-400 text-xs mb-1">Good Morning,</p>
-                    <h1 class="text-xl font-bold text-dark">Nikitin</h1>
-                </div>
-                <div class="relative">
-                    <div class="w-10 h-10 rounded-full bg-gray-200 overflow-hidden border-2 border-white shadow-sm">
-                        <img src="https://i.pravatar.cc/150?img=11" alt="Profile" class="w-full h-full object-cover">
-                    </div>
-                    <div class="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full border-2 border-white"></div>
-                </div>
-            </div>
-
-            <div class="flex overflow-x-auto snap-x snap-mandatory gap-4 px-6 pb-6 no-scrollbar">
-                
-                <div class="snap-center shrink-0 w-[85%] bg-gradient-to-br from-gray-800 to-black rounded-3xl p-6 text-white shadow-xl shadow-gray-300 relative overflow-hidden">
-                    <div class="absolute top-0 right-0 opacity-10 w-32 h-32 transform translate-x-8 -translate-y-8">
-                         <svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path></svg>
-                    </div>
-                    
-                    <div class="flex justify-between items-start mb-8">
-                        <div>
-                            <p class="text-gray-400 text-xs mb-1">Total Balance</p>
-                            <h2 class="text-2xl font-bold tracking-tight">$ 15,780.00</h2>
-                        </div>
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" class="h-4 opacity-80 invert" alt="Visa">
-                    </div>
-                    
-                    <div class="flex justify-between items-end">
-                        <div>
-                            <p class="text-gray-400 text-[10px] uppercase tracking-wider mb-1">Card Holder</p>
-                            <p class="text-sm font-medium">Nikitin V.</p>
-                        </div>
-                        <div class="text-right">
-                             <p class="text-gray-400 text-[10px] uppercase tracking-wider mb-1">Expires</p>
-                            <p class="text-sm font-medium">10/24</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="snap-center shrink-0 w-[85%] bg-white rounded-3xl p-6 text-dark shadow-lg border border-gray-100 relative">
-                    <div class="flex justify-between items-start mb-8">
-                        <div>
-                            <p class="text-gray-500 text-xs mb-1">Crypto Wallet</p>
-                            <h2 class="text-2xl font-bold tracking-tight">₿ 1.424</h2>
-                        </div>
-                        <div class="flex -space-x-2">
-                            <div class="w-6 h-6 rounded-full bg-red-500 opacity-80"></div>
-                            <div class="w-6 h-6 rounded-full bg-yellow-500 opacity-80"></div>
-                        </div>
-                    </div>
-                    <div class="flex justify-between items-end">
-                         <div>
-                            <p class="text-gray-400 text-[10px] uppercase tracking-wider mb-1">Wallet ID</p>
-                            <p class="text-sm font-medium">**** 8X29</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="px-6 mb-8">
-                <h3 class="text-sm font-bold text-dark mb-4">Quick Actions</h3>
-                <div class="grid grid-cols-4 gap-4">
-                    <div class="flex flex-col items-center gap-2 group cursor-pointer">
-                        <div class="w-14 h-14 bg-blue-600 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-blue-200 group-active:scale-95 transition">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>
-                        </div>
-                        <span class="text-xs font-medium text-gray-600">Transfer</span>
-                    </div>
-                     <div class="flex flex-col items-center gap-2 group cursor-pointer">
-                        <div class="w-14 h-14 bg-white rounded-2xl flex items-center justify-center text-primary shadow-sm border border-gray-100 group-active:scale-95 transition">
-                           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-                        </div>
-                        <span class="text-xs font-medium text-gray-600">Top Up</span>
-                    </div>
-                     <div class="flex flex-col items-center gap-2 group cursor-pointer">
-                        <div class="w-14 h-14 bg-white rounded-2xl flex items-center justify-center text-primary shadow-sm border border-gray-100 group-active:scale-95 transition">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                        </div>
-                        <span class="text-xs font-medium text-gray-600">Bill</span>
-                    </div>
-                     <div class="flex flex-col items-center gap-2 group cursor-pointer">
-                        <div class="w-14 h-14 bg-white rounded-2xl flex items-center justify-center text-primary shadow-sm border border-gray-100 group-active:scale-95 transition">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"></path></svg>
-                        </div>
-                        <span class="text-xs font-medium text-gray-600">More</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="px-6 mb-8">
-                <div class="bg-white rounded-3xl p-5 shadow-sm border border-gray-100 flex items-center justify-between">
-                    <div>
-                        <p class="text-xs text-gray-400 mb-1">This Week's Spend</p>
-                        <h3 class="text-xl font-bold text-dark mb-2">$1,240.50</h3>
-                        <div class="flex gap-2">
-                             <span class="px-2 py-1 bg-red-50 text-red-500 text-[10px] font-bold rounded-lg">+12%</span>
-                             <span class="text-[10px] text-gray-400 self-center">vs last week</span>
-                        </div>
-                    </div>
-                    <div class="relative w-16 h-16">
-                        <div class="w-full h-full rounded-full" style="background: conic-gradient(#3B82F6 0% 70%, #E5E7EB 70% 100%);"></div>
-                        <div class="absolute inset-0 m-auto w-10 h-10 bg-white rounded-full flex items-center justify-center">
-                            <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="px-6 bg-white rounded-t-[40px] pt-8 pb-8 min-h-[300px] shadow-[0_-10px_40px_-15px_rgba(0,0,0,0.05)]">
-                <div class="flex justify-between items-end mb-6">
-                    <h3 class="text-lg font-bold text-dark">Transactions</h3>
-                    <a href="#" class="text-xs font-medium text-blue-500">See All</a>
-                </div>
-
-                <div class="space-y-6">
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 rounded-2xl bg-gray-50 flex items-center justify-center text-gray-700">
-                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.879V14.89h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12c0-5.523-4.477-10-10-10z"/></svg>
-                            </div>
-                            <div>
-                                <h4 class="text-sm font-semibold text-gray-800">Spotify</h4>
-                                <p class="text-xs text-gray-400">Subscription • Today</p>
-                            </div>
-                        </div>
-                        <span class="text-sm font-bold text-gray-900">-$12.99</span>
-                    </div>
-
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 rounded-2xl bg-gray-50 flex items-center justify-center text-gray-700">
-                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.1 1.88-2.6 5.39.53 6.79-.67 1.67-1.59 3.33-2.58 4.42zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
-                            </div>
-                            <div>
-                                <h4 class="text-sm font-semibold text-gray-800">Apple Store</h4>
-                                <p class="text-xs text-gray-400">Electronics • Yesterday</p>
-                            </div>
-                        </div>
-                        <span class="text-sm font-bold text-gray-900">-$899.00</span>
-                    </div>
-
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 rounded-2xl bg-gray-50 flex items-center justify-center text-gray-700">
-                               <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
-                            </div>
-                            <div>
-                                <h4 class="text-sm font-semibold text-gray-800">Salary</h4>
-                                <p class="text-xs text-gray-400">Income • Mar 28</p>
-                            </div>
-                        </div>
-                        <span class="text-sm font-bold text-green-600">+$4,250.00</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="absolute bottom-0 w-full glass-nav pb-8 pt-4 px-6">
-            <div class="flex justify-between items-center">
-                <button class="flex flex-col items-center gap-1 text-blue-600">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
-                    <span class="text-[10px] font-medium">Home</span>
-                </button>
-                
-                <button class="flex flex-col items-center gap-1 text-gray-400 hover:text-gray-600">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
-                    <span class="text-[10px] font-medium">History</span>
-                </button>
-
-                <div class="relative -top-6">
-                    <button class="w-14 h-14 rounded-full bg-dark text-white shadow-xl shadow-gray-400 flex items-center justify-center transform hover:scale-105 transition">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-                    </button>
-                </div>
-
-                <button class="flex flex-col items-center gap-1 text-gray-400 hover:text-gray-600">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
-                    <span class="text-[10px] font-medium">Cards</span>
-                </button>
-
-                <button class="flex flex-col items-center gap-1 text-gray-400 hover:text-gray-600">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
-                    <span class="text-[10px] font-medium">Profile</span>
-                </button>
-            </div>
-        </div>
-
-        <div class="absolute bottom-1 w-full flex justify-center z-30">
-            <div class="w-32 h-1 bg-gray-900 rounded-full"></div>
-        </div>
-
     </div>
 
+    <section class="portfolio">
+        <h2 class="section-title">Selected Works</h2>
+        
+        <div class="gallery">
+            <div class="project">
+                <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop" alt="Abstract Art">
+                <div class="overlay">
+                    <h3>Neon Dreams</h3>
+                    <p>3D Rendering / Art Direction</p>
+                </div>
+            </div>
+
+            <div class="project">
+                <img src="https://images.unsplash.com/photo-1634152962476-4b8a00e1915c?q=80&w=2488&auto=format&fit=crop" alt="Dark 3D">
+                <div class="overlay">
+                    <h3>Void Structure</h3>
+                    <p>Web Design / Development</p>
+                </div>
+            </div>
+
+            <div class="project">
+                <img src="https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=2670&auto=format&fit=crop" alt="Tech">
+                <div class="overlay">
+                    <h3>Cyber Interface</h3>
+                    <p>UI/UX Design</p>
+                </div>
+            </div>
+
+            <div class="project">
+                <img src="https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?q=80&w=2670&auto=format&fit=crop" alt="Fluid">
+                <div class="overlay">
+                    <h3>Fluid Motion</h3>
+                    <p>Animation / Interaction</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>HAVE AN IDEA?</p>
+        <a href="mailto:hello@example.com" class="big-link">LET'S TALK</a>
+    </footer>
+
+    <script>
+        // --- JAVASCRIPT ---
+
+        // Custom Cursor Logic
+        const cursorDot = document.querySelector('.cursor-dot');
+        const cursorOutline = document.querySelector('.cursor-outline');
+
+        window.addEventListener('mousemove', function(e) {
+            const posX = e.clientX;
+            const posY = e.clientY;
+
+            // Dot follows instantly
+            cursorDot.style.left = `${posX}px`;
+            cursorDot.style.top = `${posY}px`;
+
+            // Outline follows with slight delay (animation)
+            cursorOutline.animate({
+                left: `${posX}px`,
+                top: `${posY}px`
+            }, { duration: 500, fill: "forwards" });
+        });
+
+        // Hover Effect on Links (Make cursor bigger)
+        const links = document.querySelectorAll('a, .project');
+        links.forEach(link => {
+            link.addEventListener('mouseenter', () => {
+                cursorOutline.style.width = '80px';
+                cursorOutline.style.height = '80px';
+                cursorOutline.style.backgroundColor = 'rgba(255,255,255,0.1)';
+            });
+            link.addEventListener('mouseleave', () => {
+                cursorOutline.style.width = '40px';
+                cursorOutline.style.height = '40px';
+                cursorOutline.style.backgroundColor = 'transparent';
+            });
+        });
+
+        // Smooth Scroll Reveal
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.project').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(50px)';
+            el.style.transition = 'all 0.8s ease-out';
+            observer.observe(el);
+        });
+
+    </script>
 </body>
 </html>
