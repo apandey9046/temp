@@ -3,277 +3,461 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lao Note - HD Design Presentation</title>
+    <title>Palette Implementation</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
 
     <style>
+        /* ======================
+           YOUR PALETTE
+        ====================== */
         :root {
-            --font-head: 'Fredoka', sans-serif;
-            --font-body: 'Nunito', sans-serif;
-            --bg-presentation: #E0E5EC;
-            --phone-border: #fff;
-            --screen-bg: #F8F9FD;
+            /* Backgrounds */
+            --bg-main: #FBF6EF;
+            --bg-subtle: #F4EEE6;
+            --surface-base: #FFFFFF;
+            --surface-muted: #EFE7DD;
+
+            /* Text */
+            --text-primary: #1C1C1C;
+            --text-secondary: #4B4B4B;
+            --text-muted: #7A7A7A;
+            --text-inverse: #FFFFFF;
+
+            /* Primary (Brand) */
+            --primary-900: #3A2416;
+            --primary-700: #5A3A26;
+            --primary-500: #7A4A2E;
+            --primary-300: #B89272;
+            --primary-100: #EAD9CB;
+
+            /* Secondary */
+            --secondary-700: #5F5F5F;
+            --secondary-500: #8A8A8A;
+            --secondary-300: #C4C4C4;
+            --secondary-100: #E6E6E6;
+
+            /* Borders */
+            --border-subtle: #E1D9CF;
+            --border-strong: #CFC6BB;
+
+            /* Semantic */
+            --success: #2E7D32;
+            --success-bg: #E8F5E9;
+            --warning: #ED6C02;
+            --warning-bg: #FFF3E0;
+            --error: #D32F2F;
+            --error-bg: #FDECEA;
+            --info: #1565C0;
+            --info-bg: #E3F2FD;
+
+            /* UI States */
+            --focus-ring: #B89272;
+            --disabled-bg: #EFE7DD;
+            --disabled-text: #9E9E9E;
+        }
+
+        /* ======================
+           RESET & GLOBAL
+        ====================== */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
         body {
-            background-color: var(--bg-presentation);
-            font-family: var(--font-body);
-            margin: 0;
-            padding: 50px;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 60px;
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
         }
 
-        /* --- PHONE MOCKUP CONTAINER --- */
-        .phone-mockup {
-            width: 375px;
-            height: 812px;
-            background: var(--screen-bg);
-            border-radius: 40px;
-            box-shadow: 
-                0 0 0 12px #1a1a1a, /* Phone Bezel */
-                0 0 0 14px #444, /* Outer Bezel Detail */
-                0 30px 60px rgba(0,0,0,0.4); /* Deep Shadow */
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
+        h1, h2, h3, h4, h5 {
+            font-family: 'Playfair Display', serif;
+            color: var(--text-primary);
+            line-height: 1.2;
+            margin-bottom: 1rem;
         }
 
-        /* Notch Simulation */
-        .notch {
-            position: absolute; top: 0; left: 50%; transform: translateX(-50%);
-            width: 150px; height: 30px; background: #1a1a1a;
-            border-bottom-left-radius: 20px; border-bottom-right-radius: 20px;
+        p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section {
+            padding: 4rem 0;
+        }
+
+        /* ======================
+           COMPONENTS
+        ====================== */
+        
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-weight: 500;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-500);
+            color: var(--text-inverse);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-700);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            border: 1px solid var(--primary-500);
+            color: var(--primary-500);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--primary-100);
+        }
+
+        .btn-disabled {
+            background-color: var(--disabled-bg);
+            color: var(--disabled-text);
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        /* Forms */
+        .input-group {
+            margin-bottom: 1rem;
+        }
+
+        label {
+            display: block;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-strong);
+            border-radius: 6px;
+            background-color: var(--surface-base);
+            font-family: inherit;
+            color: var(--text-primary);
+            outline: none;
+            transition: box-shadow 0.2s;
+        }
+
+        input:focus, textarea:focus {
+            border-color: var(--primary-500);
+            box-shadow: 0 0 0 3px var(--focus-ring); /* Using the UI State var */
+        }
+
+        input:disabled {
+            background-color: var(--disabled-bg);
+            color: var(--disabled-text);
+            border-color: var(--border-subtle);
+        }
+
+        /* Cards */
+        .card {
+            background-color: var(--surface-base);
+            border: 1px solid var(--border-subtle);
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+        }
+
+        /* Tags */
+        .tag {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            background-color: var(--secondary-100);
+            color: var(--secondary-700);
+            margin-right: 0.5rem;
+        }
+
+        /* ======================
+           LAYOUT SECTIONS
+        ====================== */
+
+        /* Header */
+        header {
+            background-color: var(--surface-base);
+            border-bottom: 1px solid var(--border-subtle);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
             z-index: 100;
         }
 
-        /* Screen Content Area */
-        .screen-content {
-            padding: 45px 24px 30px 24px;
-            height: 100%;
+        .nav-flex {
             display: flex;
-            flex-direction: column;
-            position: relative;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        /* --- TYPOGRAPHY & COMMON --- */
-        h2, h3, h4 { font-family: var(--font-head); margin: 0; color: #111; }
-        .text-sm { font-size: 13px; color: #888; }
-        .flex-between { display: flex; justify-content: space-between; align-items: center; }
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary-900);
+        }
+
+        nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            margin-left: 2rem;
+            font-size: 0.9rem;
+        }
         
-        /* --- 1. SPLASH SCREEN --- */
-        .splash-bg {
-            background: #000;
-            color: #fff;
+        nav a:hover {
+            color: var(--primary-500);
+        }
+
+        /* Hero */
+        .hero {
+            background-color: var(--bg-main);
+            text-align: center;
+            padding: 6rem 0;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            color: var(--primary-900);
+            margin-bottom: 1.5rem;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            max-width: 600px;
+            margin: 0 auto 2rem auto;
+            color: var(--text-secondary);
+        }
+
+        /* Grid Layout for Content */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        /* Section Backgrounds */
+        .bg-subtle-section {
+            background-color: var(--bg-subtle);
+        }
+
+        /* Semantic Alerts */
+        .alert {
+            padding: 1rem;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            display: flex;
             align-items: center;
-            justify-content: center;
+            border-left: 4px solid;
+        }
+
+        .alert-success { background: var(--success-bg); color: var(--success); border-color: var(--success); }
+        .alert-warning { background: var(--warning-bg); color: var(--warning); border-color: var(--warning); }
+        .alert-error   { background: var(--error-bg); color: var(--error); border-color: var(--error); }
+        .alert-info    { background: var(--info-bg); color: var(--info); border-color: var(--info); }
+
+        /* Color Swatch (For visualization) */
+        .swatch-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .swatch {
+            height: 60px;
+            border-radius: 4px;
+            margin-bottom: 0.5rem;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+        .swatch-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary-900);
+            color: var(--primary-100);
+            padding: 4rem 0;
             text-align: center;
         }
-        .logo-xl { font-size: 80px; margin-bottom: 10px; }
-        .loader-ring {
-            width: 30px; height: 30px; border: 3px solid rgba(255,255,255,0.2);
-            border-top: 3px solid #fff; border-radius: 50%; margin-top: 50px;
+        
+        footer p {
+            color: var(--primary-300);
+            font-size: 0.9rem;
         }
 
-        /* --- 2. HOME SCREEN --- */
-        .header { margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; }
-        .tabs { display: flex; gap: 10px; margin-bottom: 25px; }
-        .tab { padding: 8px 18px; border-radius: 20px; font-size: 13px; font-weight: 700; font-family: var(--font-head); }
-        .tab.active { background: #000; color: #fff; }
-        .tab.inactive { color: #999; }
-        
-        .card { padding: 20px; border-radius: 25px; margin-bottom: 15px; position: relative; }
-        .card h3 { font-size: 17px; margin-bottom: 8px; line-height: 1.3; }
-        .card p { font-size: 13px; color: #555; line-height: 1.5; margin-bottom: 15px; font-weight: 600; opacity: 0.8; }
-        .card-meta { display: flex; justify-content: space-between; font-size: 11px; font-weight: 700; opacity: 0.5; color: #000; }
-        
-        .c-red { background: #FFF0EB; } .t-red { color: #FF7D54; }
-        .c-yel { background: #FFF8E6; } .t-yel { color: #FFC107; }
-        .c-grn { background: #E8F5E9; } .t-grn { color: #4CAF50; }
-        
-        .edit-btn { position: absolute; top: 20px; right: 20px; width: 26px; height: 26px; background: #FF7D54; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; }
-        .fab-black { position: absolute; bottom: 15px; right: 15px; width: 45px; height: 45px; background: #000; border-radius: 50%; color: white; display: flex; align-items: center; justify-content: center; font-size: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
-
-        /* --- 3. CATEGORIES SCREEN --- */
-        .cat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; }
-        .cat-box { background: #fff; border-radius: 24px; padding: 20px; display: flex; flex-direction: column; align-items: center; gap: 10px; box-shadow: 0 5px 20px rgba(0,0,0,0.03); }
-        .cat-icon { width: 50px; height: 50px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 24px; color: white; margin-bottom: 5px; }
-        .bg-b { background: #2196F3; } .bg-y { background: #FFC107; } .bg-g { background: #4CAF50; } .bg-p { background: #AB47BC; }
-
-        /* --- 4. EDITOR SCREEN --- */
-        .editor-header { display: flex; justify-content: space-between; margin-bottom: 20px; font-size: 24px; color: #333; }
-        .note-title { font-size: 26px; font-weight: 700; margin-bottom: 10px; font-family: var(--font-head); }
-        .note-meta { font-size: 12px; color: #aaa; margin-bottom: 25px; font-weight: 600; letter-spacing: 0.5px; }
-        .note-body { font-size: 16px; line-height: 1.8; color: #333; }
-        .highlight { background: rgba(33, 150, 243, 0.15); color: #1976D2; padding: 2px 4px; border-radius: 4px; }
-        
-        .floating-tools {
-            position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
-            background: #000; width: 90%; padding: 15px 25px; border-radius: 30px;
-            display: flex; justify-content: space-between; color: white; font-size: 20px;
+        .divider {
+            height: 1px;
+            background-color: var(--border-subtle);
+            margin: 3rem 0;
         }
-        .color-pop { position: absolute; top: 150px; right: 20px; background: #111; padding: 8px 12px; border-radius: 10px; display: flex; gap: 8px; }
-        .dot { width: 12px; height: 12px; border-radius: 50%; }
 
-        /* --- DOCK (Shared) --- */
-        .dock {
-            position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
-            width: 85%; height: 70px; background: #000; border-radius: 35px;
-            display: flex; justify-content: space-around; align-items: center; color: #666; font-size: 24px;
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .grid-2 { grid-template-columns: 1fr; }
         }
-        .dock .active { color: white; }
-        .label { position: absolute; bottom: -40px; width: 100%; text-align: center; font-weight: bold; color: #666; text-transform: uppercase; letter-spacing: 2px; font-size: 14px; }
-
     </style>
 </head>
 <body>
 
-    <div class="phone-mockup">
-        <div class="notch"></div>
-        <div class="screen-content splash-bg">
-            <i class="ph-fill ph-note-pencil logo-xl"></i>
-            <h1 style="font-family: 'Fredoka'; letter-spacing: 1px;">LAO NOTE</h1>
-            <p style="font-size: 14px; opacity: 0.6; margin-top: 10px; max-width: 250px; line-height: 1.5;">Easily Manage Your Notes On Your Phone & Have Infinite Notes</p>
-            <div class="loader-ring"></div>
-            <div style="margin-top: auto; font-size: 12px; opacity: 0.5; margin-bottom: 20px;">Loading...</div>
+    <header>
+        <div class="container nav-flex">
+            <div class="logo">Artisan.</div>
+            <nav>
+                <a href="#">Home</a>
+                <a href="#">Palette</a>
+                <a href="#">Components</a>
+                <a href="#">Contact</a>
+            </nav>
         </div>
-        <div class="label">01. Splash Screen</div>
-    </div>
+    </header>
 
-    <div class="phone-mockup">
-        <div class="notch"></div>
-        <div class="screen-content">
-            <div class="header">
-                <div style="font-family:'Fredoka'; font-weight:700; font-size:22px; display:flex; gap:8px;"><i class="ph-fill ph-note-pencil"></i> Lao Note</div>
-                <div style="display:flex; gap:12px; font-size:24px;"><i class="ph ph-magnifying-glass"></i><i class="ph ph-user-circle"></i></div>
-            </div>
-
-            <div class="tabs">
-                <div class="tab active">Notes</div>
-                <div class="tab inactive">Highlights</div>
-                <div class="tab inactive">Favs</div>
-            </div>
-
-            <div class="flex-between" style="margin-bottom:15px;">
-                <h4 style="font-size:18px;">List Notes</h4>
-                <div class="text-sm" style="display:flex; align-items:center;">All Notes <i class="ph-bold ph-caret-down"></i></div>
-            </div>
-
-            <div class="card c-red">
-                <div class="edit-btn"><i class="ph-bold ph-pencil-simple"></i></div>
-                <h3>How To Draw A Professional Wireframe?</h3>
-                <p>For Wireframe Design, You Need To Have A Pen And Paper With You...</p>
-                <div class="card-meta t-red"><span>Design • Wireframe</span> <span>2020/05/09</span></div>
-            </div>
-
-            <div class="card c-yel">
-                <h3>Ways To Succeed Early</h3>
-                <div class="card-meta t-yel" style="margin-top:25px;"><span>Succeed • Goals</span> <span>2020/05/09</span></div>
-            </div>
-
-            <div class="card c-grn" style="height:110px;">
-                <h3>Scientific Facts Of Space</h3>
-                <div class="card-meta t-grn" style="margin-top:20px;"><span>Scientific • Space</span> <span>2020/05/08</span></div>
-                <div class="fab-black"><i class="ph-bold ph-plus"></i></div>
-            </div>
-
-            <div class="dock">
-                <i class="ph-fill ph-house active"></i>
-                <i class="ph-bold ph-crown"></i>
-                <i class="ph-bold ph-squares-four"></i>
-                <i class="ph-bold ph-gear"></i>
+    <section class="hero">
+        <div class="container">
+            <span class="tag">Release v2.0</span>
+            <h1>Warmth & Clarity</h1>
+            <p>A demonstration of the provided design tokens in a clean, editorial layout. Focus on the button below to see the custom ring.</p>
+            <div style="margin-top: 2rem;">
+                <a href="#" class="btn btn-primary">Get Started</a>
+                <a href="#" class="btn btn-secondary" style="margin-left: 10px;">Documentation</a>
             </div>
         </div>
-        <div class="label">02. Home List</div>
-    </div>
+    </section>
 
-    <div class="phone-mockup">
-        <div class="notch"></div>
-        <div class="screen-content">
-            <div class="header">
-                <div style="font-family:'Fredoka'; font-weight:700; font-size:20px; margin:0 auto;">Categories</div>
-                <i class="ph-bold ph-plus" style="position:absolute; right:24px; font-size:24px;"></i>
-            </div>
+    <section class="bg-subtle-section">
+        <div class="container">
+            <div class="grid-2">
+                <div>
+                    <h2>Interactive States</h2>
+                    <p>Testing inputs, borders, and focus rings.</p>
+                    
+                    <div class="card">
+                        <div class="input-group">
+                            <label>Active Input (Focus me!)</label>
+                            <input type="text" placeholder="Type here to see --focus-ring">
+                        </div>
+                        <div class="input-group">
+                            <label>Disabled Input</label>
+                            <input type="text" disabled placeholder="Cannot type here" value="Locked content">
+                        </div>
+                        <div class="input-group">
+                            <label>Primary Select</label>
+                            <button class="btn btn-disabled">Disabled Button</button>
+                        </div>
+                    </div>
+                </div>
 
-            <div class="flex-between" style="margin-top:10px;">
-                <h4 style="font-size:18px;">List Categories</h4>
-                <div class="text-sm">New <i class="ph-bold ph-caret-down"></i></div>
-            </div>
-
-            <div class="cat-grid">
-                <div class="cat-box">
-                    <div class="cat-icon bg-b"><i class="ph-fill ph-folder"></i></div>
-                    <h3>Design</h3>
-                    <div class="text-sm">15 Notes</div>
+                <div>
+                    <h2>Semantic System</h2>
+                    <p>Feedback colors for success, warning, error, and info.</p>
+                    
+                    <div class="card">
+                        <div class="alert alert-success">
+                            <strong>Success:</strong>&nbsp;Changes saved successfully. (--success)
+                        </div>
+                        <div class="alert alert-warning">
+                            <strong>Warning:</strong>&nbsp;Your account is pending approval. (--warning)
+                        </div>
+                        <div class="alert alert-error">
+                            <strong>Error:</strong>&nbsp;Connection timed out. (--error)
+                        </div>
+                        <div class="alert alert-info">
+                            <strong>Info:</strong>&nbsp;New updates available. (--info)
+                        </div>
+                    </div>
                 </div>
-                <div class="cat-box">
-                    <div class="cat-icon bg-y"><i class="ph-fill ph-folder"></i></div>
-                    <h3>Success</h3>
-                    <div class="text-sm">45 Notes</div>
-                </div>
-                <div class="cat-box">
-                    <div class="cat-icon bg-g"><i class="ph-fill ph-folder"></i></div>
-                    <h3>Scientific</h3>
-                    <div class="text-sm">29 Notes</div>
-                </div>
-                <div class="cat-box">
-                    <div class="cat-icon bg-p"><i class="ph-fill ph-folder"></i></div>
-                    <h3>Freelancer</h3>
-                    <div class="text-sm">19 Notes</div>
-                </div>
-            </div>
-
-            <div class="dock">
-                <i class="ph-bold ph-house"></i>
-                <i class="ph-bold ph-crown"></i>
-                <i class="ph-fill ph-squares-four active"></i>
-                <i class="ph-bold ph-gear"></i>
             </div>
         </div>
-        <div class="label">03. Categories Grid</div>
-    </div>
+    </section>
 
-    <div class="phone-mockup">
-        <div class="notch"></div>
-        <div class="screen-content" style="background:white;">
-            <div class="editor-header">
-                <i class="ph-bold ph-caret-left"></i>
-                <div style="display:flex; gap:15px;">
-                    <i class="ph-bold ph-magnifying-glass"></i>
-                    <i class="ph-bold ph-dots-three-circle"></i>
+    <section>
+        <div class="container">
+            <div class="grid-2">
+                <div>
+                    <h3>Primary Palette</h3>
+                    <p class="small">Demonstrating the brown/earth spectrum.</p>
+                    <div class="swatch-grid">
+                        <div><div class="swatch" style="background: var(--primary-900)"></div><div class="swatch-label">Pri-900</div></div>
+                        <div><div class="swatch" style="background: var(--primary-700)"></div><div class="swatch-label">Pri-700</div></div>
+                        <div><div class="swatch" style="background: var(--primary-500)"></div><div class="swatch-label">Pri-500</div></div>
+                        <div><div class="swatch" style="background: var(--primary-300)"></div><div class="swatch-label">Pri-300</div></div>
+                        <div><div class="swatch" style="background: var(--primary-100)"></div><div class="swatch-label">Pri-100</div></div>
+                    </div>
+                </div>
+                <div>
+                    <h3>Secondary Palette</h3>
+                    <p class="small">Demonstrating the grayscale spectrum.</p>
+                    <div class="swatch-grid">
+                        <div><div class="swatch" style="background: var(--secondary-700)"></div><div class="swatch-label">Sec-700</div></div>
+                        <div><div class="swatch" style="background: var(--secondary-500)"></div><div class="swatch-label">Sec-500</div></div>
+                        <div><div class="swatch" style="background: var(--secondary-300)"></div><div class="swatch-label">Sec-300</div></div>
+                        <div><div class="swatch" style="background: var(--secondary-100)"></div><div class="swatch-label">Sec-100</div></div>
+                    </div>
                 </div>
             </div>
 
-            <div class="note-title">How To Draw A Professional Wireframe?</div>
-            <div class="note-meta">DESIGN &nbsp;|&nbsp; WIREFRAME &nbsp;&nbsp; 2020/05/09</div>
-            
-            <div class="note-body">
-                For Wireframe Design, You Need To Have A Pen And Paper With You. <span class="highlight">Simply Put, A Wireframe Is A Two-Dimensional Image Of The Screen</span> To Give The Program A More Accurate Visual Concept...
-            </div>
+            <div class="divider"></div>
 
-            <div class="color-pop">
-                <div class="dot" style="background:#2196F3; border: 1px solid white;"></div>
-                <div class="dot" style="background:#FFC107;"></div>
-                <div class="dot" style="background:#E040FB;"></div>
-            </div>
-
-            <div class="floating-tools">
-                <i class="ph-bold ph-text-b"></i>
-                <i class="ph-bold ph-text-italic"></i>
-                <i class="ph-bold ph-text-underline"></i>
-                <i class="ph-bold ph-list-dashes"></i>
-                <i class="ph-fill ph-circle" style="color:#2196F3; border: 2px solid white; border-radius: 50%;"></i>
-                <i class="ph-bold ph-link"></i>
+            <div class="grid-3">
+                <div class="card" style="background-color: var(--surface-muted);">
+                    <h4>Surface Muted</h4>
+                    <p>This card uses <code>--surface-muted</code> as a background.</p>
+                    <small style="color: var(--text-muted)">This is muted text (--text-muted) often used for timestamps or metadata.</small>
+                </div>
+                <div class="card">
+                    <h4>Surface Base</h4>
+                    <p>Standard card background.</p>
+                    <p style="color: var(--text-primary); font-weight: bold;">Text Primary</p>
+                    <p style="color: var(--text-secondary);">Text Secondary</p>
+                </div>
+                <div class="card" style="border-color: var(--primary-300);">
+                    <h4 style="color: var(--primary-700)">Brand Highlight</h4>
+                    <p>This card has a custom border color using <code>--primary-300</code>.</p>
+                </div>
             </div>
         </div>
-        <div class="label">04. Editor View</div>
-    </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <h3>Artisan Theme</h3>
+            <p>Using <code>--primary-900</code> background and <code>--primary-300</code> text.</p>
+            <br>
+            <p style="color: var(--text-inverse); opacity: 0.5;">&copy; 2023 All Rights Reserved.</p>
+        </div>
+    </footer>
 
 </body>
 </html>
