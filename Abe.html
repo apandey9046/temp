@@ -1,413 +1,749 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dark Mode Mint Theme</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
+
+    <title>Arpit Pandey | Flutter App Developer</title>
+    <meta name="description"
+        content="Portfolio of Arpit Pandey, an expert App Developer specializing in Flutter, Dart, and scalable mobile solutions.">
+    <meta name="keywords"
+        content="Arpit Pandey, Flutter Developer, App Developer, Mobile App Developer, Dart, Firebase, Portfolio">
+    <meta name="author" content="Arpit Pandey">
+
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📱</text></svg>">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700&family=Fredoka:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <script>
+        if (window.location.hash) {
+            window.scrollTo(0, 0);
+            history.replaceState(null, null, window.location.pathname);
+        }
+
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0F172A',
+                        accent: '#8B5CF6',
+                        secondary: '#06B6D4',
+                        flutter: '#02569B',
+                    },
+                    fontFamily: {
+                        fredoka: ['Fredoka', 'sans-serif'],
+                        baloo: ['"Baloo 2"', 'cursive'],
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'fade-in': 'fadeIn 0.4s ease-out forwards',
+                    },
+                    keyframes: {
+                        'float': {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        'fadeIn': {
+                            '0%': { opacity: '0', transform: 'scale(0.95)' },
+                            '100%': { opacity: '1', transform: 'scale(1)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        /* ======================
-           YOUR PALETTE
-        ====================== */
-        :root {
-            /* Backgrounds */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #8B5CF6; border-radius: 4px; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-            
-            --bg-main: #2B2B2A;
-            --bg-subtle: #30302F;
-            --surface-base: #333332;
-            --surface-muted: #3E3E3C;
-
-            /* Text */
-            --text-primary: #F2F2F2;
-            --text-secondary: #CFCFCF;
-            --text-muted: #9E9E9E;
-            --text-inverse: #1E1E1E;
-
-            /* Primary (Mint CTA) */
-            --primary-900: #2E5F5B;
-            --primary-700: #4F8F89;
-            --primary-500: #BFE8E2;
-            --primary-300: #D7F2EE;
-            --primary-100: #F0FBF9;
-
-            /* Secondary (Neutral UI) */
-            --secondary-700: #8E8E8E;
-            --secondary-500: #B0B0B0;
-            --secondary-300: #D0D0D0;
-            --secondary-100: #E8E8E8;
-
-            /* Borders */
-            --border-subtle: #3A3A38;
-            --border-strong: #4A4A47;
-
-            /* Semantic */
-            --success: #4ADE80;
-            --success-bg: #123325;
-            --warning: #FACC15;
-            --warning-bg: #3A2F10;
-            --error: #F87171;
-            --error-bg: #3A1717;
-            --info: #60A5FA;
-            --info-bg: #12253A;
-
-            /* UI States */
-            --focus-ring: #BFE8E2;
-            --disabled-bg: #3A3A38;
-            --disabled-text: #7A7A7A;
+        .glass {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
         }
 
-        /* ======================
-           GLOBAL RESET
-        ====================== */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
+        .dark .glass {
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
         }
 
-        body {
-            background-color: var(--bg-main);
-            color: var(--text-secondary);
-            font-family: 'Inter', sans-serif;
-            line-height: 1.6;
-            -webkit-font-smoothing: antialiased;
+        .text-gradient {
+            background: linear-gradient(to right, #8B5CF6, #06B6D4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        h1, h2, h3, h4 {
-            color: var(--text-primary);
-            font-weight: 600;
-            line-height: 1.2;
-            margin-bottom: 0.5em;
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
         }
+        .reveal.active { opacity: 1; transform: translateY(0); }
 
-        p {
-            margin-bottom: 1.5em;
+        .blob {
+            position: absolute; width: 300px; height: 300px;
+            background: linear-gradient(180deg, rgba(139, 92, 246, 0.3) 0%, rgba(6, 182, 212, 0.3) 100%);
+            filter: blur(60px); border-radius: 50%; z-index: -1; transition: opacity 0.5s ease;
         }
+        @media (min-width: 768px) { .blob { width: 500px; height: 500px; filter: blur(90px); } }
+        .dark .blob { background: linear-gradient(180deg, rgba(139, 92, 246, 0.15) 0%, rgba(6, 182, 212, 0.15) 100%); }
 
-        a {
-            text-decoration: none;
-            color: var(--primary-500);
-            transition: color 0.2s;
+        .device-frame {
+            position: relative; border: 6px solid #cbd5e1; border-radius: 1.5rem;
+            overflow: hidden; box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.1); transition: all 0.3s ease;
         }
+        @media (min-width: 768px) {
+            .device-frame { border-width: 8px; border-radius: 2rem; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1); }
+        }
+        .dark .device-frame { border-color: #334155; box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.4); }
+        @media (min-width: 768px) { .dark .device-frame { box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); } }
+
+        .nav-link { position: relative; }
+        .nav-link::after {
+            content: ''; position: absolute; width: 0; height: 2px;
+            bottom: -4px; left: 0; background-color: #8B5CF6; transition: width 0.3s ease;
+        }
+        .nav-link:hover::after { width: 100%; }
         
-        a:hover {
-            color: var(--primary-300);
-        }
-
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 0 24px;
-        }
-
-        /* ======================
-           COMPONENTS
-        ====================== */
-
-        /* Buttons */
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 10px 20px;
-            border-radius: 6px;
-            font-weight: 600;
-            font-size: 0.95rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            border: 1px solid transparent;
-        }
-
-        g-main: #2B2B2A;
-            --bg-subtle: #30302F;
-            --surface-base: #333332;
-            --surface-muted: #3E3E3C;
-
-        .btn-primary {
-            background-color: var(--primary-500);
-            color: var(--text-inverse); /* Using inverse because button is light */
-        }
-
-        .btn-primary:hover {
-            background-color: var(--primary-300);
-            transform: translateY(-1px);
-        }
-
-        .btn-outline {
-            background-color: transparent;
-            border-color: var(--border-strong);
-            color: var(--text-primary);
-        }
-
-        .btn-outline:hover {
-            border-color: var(--text-secondary);
-            background-color: var(--bg-subtle);
-        }
-
-        .btn-disabled {
-            background-color: var(--disabled-bg);
-            color: var(--disabled-text);
-            cursor: not-allowed;
-        }
-
-        /* Cards */
-        .card {
-            background-color: var(--surface-base);
-            border: 1px solid var(--border-subtle);
-            border-radius: 8px;
-            padding: 24px;
-        }
-
-        /* Forms */
-        .input-wrapper {
-            margin-bottom: 16px;
-        }
-        
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-        }
-
-        input[type="text"], input[type="email"] {
-            width: 100%;
-            padding: 10px 12px;
-            background-color: var(--bg-main);
-            border: 1px solid var(--border-strong);
-            border-radius: 6px;
-            color: var(--text-primary);
-            font-size: 1rem;
-            outline: none;
-            transition: border-color 0.2s, box-shadow 0.2s;
-        }
-
-        input:focus {
-            border-color: var(--primary-500);
-            box-shadow: 0 0 0 3px rgba(191, 232, 226, 0.1); /* Slight glow using primary */
-        }
-
-        /* Alerts */
-        .alert {
-            padding: 12px 16px;
-            border-radius: 6px;
-            font-size: 0.9rem;
-            margin-bottom: 12px;
-            border-left: 4px solid;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .alert-success { background: var(--success-bg); color: var(--success); border-color: var(--success); }
-        .alert-warning { background: var(--warning-bg); color: var(--warning); border-color: var(--warning); }
-        .alert-error   { background: var(--error-bg); color: var(--error); border-color: var(--error); }
-        .alert-info    { background: var(--info-bg); color: var(--info); border-color: var(--info); }
-
-        /* Badge */
-        .badge {
-            display: inline-block;
-            padding: 2px 8px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            border-radius: 4px;
-            background-color: var(--surface-muted);
-            color: var(--text-muted);
-            border: 1px solid var(--border-subtle);
-        }
-
-        /* ======================
-           LAYOUT
-        ====================== */
-        header {
-            border-bottom: 1px solid var(--border-subtle);
-            padding: 20px 0;
-            margin-bottom: 40px;
-        }
-        
-        .header-flex {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-weight: 700;
-            font-size: 1.25rem;
-            color: var(--text-primary);
-            letter-spacing: -0.5px;
-        }
-        .logo span { color: var(--primary-500); }
-
-        .hero {
-            text-align: center;
-            padding: 40px 0 60px;
-        }
-        
-        .hero h1 {
-            font-size: 2.5rem;
-            margin-bottom: 16px;
-        }
-        
-        .hero p {
-            font-size: 1.125rem;
-            color: var(--text-muted);
-            max-width: 600px;
-            margin: 0 auto 32px;
-        }
-
-        .grid-2 {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 24px;
-            margin-bottom: 40px;
-        }
-
-        g-main: #2B2B2A;
-            --bg-subtle: #30302F;
-            --surface-base: #333332;
-            --surface-muted: #3E3E3C;
-        .grid-3 {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 24px;
-        }
-
-        /* Specific Component: Data Table Look */
-        .data-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 12px 0;
-            border-bottom: 1px solid var(--border-subtle);
-        }
-        .data-row:last-child { border-bottom: none; }
-        .data-label { color: var(--text-secondary); }
-        .data-value { color: var(--text-primary); font-family: monospace; }
-
-        footer {
-            margin-top: 80px;
-            padding: 40px 0;
-            border-top: 1px solid var(--border-subtle);
-            text-align: center;
-            color: var(--text-muted);
-            font-size: 0.875rem;
-        }
-
-        @media (max-width: 768px) {
-            .grid-2 { grid-template-columns: 1fr; }
-        }
-
+        .sidebar-link { transition: all 0.3s ease; transform: translateX(0); }
+        .sidebar-link:hover { transform: translateX(10px); color: #8B5CF6; }
     </style>
 </head>
-<body>
 
-    <header>
-        <div class="container header-flex">
-            <div class="logo">Dark<span>Mint</span>.</div>
-            <nav>
-                <a href="#" style="margin-left: 20px; color: var(--text-primary);">Dashboard</a>
-                <a href="#" style="margin-left: 20px; color: var(--text-muted);">Settings</a>
-                <a href="#" style="margin-left: 20px; color: var(--text-muted);">Profile</a>
-            </nav>
+<body class="font-baloo bg-slate-50 text-slate-800 dark:bg-[#0F172A] dark:text-[#F8FAFC] transition-colors duration-500 overflow-x-hidden">
+
+    <header class="fixed top-0 w-full z-40 transition-all duration-300 glass py-3 md:py-4 px-4 md:px-12 flex justify-between items-center">
+        <div class="text-2xl md:text-3xl font-fredoka font-bold text-gradient tracking-wider z-50">AP.</div>
+        <nav class="hidden md:flex space-x-8 font-medium items-center">
+            <a href="#about" class="nav-link hover:text-accent transition-colors">About</a>
+            <a href="#projects" class="nav-link hover:text-accent transition-colors">Projects</a>
+            <a href="#skills" class="nav-link hover:text-accent transition-colors">Skills</a>
+            <a href="#contact" class="nav-link hover:text-accent transition-colors">Contact</a>
+
+            <button id="themeToggle" class="ml-4 p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors focus:outline-none text-slate-600 dark:text-slate-300">
+                <svg id="sunIcon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                <svg id="moonIcon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+            </button>
+        </nav>
+
+        <div class="md:hidden flex items-center space-x-2 sm:space-x-4">
+            <button id="mobileThemeToggle" class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors focus:outline-none text-slate-600 dark:text-slate-300 z-50">
+                <svg id="mobileSunIcon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                <svg id="mobileMoonIcon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+            </button>
+            <button id="menuBtn" class="p-2 focus:outline-none text-slate-800 dark:text-white z-50">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
         </div>
     </header>
 
-    <main class="container">
-
-        <section class="hero">
-            <h1>Manage your dark aesthetics.</h1>
-            <p>A simple implementation of the provided color tokens, featuring high contrast text and mint accents.</p>
-            <div>
-                <button class="btn btn-primary">Get Started</button>
-                <button class="btn btn-outline" style="margin-left: 10px;">Documentation</button>
+    <div id="menuBackdrop" class="fixed inset-0 bg-slate-900/60 dark:bg-black/60 backdrop-blur-sm z-40 opacity-0 pointer-events-none transition-opacity duration-300" onclick="toggleMenu()"></div>
+    <div id="mobileMenu" class="fixed top-0 right-0 h-full w-[80%] max-w-sm bg-white/95 dark:bg-[#0F172A]/95 backdrop-blur-xl z-50 transform translate-x-full transition-transform duration-300 ease-in-out shadow-2xl flex flex-col rounded-l-3xl border-l border-white/20 dark:border-white/10">
+        <div class="flex justify-between items-center p-6 border-b border-slate-200/50 dark:border-slate-800/50">
+            <span class="text-2xl font-fredoka font-bold text-gradient">Menu</span>
+            <button onclick="toggleMenu()" class="p-2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+        </div>
+        <div class="flex flex-col px-8 py-10 space-y-8 flex-grow overflow-y-auto">
+            <a href="#about" onclick="toggleMenu()" class="sidebar-link text-2xl font-fredoka font-semibold text-slate-800 dark:text-white flex items-center"><span class="w-2 h-2 rounded-full bg-accent mr-4"></span> About</a>
+            <a href="#projects" onclick="toggleMenu()" class="sidebar-link text-2xl font-fredoka font-semibold text-slate-800 dark:text-white flex items-center"><span class="w-2 h-2 rounded-full bg-secondary mr-4"></span> Projects</a>
+            <a href="#skills" onclick="toggleMenu()" class="sidebar-link text-2xl font-fredoka font-semibold text-slate-800 dark:text-white flex items-center"><span class="w-2 h-2 rounded-full bg-accent mr-4"></span> Skills</a>
+            <a href="#contact" onclick="toggleMenu()" class="sidebar-link text-2xl font-fredoka font-semibold text-slate-800 dark:text-white flex items-center"><span class="w-2 h-2 rounded-full bg-secondary mr-4"></span> Contact</a>
+        </div>
+        <div class="p-8 mt-auto border-t border-slate-200/50 dark:border-slate-800/50">
+            <p class="text-sm text-slate-500 dark:text-slate-400 mb-4 font-medium">Let's Connect</p>
+            <div class="flex space-x-4">
+                <a href="https://linkedin.com" target="_blank" class="p-3 bg-slate-100 dark:bg-slate-800 rounded-full text-slate-600 dark:text-slate-300 hover:bg-blue-100 hover:text-blue-600 transition-colors"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" /></svg></a>
+                <a href="https://github.com" target="_blank" class="p-3 bg-slate-100 dark:bg-slate-800 rounded-full text-slate-600 dark:text-slate-300 hover:bg-slate-200 hover:text-slate-900 transition-colors"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" /></svg></a>
             </div>
-        </section>
+        </div>
+    </div>
 
-        <div class="grid-2">
+    <section class="relative min-h-screen flex items-center justify-center pt-24 pb-12 md:pt-20 px-4 md:px-6 overflow-hidden">
+        <div class="blob top-[-5%] left-[-10%] md:top-[-10%] md:left-[-10%] animate-float"></div>
+        <div class="blob bottom-[-5%] right-[-10%] md:bottom-[-10%] md:right-[-10%] animate-float" style="animation-delay: -3s;"></div>
+        <div class="max-w-4xl text-center z-10 w-full">
+            <h1 class="font-fredoka text-5xl sm:text-6xl md:text-8xl font-bold mb-4 md:mb-6 tracking-tight reveal">Arpit <span class="text-gradient">Pandey</span></h1>
+            <p class="text-lg sm:text-xl md:text-3xl text-slate-600 dark:text-slate-300 mb-8 md:mb-10 font-medium reveal px-2" style="transition-delay: 200ms;">
+                Building Beautiful & Performant Apps with <span class="text-blue-500 font-bold">Flutter</span>.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center reveal w-full max-w-xs sm:max-w-none mx-auto" style="transition-delay: 400ms;">
+                <a href="#contact" class="w-full sm:w-auto px-8 py-3.5 md:py-4 bg-accent text-white hover:bg-opacity-90 rounded-full font-fredoka text-lg font-semibold transition-all hover:scale-105 active:scale-95 shadow-lg shadow-purple-500/30 text-center">Get in Touch</a>
+                <a href="#projects" class="w-full sm:w-auto px-8 py-3.5 md:py-4 bg-white dark:bg-transparent border border-slate-300 dark:border-slate-700 hover:border-accent text-slate-800 dark:text-white rounded-full font-fredoka text-lg font-semibold transition-all hover:bg-accent/5 shadow-sm text-center">View Portfolio</a>
+            </div>
+        </div>
+        <div class="absolute bottom-6 md:bottom-10 left-1/2 -translate-x-1/2 animate-bounce opacity-60 text-slate-500 dark:text-slate-400">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+        </div>
+    </section>
+
+    <section id="about" class="py-16 md:py-24 px-5 md:px-12 max-w-7xl mx-auto">
+        <div class="grid md:grid-cols-2 gap-10 md:gap-16 items-center">
+            <div class="reveal order-2 md:order-1">
+                <h2 class="font-fredoka text-3xl sm:text-4xl md:text-5xl font-bold mb-6 md:mb-8 flex items-center text-slate-800 dark:text-white">
+                    <span class="w-8 md:w-12 h-1 bg-accent mr-3 md:mr-4 rounded-full"></span> About Me
+                </h2>
+                <div class="space-y-4 md:space-y-6 text-base md:text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
+                    <p>I am a dedicated <strong class="text-blue-500 dark:text-blue-400">Flutter Developer</strong> with a passion for creating innovative, native-feeling, and visually stunning mobile experiences. I specialize in building cross-platform applications from a single codebase using Dart.</p>
+                    <p>With a keen eye for UI/UX principles and expertise in robust state management solutions (like Provider & BLoC), I ensure that every app I build is not just beautiful, but highly scalable and performant. I believe in writing clean code that bridges complex logic with a seamless user journey.</p>
+                </div>
+            </div>
+            <div class="relative reveal order-1 md:order-2 w-4/5 sm:w-2/3 md:w-full mx-auto" style="transition-delay: 300ms;">
+                <div class="aspect-square glass rounded-[2rem] md:rounded-[2.5rem] overflow-hidden flex items-center justify-center p-6 md:p-8">
+                    <div class="w-full h-full rounded-[1.5rem] md:rounded-3xl bg-gradient-to-br from-blue-400/20 to-secondary/20 flex items-center justify-center border border-slate-200 dark:border-white/10 shadow-inner">
+                        <svg class="w-24 h-24 md:w-32 md:h-32 text-blue-500/80" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M14.314 0L2.3 12 6 15.7 21.684.01h-7.37zM10.122 15.698l-3.833 3.833h7.373l3.833-3.833-7.373-.001zm7.373 8.303h7.373l-5.541-5.542-7.373.001 5.541 5.541z"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="absolute -top-4 -right-4 md:-top-6 md:-right-6 w-24 h-24 md:w-32 md:h-32 bg-secondary/30 rounded-full blur-2xl md:blur-3xl animate-pulse-slow"></div>
+                <div class="absolute -bottom-4 -left-4 md:-bottom-6 md:-left-6 w-32 h-32 md:w-40 md:h-40 bg-accent/30 rounded-full blur-2xl md:blur-3xl animate-pulse-slow" style="animation-delay: 2s;"></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="py-16 md:py-24 bg-slate-100/50 dark:bg-slate-900/50 transition-colors duration-500 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-5 md:px-12">
             
-            <div class="card">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 20px;">
-                    <h3>Account Login</h3>
-                    <span class="badge">Secure</span>
+            <div class="text-center mb-8 reveal">
+                <h2 class="font-fredoka text-3xl sm:text-4xl md:text-5xl font-bold mb-3 md:mb-4 text-slate-800 dark:text-white">My Work</h2>
+                <p class="text-slate-500 dark:text-slate-400 text-base md:text-lg">Swipe through my latest Flutter projects.</p>
+            </div>
+
+            <div class="reveal flex overflow-x-auto no-scrollbar gap-3 md:gap-4 mb-10 pb-2 justify-start md:justify-center">
+                <button data-filter="all" class="filter-btn px-5 py-2 rounded-full font-fredoka font-semibold whitespace-nowrap transition-colors bg-accent text-white border border-accent shadow-md">All Projects</button>
+                <button data-filter="flutter" class="filter-btn px-5 py-2 rounded-full font-fredoka font-semibold whitespace-nowrap transition-colors bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:border-accent">Flutter Core</button>
+                <button data-filter="firebase" class="filter-btn px-5 py-2 rounded-full font-fredoka font-semibold whitespace-nowrap transition-colors bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:border-accent">Firebase</button>
+                <button data-filter="ui" class="filter-btn px-5 py-2 rounded-full font-fredoka font-semibold whitespace-nowrap transition-colors bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:border-accent">UI Clones</button>
+            </div>
+
+            <div class="relative group/slider">
+                <button id="slideLeftBtn" class="hidden md:flex absolute -left-5 top-1/2 -translate-y-1/2 z-10 p-3 rounded-full bg-white dark:bg-slate-800 text-slate-800 dark:text-white shadow-xl hover:scale-110 transition-transform opacity-0 group-hover/slider:opacity-100 border border-slate-200 dark:border-slate-700">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                </button>
+
+                <div id="sliderContainer" class="flex gap-6 md:gap-8 overflow-x-auto no-scrollbar snap-x snap-mandatory pb-8 pt-4 px-2">
                 </div>
+
+                <button id="slideRightBtn" class="hidden md:flex absolute -right-5 top-1/2 -translate-y-1/2 z-10 p-3 rounded-full bg-white dark:bg-slate-800 text-slate-800 dark:text-white shadow-xl hover:scale-110 transition-transform opacity-0 group-hover/slider:opacity-100 border border-slate-200 dark:border-slate-700">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                </button>
+            </div>
+            
+            <div class="text-center mt-6 text-sm text-slate-500 dark:text-slate-400 md:hidden flex items-center justify-center">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>
+                Swipe to explore
+            </div>
+        </div>
+    </section>
+
+    <section id="skills" class="py-16 md:py-24 px-4 md:px-12 max-w-7xl mx-auto">
+        <div class="reveal">
+            <h2 class="font-fredoka text-3xl sm:text-4xl md:text-5xl font-bold mb-8 md:mb-16 text-center text-slate-800 dark:text-white">My Expertise</h2>
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
+                <div class="glass p-4 sm:p-6 md:p-8 rounded-[1.5rem] md:rounded-3xl text-center hover:bg-white/80 dark:hover:bg-white/5 transition-all duration-300 hover:-translate-y-1 group flex flex-col items-center justify-center">
+                    <div class="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 mb-3 md:mb-6 bg-accent/10 dark:bg-accent/20 rounded-2xl md:rounded-[1.5rem] flex items-center justify-center text-accent group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300">
+                        <svg class="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
+                    </div>
+                    <h4 class="font-fredoka font-bold text-base sm:text-lg md:text-xl mb-1 md:mb-2 text-slate-800 dark:text-white">Languages</h4>
+                    <p class="text-slate-500 dark:text-slate-400 text-xs sm:text-sm font-medium">Dart, Swift, Kotlin</p>
+                </div>
+                <div class="glass p-4 sm:p-6 md:p-8 rounded-[1.5rem] md:rounded-3xl text-center hover:bg-white/80 dark:hover:bg-white/5 transition-all duration-300 hover:-translate-y-1 group flex flex-col items-center justify-center">
+                    <div class="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 mb-3 md:mb-6 bg-blue-500/10 dark:bg-blue-500/20 rounded-2xl md:rounded-[1.5rem] flex items-center justify-center text-blue-500 group-hover:scale-110 group-hover:-rotate-3 transition-transform duration-300">
+                        <svg class="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2 1 3 3 3h10c2 0 3-1 3-3V7c0-2-1-3-3-3H7c-2 0-3 1-3 3zM9 11l3 3 3-3"></path></svg>
+                    </div>
+                    <h4 class="font-fredoka font-bold text-base sm:text-lg md:text-xl mb-1 md:mb-2 text-slate-800 dark:text-white">Frameworks</h4>
+                    <p class="text-slate-500 dark:text-slate-400 text-xs sm:text-sm font-medium">Flutter, React Native</p>
+                </div>
+                <div class="glass p-4 sm:p-6 md:p-8 rounded-[1.5rem] md:rounded-3xl text-center hover:bg-white/80 dark:hover:bg-white/5 transition-all duration-300 hover:-translate-y-1 group flex flex-col items-center justify-center">
+                    <div class="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 mb-3 md:mb-6 bg-yellow-500/10 dark:bg-yellow-500/20 rounded-2xl md:rounded-[1.5rem] flex items-center justify-center text-yellow-600 dark:text-yellow-400 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300">
+                        <svg class="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                    </div>
+                    <h4 class="font-fredoka font-bold text-base sm:text-lg md:text-xl mb-1 md:mb-2 text-slate-800 dark:text-white">State Mgmt.</h4>
+                    <p class="text-slate-500 dark:text-slate-400 text-xs sm:text-sm font-medium">BLoC, Provider, Riverpod</p>
+                </div>
+                <div class="glass p-4 sm:p-6 md:p-8 rounded-[1.5rem] md:rounded-3xl text-center hover:bg-white/80 dark:hover:bg-white/5 transition-all duration-300 hover:-translate-y-1 group flex flex-col items-center justify-center">
+                    <div class="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 mb-3 md:mb-6 bg-secondary/10 dark:bg-secondary/20 rounded-2xl md:rounded-[1.5rem] flex items-center justify-center text-secondary group-hover:scale-110 group-hover:-rotate-3 transition-transform duration-300">
+                        <svg class="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-7 0V4"></path></svg>
+                    </div>
+                    <h4 class="font-fredoka font-bold text-base sm:text-lg md:text-xl mb-1 md:mb-2 text-slate-800 dark:text-white">Backend & Tools</h4>
+                    <p class="text-slate-500 dark:text-slate-400 text-xs sm:text-sm font-medium">Firebase, Git, Figma</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="py-16 md:py-24 px-5 md:px-12 mb-10">
+        <div class="max-w-4xl mx-auto glass p-8 md:p-12 rounded-[2rem] md:rounded-[3rem] text-center reveal border-t border-white/40 dark:border-white/10 shadow-xl">
+            <h2 class="font-fredoka text-3xl sm:text-4xl md:text-5xl font-bold mb-4 md:mb-6 text-slate-800 dark:text-white">Connect With Me</h2>
+            <p class="text-slate-600 dark:text-slate-300 text-base md:text-lg mb-8 md:mb-10 max-w-2xl mx-auto">Looking for a Flutter expert for your next big mobile app? I'm always open to new opportunities and exciting collaborations.</p>
+            <div class="flex flex-col md:flex-row gap-4 md:gap-6 justify-center items-center mb-10 md:mb-12 w-full max-w-xs mx-auto md:max-w-none">
+                <a href="mailto:contact@arpitpandey.dev" class="w-full md:w-auto flex items-center justify-center space-x-3 text-xl md:text-2xl font-fredoka font-semibold text-white bg-accent px-8 py-4 rounded-full hover:bg-purple-600 hover:scale-105 transition-all duration-300 shadow-lg shadow-purple-500/30">
+                    <svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                    <span>Say Hello</span>
+                </a>
+            </div>
+            <div class="flex justify-center space-x-5 md:space-x-6">
+                <a href="https://linkedin.com" target="_blank" class="p-3 md:p-4 bg-slate-200 dark:bg-white/5 rounded-full hover:bg-blue-100 hover:text-blue-600 dark:hover:bg-accent/20 dark:hover:text-accent transition-all duration-300 text-slate-500 dark:text-slate-400">
+                    <svg class="w-5 h-5 md:w-6 md:h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" /></svg>
+                </a>
+                <a href="https://github.com" target="_blank" class="p-3 md:p-4 bg-slate-200 dark:bg-white/5 rounded-full hover:bg-slate-300 hover:text-slate-900 dark:hover:bg-accent/20 dark:hover:text-accent transition-all duration-300 text-slate-500 dark:text-slate-400">
+                    <svg class="w-5 h-5 md:w-6 md:h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" /></svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <div id="projectModal" class="fixed inset-0 z-50 flex justify-end md:justify-center md:items-center overflow-hidden hidden">
+        
+        <div id="modalBackdrop" class="absolute inset-0 bg-slate-900/60 dark:bg-black/70 backdrop-blur-sm opacity-0 transition-opacity duration-300 pointer-events-none" onclick="closeProjectModal()"></div>
+
+        <div id="modalPanel" class="pointer-events-auto bg-white dark:bg-slate-900 shadow-2xl flex flex-col z-10
+            w-full h-full transform translate-x-full transition-transform duration-300 ease-out overflow-hidden
+            md:w-full md:max-w-6xl md:h-auto md:max-h-[90vh] md:rounded-[2.5rem] md:transform md:translate-x-0 md:scale-95 md:opacity-0 md:transition-all md:border md:border-slate-200 md:dark:border-slate-700 relative">
+            
+            <div class="md:hidden sticky top-0 z-40 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 px-4 py-3 flex justify-between items-center shadow-sm">
+                <button onclick="closeProjectModal()" class="flex items-center text-accent font-semibold active:scale-95 transition-transform">
+                    <svg class="w-6 h-6 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg> Back
+                </button>
+                <span id="modalMobileTitle" class="font-fredoka font-bold text-lg text-slate-800 dark:text-white truncate">Project</span>
+                <div class="w-16"></div> 
+            </div>
+
+            <button onclick="closeProjectModal()" class="hidden md:flex absolute top-6 right-6 z-40 p-3 bg-slate-100/50 hover:bg-slate-200/80 dark:bg-slate-800/50 dark:hover:bg-slate-700/80 backdrop-blur-md rounded-full text-slate-800 dark:text-white transition-all shadow-sm hover:rotate-90">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+
+            <div class="flex-grow overflow-y-auto no-scrollbar pb-28 md:pb-0 relative">
+                <div class="h-40 sm:h-56 md:h-80 w-full bg-gradient-to-r from-accent to-secondary relative flex items-center justify-center">
+                    <div class="absolute inset-0 bg-black/20"></div>
+                    <h2 class="font-fredoka text-3xl sm:text-5xl md:text-7xl font-bold text-white z-10 tracking-wider shadow-sm text-center px-4">Project Details</h2>
+                </div>
+
+                <div class="p-5 sm:p-8 md:p-14">
+                    <div class="mb-8 md:mb-12">
+                        <h3 class="font-fredoka text-2xl sm:text-4xl md:text-5xl font-bold text-slate-800 dark:text-white mb-2 md:mb-4">
+                            <span id="modalProjTitle">Project Name</span>
+                            <span id="modalProjTagline" class="text-accent text-lg sm:text-2xl font-medium block sm:inline mt-1 sm:mt-0 sm:ml-2">- Tagline</span>
+                        </h3>
+                        <div id="modalProjTags" class="flex flex-wrap gap-2 md:gap-3 mt-4"></div>
+                    </div>
+
+                    <div id="modalProjMainDesc" class="text-base md:text-lg text-slate-600 dark:text-slate-400 mb-10 md:mb-16 leading-relaxed max-w-4xl"></div>
+
+                    <div class="grid md:grid-cols-2 gap-8 md:gap-12 items-center mb-16 md:mb-24">
+                        <div>
+                            <h4 id="modalF1Title" class="font-fredoka text-2xl md:text-3xl font-bold text-slate-800 dark:text-white mb-3 md:mb-4 flex items-center">
+                                <span class="w-6 md:w-8 h-1 bg-accent mr-3 rounded-full"></span> Feature 1
+                            </h4>
+                            <p id="modalF1Desc" class="text-slate-600 dark:text-slate-400 text-sm md:text-lg leading-relaxed mb-4"></p>
+                            <p class="text-xs md:text-sm text-accent font-semibold flex items-center">
+                                <svg class="w-4 h-4 mr-1 md:mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"></path></svg>
+                                Tap images to swap
+                            </p>
+                        </div>
+                        
+                        <div class="group/collage relative h-[250px] sm:h-[350px] w-full flex items-center justify-center cursor-pointer md:hover:scale-[1.02] transition-transform duration-500 origin-center" onclick="this.classList.toggle('swapped')">
+                            <div id="modalF1Card1" class="absolute transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] rounded-2xl border-4 border-white dark:border-slate-700 overflow-hidden bg-slate-200 dark:bg-slate-800 shadow-xl 
+                                z-10 -rotate-6 -translate-x-8 translate-y-4 opacity-80 w-40 h-64 md:-translate-x-12 md:w-56 md:h-72
+                                group-[.swapped]/collage:z-20 group-[.swapped]/collage:rotate-3 group-[.swapped]/collage:translate-x-6 group-[.swapped]/collage:-translate-y-2 group-[.swapped]/collage:opacity-100 group-[.swapped]/collage:w-48 group-[.swapped]/collage:h-72 group-[.swapped]/collage:md:translate-x-8 group-[.swapped]/collage:md:-translate-y-4 group-[.swapped]/collage:md:w-64 group-[.swapped]/collage:md:h-80 group-[.swapped]/collage:shadow-2xl group-[.swapped]/collage:border-slate-500">
+                            </div>
+                            <div id="modalF1Card2" class="absolute transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] rounded-2xl border-4 border-white dark:border-slate-600 overflow-hidden bg-slate-300 dark:bg-slate-700 shadow-2xl 
+                                z-20 rotate-3 translate-x-6 -translate-y-2 opacity-100 w-48 h-72 md:translate-x-8 md:-translate-y-4 md:w-64 md:h-80
+                                group-[.swapped]/collage:z-10 group-[.swapped]/collage:-rotate-6 group-[.swapped]/collage:-translate-x-8 group-[.swapped]/collage:translate-y-4 group-[.swapped]/collage:opacity-80 group-[.swapped]/collage:w-40 group-[.swapped]/collage:h-64 group-[.swapped]/collage:md:-translate-x-12 group-[.swapped]/collage:md:w-56 group-[.swapped]/collage:md:h-72 group-[.swapped]/collage:shadow-xl group-[.swapped]/collage:border-slate-700">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-8 md:gap-12 items-center mb-10 md:mb-16">
+                        <div class="group/collage relative h-[250px] sm:h-[350px] w-full flex items-center justify-center cursor-pointer order-2 md:order-1 md:hover:scale-[1.02] transition-transform duration-500 origin-center" onclick="this.classList.toggle('swapped')">
+                            <div id="modalF2Card1" class="absolute transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] rounded-2xl border-4 border-white dark:border-slate-700 overflow-hidden bg-slate-200 dark:bg-slate-800 shadow-xl 
+                                z-10 rotate-6 translate-x-8 translate-y-4 opacity-80 w-40 h-64 md:translate-x-10 md:translate-y-6 md:w-56 md:h-72
+                                group-[.swapped]/collage:z-20 group-[.swapped]/collage:-rotate-3 group-[.swapped]/collage:-translate-x-6 group-[.swapped]/collage:-translate-y-2 group-[.swapped]/collage:opacity-100 group-[.swapped]/collage:w-48 group-[.swapped]/collage:h-72 group-[.swapped]/collage:md:-translate-x-12 group-[.swapped]/collage:md:w-64 group-[.swapped]/collage:md:h-80 group-[.swapped]/collage:shadow-2xl group-[.swapped]/collage:border-slate-500">
+                            </div>
+                            <div id="modalF2Card2" class="absolute transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] rounded-2xl border-4 border-white dark:border-slate-600 overflow-hidden bg-slate-300 dark:bg-slate-700 shadow-2xl 
+                                z-20 -rotate-3 -translate-x-6 -translate-y-2 opacity-100 w-48 h-72 md:-translate-x-12 md:w-64 md:h-80
+                                group-[.swapped]/collage:z-10 group-[.swapped]/collage:rotate-6 group-[.swapped]/collage:translate-x-8 group-[.swapped]/collage:translate-y-4 group-[.swapped]/collage:opacity-80 group-[.swapped]/collage:w-40 group-[.swapped]/collage:h-64 group-[.swapped]/collage:md:translate-x-10 group-[.swapped]/collage:md:translate-y-6 group-[.swapped]/collage:md:w-56 group-[.swapped]/collage:md:h-72 group-[.swapped]/collage:shadow-xl group-[.swapped]/collage:border-slate-700">
+                            </div>
+                        </div>
+
+                        <div class="order-1 md:order-2">
+                            <h4 id="modalF2Title" class="font-fredoka text-2xl md:text-3xl font-bold text-slate-800 dark:text-white mb-3 md:mb-4 flex items-center">
+                                <span class="w-6 md:w-8 h-1 bg-secondary mr-3 rounded-full"></span> Feature 2
+                            </h4>
+                            <p id="modalF2Desc" class="text-slate-600 dark:text-slate-400 text-sm md:text-lg leading-relaxed mb-4"></p>
+                            <p class="text-xs md:text-sm text-secondary font-semibold flex items-center">
+                                <svg class="w-4 h-4 mr-1 md:mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"></path></svg>
+                                Tap images to swap
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="hidden md:flex mt-16 pt-8 border-t border-slate-200 dark:border-slate-800 flex-row gap-4 justify-center">
+                        <a id="modalLiveBtnDesktop" href="#" target="_blank" class="px-8 py-4 bg-accent text-white hover:bg-purple-600 rounded-full font-fredoka text-lg font-semibold transition-all hover:-translate-y-1 shadow-lg shadow-purple-500/30">Live Demo</a>
+                        <a id="modalGithubBtnDesktop" href="#" target="_blank" class="px-8 py-4 bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-white hover:bg-slate-200 dark:hover:bg-slate-700 rounded-full font-fredoka text-lg font-semibold transition-all border border-slate-300 dark:border-slate-600 hover:-translate-y-1">View on GitHub</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="md:hidden absolute bottom-0 left-0 w-full bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl border-t border-slate-200/50 dark:border-slate-800/50 p-4 pb-6 flex gap-3 z-40 shadow-[0_-10px_30px_rgba(0,0,0,0.05)] dark:shadow-[0_-10px_30px_rgba(0,0,0,0.3)]">
+                <a id="modalLiveBtnMobile" href="#" target="_blank" class="flex-1 py-3.5 bg-accent text-white rounded-2xl font-fredoka text-base font-semibold text-center shadow-lg shadow-purple-500/30 active:scale-95 transition-transform">Live Demo</a>
+                <a id="modalGithubBtnMobile" href="#" target="_blank" class="flex-1 py-3.5 bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-white rounded-2xl font-fredoka text-base font-semibold border border-slate-200 dark:border-slate-700 text-center active:scale-95 transition-transform">GitHub</a>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // =========================================================================
+        // DYNAMIC PROJECT DATA
+        // =========================================================================
+        const projects = [
+            {
+                id: 'ecommerce',
+                title: "ShopX E-Commerce",
+                tagline: "- Full Stack App",
+                category: "flutter",
+                tags: ["Flutter", "Dart", "BLoC Pattern", "Firebase"],
+                cardIcon: `<svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>`,
+                cardGradient: "from-indigo-500 to-purple-600",
+                shortDesc: "A full-featured Flutter e-commerce app with complex state management using BLoC and slick animations.",
+                mainDesc: "A highly scalable and beautiful e-commerce application built entirely in Flutter. It handles complex state management across multiple screens using the BLoC pattern, ensuring high performance even with thousands of products.",
+                feature1: {
+                    title: "Dynamic Product Rendering",
+                    desc: "A custom-built dynamic rendering engine allows products to be displayed elegantly with hero animations across screen transitions.",
+                    // TODO: Paste your original portrait image URLs below
+                    img1: "https://placehold.co/400x800/4F46E5/ffffff?text=Product+Home\n(TODO:+Replace)",
+                    img2: "https://placehold.co/400x800/7C3AED/ffffff?text=Product+Details\n(TODO:+Replace)"
+                },
+                feature2: {
+                    title: "Advanced Cart State",
+                    desc: "Users can add, remove, and favorite items seamlessly without any frame drops. The backend synchronizes via Firebase real-time database.",
+                    // TODO: Paste your original portrait image URLs below
+                    img1: "https://placehold.co/400x800/06B6D4/ffffff?text=Cart+UI\n(TODO:+Replace)",
+                    img2: "https://placehold.co/400x800/EC4899/ffffff?text=Checkout\n(TODO:+Replace)"
+                },
+                links: { live: "#", github: "#" }
+            },
+            {
+                id: 'chat',
+                title: "Connect Chat App",
+                tagline: "- Real-time Messaging",
+                category: "firebase",
+                tags: ["Flutter", "Firebase", "FCM", "Provider"],
+                cardIcon: `<svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03-8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>`,
+                cardGradient: "from-teal-500 to-blue-600",
+                shortDesc: "Real-time messaging application built with Flutter & Firebase. Features push notifications and cloud storage.",
+                mainDesc: "A complete real-time messaging solution mirroring WhatsApp's core functionality. Handles 1-to-1 chats, group messaging, and media attachments instantly.",
+                feature1: {
+                    title: "Instant Synchronization",
+                    desc: "Messages appear instantly using Firestore Streams. The app handles offline caching so users can view messages even without an internet connection.",
+                    // TODO: Paste your original portrait image URLs below
+                    img1: "https://placehold.co/400x800/14B8A6/ffffff?text=Chat+List\n(TODO:+Replace)",
+                    img2: "https://placehold.co/400x800/3B82F6/ffffff?text=Messaging\n(TODO:+Replace)"
+                },
+                feature2: {
+                    title: "Media Handling",
+                    desc: "Integrated custom camera logic and gallery picking. Images are compressed locally before being uploaded to Firebase Storage.",
+                    // TODO: Paste your original portrait image URLs below
+                    img1: "https://placehold.co/400x800/F97316/ffffff?text=Camera\n(TODO:+Replace)",
+                    img2: "https://placehold.co/400x800/EAB308/ffffff?text=Gallery\n(TODO:+Replace)"
+                },
+                links: { live: "#", github: "#" }
+            },
+            {
+                id: 'fintech',
+                title: "Wallet UI Clone",
+                tagline: "- Pixel Perfect Render",
+                category: "ui",
+                tags: ["Flutter UI", "Custom Painter", "Animations"],
+                cardIcon: `<svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`,
+                cardGradient: "from-pink-500 to-rose-600",
+                shortDesc: "A showcase of Flutter's rendering power. This app clones a highly popular, animation-heavy Fintech application.",
+                mainDesc: "A showcase of Flutter's rendering power. This app clones a highly popular, animation-heavy Fintech application. It focuses entirely on smooth 60fps animations and custom painted charts.",
+                feature1: {
+                    title: "Sliver Scroll Effects",
+                    desc: "Implements advanced Sliver widgets in Flutter to create collapsing headers and sticky elements that react to user scroll.",
+                    // TODO: Paste your original portrait image URLs below
+                    img1: "https://placehold.co/400x800/EC4899/ffffff?text=Dashboard\n(TODO:+Replace)",
+                    img2: "https://placehold.co/400x800/D946EF/ffffff?text=Scroll\n(TODO:+Replace)"
+                },
+                feature2: {
+                    title: "Custom Painted Charts",
+                    desc: "Replaced heavy third-party charting libraries with native Dart CustomPainter to draw bezier curves and dynamic financial graphs.",
+                    // TODO: Paste your original portrait image URLs below
+                    img1: "https://placehold.co/400x800/8B5CF6/ffffff?text=Graphs\n(TODO:+Replace)",
+                    img2: "https://placehold.co/400x800/F43F5E/ffffff?text=Stats\n(TODO:+Replace)"
+                },
+                links: { live: "#", github: "#" }
+            },
+            {
+                id: 'taskapp',
+                title: "SyncTask Manager",
+                tagline: "- Offline First App",
+                category: "flutter",
+                tags: ["Flutter", "SQLite", "Riverpod"],
+                cardIcon: `<svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path></svg>`,
+                cardGradient: "from-orange-400 to-red-500",
+                shortDesc: "A productivity application with local SQLite caching (sqflite) and API synchronization for offline-first support.",
+                mainDesc: "A highly robust productivity app designed to work primarily offline. All tasks are cached locally using SQLite and sync silently in the background when the network is restored.",
+                feature1: {
+                    title: "Local Database",
+                    desc: "Implements strict typing and secure local storage queries. App launch times are virtually instantaneous regardless of data size.",
+                    // TODO: Paste your original portrait image URLs below
+                    img1: "https://placehold.co/400x800/F97316/ffffff?text=Tasks\n(TODO:+Replace)",
+                    img2: "https://placehold.co/400x800/EF4444/ffffff?text=Add+Task\n(TODO:+Replace)"
+                },
+                feature2: {
+                    title: "Background Sync",
+                    desc: "Utilizes background isolates to perform REST API syncs without ever blocking the main UI thread.",
+                    // TODO: Paste your original portrait image URLs below
+                    img1: "https://placehold.co/400x800/E11D48/ffffff?text=Syncing\n(TODO:+Replace)",
+                    img2: "https://placehold.co/400x800/F59E0B/ffffff?text=Settings\n(TODO:+Replace)"
+                },
+                links: { live: "#", github: "#" }
+            }
+        ];
+
+        // Dynamically Render Projects
+        function renderProjects() {
+            const sliderContainer = document.getElementById('sliderContainer');
+            sliderContainer.innerHTML = ''; 
+            
+            projects.forEach(proj => {
+                const shortTitle = proj.title.split(' ')[0]; 
+                const cardHTML = `
+                    <div data-category="${proj.category}" class="project-card flex-none w-[85vw] sm:w-[60vw] md:w-[45vw] lg:w-[40vw] snap-center group h-auto cursor-pointer animate-fade-in" onclick="openProjectModal('${proj.id}')">
+                        <div class="glass rounded-3xl p-6 md:p-8 h-full flex flex-col transition-all duration-500 hover:border-accent/50 hover:-translate-y-2 hover:shadow-2xl hover:shadow-accent/20">
+                            <div class="mb-6 md:mb-8 device-frame aspect-video bg-slate-200 dark:bg-slate-800 flex items-center justify-center group-hover:scale-[1.03] transition-transform duration-500">
+                                <div class="w-full h-full bg-gradient-to-br ${proj.cardGradient} flex flex-col items-center justify-center p-4 md:p-6 text-center">
+                                    <div class="p-3 bg-white/20 backdrop-blur-sm rounded-xl mb-3 shadow-lg">
+                                        ${proj.cardIcon}
+                                    </div>
+                                    <span class="font-fredoka text-xl font-bold text-white tracking-wide">${shortTitle}</span>
+                                </div>
+                            </div>
+                            <h3 class="font-fredoka text-xl md:text-2xl font-bold mb-3 text-slate-800 dark:text-white">${proj.title}</h3>
+                            <p class="text-sm md:text-base text-slate-600 dark:text-slate-300 mb-6 flex-grow">${proj.shortDesc}</p>
+                            <div class="flex items-center justify-between mt-auto">
+                                <div class="flex space-x-2"><span class="px-3 py-1 bg-slate-200 dark:bg-white/10 text-slate-600 dark:text-slate-300 rounded-full text-xs font-medium">${proj.tags[0]}</span></div>
+                                <span class="flex items-center text-accent text-sm font-semibold hover:text-purple-500 transition-colors group">View Details <svg class="ml-1 w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg></span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                sliderContainer.insertAdjacentHTML('beforeend', cardHTML);
+            });
+        }
+
+        renderProjects();
+
+        setTimeout(() => { document.documentElement.classList.add('scroll-smooth'); }, 100);
+
+        // Theme Setup
+        const html = document.documentElement;
+        const themeToggles = [document.getElementById('themeToggle'), document.getElementById('mobileThemeToggle')];
+        const sunIcons = [document.getElementById('sunIcon'), document.getElementById('mobileSunIcon')];
+        const moonIcons = [document.getElementById('moonIcon'), document.getElementById('mobileMoonIcon')];
+
+        if (localStorage.theme === 'light' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: light)').matches)) {
+            html.classList.remove('dark'); updateIcons('light');
+        } else {
+            html.classList.add('dark'); updateIcons('dark');
+        }
+
+        function updateIcons(theme) {
+            if (theme === 'dark') {
+                sunIcons.forEach(icon => icon.classList.remove('hidden'));
+                moonIcons.forEach(icon => icon.classList.add('hidden'));
+            } else {
+                sunIcons.forEach(icon => icon.classList.add('hidden'));
+                moonIcons.forEach(icon => icon.classList.remove('hidden'));
+            }
+        }
+
+        themeToggles.forEach(toggle => {
+            toggle.addEventListener('click', () => {
+                if (html.classList.contains('dark')) {
+                    html.classList.remove('dark'); localStorage.theme = 'light'; updateIcons('light');
+                } else {
+                    html.classList.add('dark'); localStorage.theme = 'dark'; updateIcons('dark');
+                }
+            });
+        });
+
+        // Observers
+        const observerOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Mobile Menu Nav
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const menuBackdrop = document.getElementById('menuBackdrop');
+        let isMenuOpen = false;
+
+        menuBtn.addEventListener('click', toggleMenu);
+
+        function toggleMenu() {
+            isMenuOpen = !isMenuOpen;
+            if (isMenuOpen) {
+                menuBackdrop.classList.remove('pointer-events-none');
+                menuBackdrop.classList.remove('opacity-0');
+                mobileMenu.classList.remove('translate-x-full');
+                document.body.classList.add('overflow-hidden');
+            } else {
+                menuBackdrop.classList.add('opacity-0');
+                menuBackdrop.classList.add('pointer-events-none');
+                mobileMenu.classList.add('translate-x-full');
+                document.body.classList.remove('overflow-hidden');
+            }
+        }
+
+        // Header Scrolling
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.classList.add('py-2', 'shadow-md'); header.classList.remove('py-3', 'md:py-4');
+            } else {
+                header.classList.add('py-3', 'md:py-4'); header.classList.remove('py-2', 'shadow-md');
+            }
+        });
+
+        // Filter Logic
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const sliderContainer = document.getElementById('sliderContainer');
+        const slideLeftBtn = document.getElementById('slideLeftBtn');
+        const slideRightBtn = document.getElementById('slideRightBtn');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => {
+                    b.classList.remove('bg-accent', 'text-white', 'border-accent', 'shadow-md');
+                    b.classList.add('bg-white', 'dark:bg-slate-800', 'text-slate-600', 'dark:text-slate-300', 'border-slate-200', 'dark:border-slate-700');
+                });
+                btn.classList.add('bg-accent', 'text-white', 'border-accent', 'shadow-md');
+                btn.classList.remove('bg-white', 'dark:bg-slate-800', 'text-slate-600', 'dark:text-slate-300', 'border-slate-200', 'dark:border-slate-700');
+
+                const filterValue = btn.getAttribute('data-filter');
+                const projectCards = document.querySelectorAll('.project-card');
+
+                projectCards.forEach(card => {
+                    card.classList.remove('animate-fade-in'); 
+                    void card.offsetWidth; 
+
+                    if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
+                        card.classList.remove('hidden');
+                        card.classList.add('animate-fade-in');
+                    } else {
+                        card.classList.add('hidden');
+                    }
+                });
+                sliderContainer.scrollTo({ left: 0, behavior: 'smooth' });
+            });
+        });
+
+        if(slideLeftBtn && slideRightBtn) {
+            slideLeftBtn.addEventListener('click', () => {
+                const scrollAmount = window.innerWidth < 768 ? window.innerWidth * 0.85 : window.innerWidth * 0.45;
+                sliderContainer.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+            });
+            slideRightBtn.addEventListener('click', () => {
+                const scrollAmount = window.innerWidth < 768 ? window.innerWidth * 0.85 : window.innerWidth * 0.45;
+                sliderContainer.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+            });
+        }
+
+        // Modal Logic
+        const modal = document.getElementById('projectModal');
+        const modalBackdropDetails = document.getElementById('modalBackdrop');
+        const modalPanel = document.getElementById('modalPanel');
+
+        function openProjectModal(projectId) {
+            const data = projects.find(p => p.id === projectId);
+            if (!data) return;
+
+            document.querySelectorAll('.group\\/collage').forEach(el => el.classList.remove('swapped'));
+
+            document.getElementById('modalProjTitle').innerText = data.title;
+            document.getElementById('modalMobileTitle').innerText = data.title; 
+            document.getElementById('modalProjTagline').innerText = data.tagline;
+            document.getElementById('modalProjMainDesc').innerText = data.mainDesc;
+
+            const tagsHTML = data.tags.map(tag =>
+                `<span class="px-3 md:px-4 py-1.5 md:py-2 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-full text-xs md:text-sm font-semibold border border-slate-200 dark:border-slate-700">${tag}</span>`
+            ).join('');
+            document.getElementById('modalProjTags').innerHTML = tagsHTML;
+
+            document.getElementById('modalF1Title').innerHTML = `<span class="w-6 md:w-8 h-1 bg-accent mr-2 md:mr-3 rounded-full"></span>${data.feature1.title}`;
+            document.getElementById('modalF1Desc').innerText = data.feature1.desc;
+            document.getElementById('modalF1Card1').innerHTML = `<img src="${data.feature1.img1}" class="w-full h-full object-cover" alt="Screen 1">`;
+            document.getElementById('modalF1Card2').innerHTML = `<img src="${data.feature1.img2}" class="w-full h-full object-cover" alt="Screen 2">`;
+
+            document.getElementById('modalF2Title').innerHTML = `<span class="w-6 md:w-8 h-1 bg-secondary mr-2 md:mr-3 rounded-full"></span>${data.feature2.title}`;
+            document.getElementById('modalF2Desc').innerText = data.feature2.desc;
+            document.getElementById('modalF2Card1').innerHTML = `<img src="${data.feature2.img1}" class="w-full h-full object-cover" alt="Screen 3">`;
+            document.getElementById('modalF2Card2').innerHTML = `<img src="${data.feature2.img2}" class="w-full h-full object-cover" alt="Screen 4">`;
+
+            document.getElementById('modalLiveBtnDesktop').href = data.links.live;
+            document.getElementById('modalGithubBtnDesktop').href = data.links.github;
+            document.getElementById('modalLiveBtnMobile').href = data.links.live;
+            document.getElementById('modalGithubBtnMobile').href = data.links.github;
+
+            modal.classList.remove('hidden');
+            setTimeout(() => { 
+                modalBackdropDetails.classList.remove('opacity-0'); 
+                modalBackdropDetails.classList.remove('pointer-events-none');
                 
-                <form>
-                    <div class="input-wrapper">
-                        <label>Email Address</label>
-                        <input type="email" placeholder="user@example.com">
-                    </div>
-                    <div class="input-wrapper">
-                        <label>Password</label>
-                        <input type="text" placeholder="••••••••">
-                    </div>
-                    <div class="input-wrapper">
-                         <label>Disabled Field</label>
-                         <input type="text" disabled value="Cannot edit this" style="background: var(--disabled-bg); color: var(--disabled-text); cursor: not-allowed;">
-                    </div>
-                    <button type="button" class="btn btn-primary" style="width: 100%; margin-top: 10px;">Sign In</button>
-                </form>
-            </div>
+                modalPanel.classList.remove('translate-x-full');
+                modalPanel.classList.remove('md:scale-95', 'md:opacity-0');
+                modalPanel.classList.add('md:scale-100', 'md:opacity-100');
+            }, 10);
+            document.body.classList.add('overflow-hidden');
+        }
 
-            <div>
-                <div class="card" style="height: 100%;">
-                    <h3>System Status</h3>
-                    <p class="small" style="color: var(--text-muted)">Real-time alerts using semantic variables.</p>
+        function closeProjectModal() {
+            modalBackdropDetails.classList.add('opacity-0'); 
+            modalBackdropDetails.classList.add('pointer-events-none');
+            
+            modalPanel.classList.add('translate-x-full');
+            modalPanel.classList.remove('md:scale-100', 'md:opacity-100');
+            modalPanel.classList.add('md:scale-95', 'md:opacity-0');
+            
+            setTimeout(() => { 
+                modal.classList.add('hidden'); 
+                if(!isMenuOpen) document.body.classList.remove('overflow-hidden');
+            }, 300);
+        }
 
-                    <div class="alert alert-success">
-                        <span><strong>Operational:</strong> All systems normal.</span>
-                    </div>
-
-                    <div class="alert alert-warning">
-                        <span><strong>Warning:</strong> High latency detected.</span>
-                    </div>
-
-                    <div class="alert alert-error">
-                        <span><strong>Error:</strong> Database connection failed.</span>
-                        <span style="font-weight:bold; cursor:pointer;">Retry</span>
-                    </div>
-
-                    <div class="alert alert-info">
-                        <span><strong>Update:</strong> Patch v2.3 is available.</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <h3 style="margin-top: 40px; margin-bottom: 20px;">Analytics Overview</h3>
-        <div class="grid-3">
-            <div class="card">
-                <div style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 5px;">TOTAL REVENUE</div>
-                <div style="font-size: 2rem; font-weight: 700; color: var(--text-primary);">$24,500</div>
-                <div style="color: var(--success); font-size: 0.85rem; margin-top: 5px;">▲ 12% from last month</div>
-            </div>
-
-            <div class="card">
-                <div style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 5px;">ACTIVE USERS</div>
-                <div style="font-size: 2rem; font-weight: 700; color: var(--text-primary);">1,240</div>
-                <div style="color: var(--secondary-500); font-size: 0.85rem; margin-top: 5px;">• Stable</div>
-            </div>
-
-            <div class="card">
-                <div style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 5px;">SERVER LOAD</div>
-                <div style="font-size: 2rem; font-weight: 700; color: var(--text-primary);">84%</div>
-                <div style="color: var(--warning); font-size: 0.85rem; margin-top: 5px;">⚠ High Load</div>
-            </div>
-        </div>
-
-        <div style="margin-top: 40px;">
-            <div style="background-color: var(--surface-muted); height: 200px; width: 100%; border-radius: 8px; display: flex; align-items: center; justify-content: center; border: 1px dashed var(--border-strong);">
-                <p style="color: var(--text-muted); margin: 0;">Image Placeholder (--surface-muted)</p>
-            </div>
-        </div>
-
-    </main>
-
-    <footer>
-        <div class="container">
-            <p>&copy; 2023 DarkMint UI. Background: <code>#2B2B2A</code></p>
-        </div>
-    </footer>
-
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                if (!modal.classList.contains('hidden')) closeProjectModal();
+                if (isMenuOpen) toggleMenu();
+            }
+        });
+    </script>
 </body>
+
 </html>
