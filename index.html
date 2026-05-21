@@ -1,632 +1,296 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <title>Arpit Pandey | App Developer Portfolio</title>
-    <meta name="description" content="Portfolio of Arpit Pandey, an expert App Developer specializing in React Native, Flutter, and scalable web solutions.">
-    <meta name="keywords" content="Arpit Pandey, App Developer, Mobile App Developer, React Native, Flutter, Vue.js, Node.js, Portfolio">
-    <meta name="author" content="Arpit Pandey">
-    
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👨‍💻</text></svg>">
-
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://arpitpandey.dev/"> <meta property="og:title" content="Arpit Pandey | App Developer Portfolio">
-    <meta property="og:description" content="Crafting Intuitive and Powerful Applications. Check out my latest projects and skills.">
-    <meta property="og:image" content="https://arpitpandey.dev/preview-image.jpg"> <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://arpitpandey.dev/">
-    <meta property="twitter:title" content="Arpit Pandey | App Developer Portfolio">
-    <meta property="twitter:description" content="Crafting Intuitive and Powerful Applications. Check out my latest projects and skills.">
-    <meta property="twitter:image" content="https://arpitpandey.dev/preview-image.jpg">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700&family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
-    <script>
-        if (window.location.hash) {
-            window.scrollTo(0, 0);
-            history.replaceState(null, null, window.location.pathname);
-        }
-
-        tailwind.config = {
-            darkMode: 'class', 
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#0F172A',
-                        accent: '#8B5CF6',
-                        secondary: '#06B6D4',
-                    },
-                    fontFamily: {
-                        fredoka: ['Fredoka', 'sans-serif'],
-                        baloo: ['"Baloo 2"', 'cursive'],
-                    },
-                    animation: {
-                        'float': 'float 6s ease-in-out infinite',
-                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                        'modal-enter': 'modalEnter 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards',
-                    },
-                    keyframes: {
-                        'float': {
-                            '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-20px)' },
-                        },
-                        'modalEnter': {
-                            '0%': { opacity: '0', transform: 'scale(0.95) translateY(20px)' },
-                            '100%': { opacity: '1', transform: 'scale(1) translateY(0)' },
-                        }
-                    }
-                }
-            }
-        }
-    </script>
+    <title>Bento Grid UI - 4 Unique Sections</title>
     <style>
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #8B5CF6; border-radius: 4px; }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: #121212; /* Dark theme background for contrast */
+            color: #333;
+            padding: 20px;
+        }
+
+        /* --- Navigation --- */
+        .nav-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            background: #333;
+            color: #fff;
+            transition: 0.3s;
+        }
+
+        button.active {
+            background: #fff;
+            color: #000;
+        }
+
+        .page-section {
+            display: none;
+            max-width: 1200px;
+            margin: 0 auto;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- Common Bento Box Style --- */
+        .bento-box {
+            border-radius: 24px;
+            padding: 24px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+        }
+
+        h2 { font-size: 1.5rem; margin-bottom: 15px; font-weight: 700; }
+        h3 { font-size: 1.2rem; margin-bottom: 10px; opacity: 0.8;}
+        .amount { font-size: 2.5rem; font-weight: 700; margin: 10px 0; }
+
+        /* =========================================
+           Section 1: Overview (Pastel Blue Palette)
+           Layout: 3-column asymmetric grid
+           ========================================= */
+        #section-1 {
+            background: #E3F2FD;
+            padding: 30px;
+            border-radius: 30px;
+        }
+        .grid-1 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1.5fr;
+            grid-template-rows: auto auto;
+            gap: 20px;
+        }
+        .box-1-1 { grid-column: span 2; background: #FFFFFF; }
+        .box-1-2 { grid-column: span 1; grid-row: span 2; background: #BBDEFB; display: flex; align-items: center; justify-content: center; text-align: center;}
+        .box-1-3 { background: #1976D2; color: #fff; }
+        .box-1-4 { background: #FFFFFF; }
+        .progress-bar { width: 100%; height: 8px; background: #e0e0e0; border-radius: 4px; margin-top: 10px; overflow: hidden;}
+        .progress-fill-blue { width: 70%; height: 100%; background: #1976D2; }
+
+        /* =========================================
+           Section 2: Budgeting (Mint Green Palette)
+           Layout: 2-column masonry feel
+           ========================================= */
+        #section-2 {
+            background: #E8F5E9;
+            padding: 30px;
+            border-radius: 30px;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1.2fr 2fr;
+            gap: 20px;
+        }
+        .box-2-1 { background: #FFFFFF; text-align: center; }
+        .box-2-2 { background: #C8E6C9; }
+        .box-2-3 { grid-column: span 2; background: #2E7D32; color: white; display: flex; justify-content: space-between; align-items: center;}
         
-        .glass {
-            background: rgba(255, 255, 255, 0.6);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+        /* =========================================
+           Section 3: Connections (Lilac/Purple Palette)
+           Layout: Big Hero + Side cards
+           ========================================= */
+        #section-3 {
+            background: #F3E5F5;
+            padding: 30px;
+            border-radius: 30px;
         }
-        .dark .glass {
-            background: rgba(30, 41, 59, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        .grid-3 {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
         }
+        .box-3-1 { background: #E1BEE7; display: flex; flex-direction: column; align-items: center; text-align: center;}
+        .box-3-2 { background: #FFFFFF; }
+        .box-3-3 { background: #4A148C; color: white; }
 
-        .text-gradient {
-            background: linear-gradient(to right, #8B5CF6, #06B6D4);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        /* =========================================
+           Section 4: Analytics (Warm Yellow/Peach Palette)
+           Layout: 4 equal cards + 1 wide bottom card
+           ========================================= */
+        #section-4 {
+            background: #FFF8E1;
+            padding: 30px;
+            border-radius: 30px;
         }
+        .grid-4 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .box-4-1 { background: #FFECB3; }
+        .box-4-2 { background: #FFFFFF; }
+        .box-4-3 { background: #FFFFFF; }
+        .box-4-4 { background: #FFCC80; }
+        .box-4-5 { grid-column: span 2; background: #FF8F00; color: white; text-align: center;}
 
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        /* Image Placeholders styling */
+        .placeholder-img {
+            max-width: 100%;
+            border-radius: 12px;
+            object-fit: cover;
+            display: block;
+            margin: 15px auto;
         }
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
+        
+        /* Responsive tweaks */
+        @media (max-width: 768px) {
+            .grid-1, .grid-2, .grid-3, .grid-4 {
+                grid-template-columns: 1fr;
+            }
+            .box-1-1, .box-1-2, .box-2-3, .box-4-5 { grid-column: span 1; }
         }
-
-        .blob {
-            position: absolute;
-            width: 500px;
-            height: 500px;
-            background: linear-gradient(180deg, rgba(139, 92, 246, 0.3) 0%, rgba(6, 182, 212, 0.3) 100%);
-            filter: blur(90px);
-            border-radius: 50%;
-            z-index: -1;
-            transition: opacity 0.5s ease;
-        }
-        .dark .blob {
-            background: linear-gradient(180deg, rgba(139, 92, 246, 0.15) 0%, rgba(6, 182, 212, 0.15) 100%);
-        }
-
-        .device-frame {
-            position: relative;
-            border: 8px solid #cbd5e1; 
-            border-radius: 2rem;
-            overflow: hidden;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-        }
-        .dark .device-frame {
-            border-color: #334155; 
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-        }
-
-        .nav-link { position: relative; }
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -4px;
-            left: 0;
-            background-color: #8B5CF6;
-            transition: width 0.3s ease;
-        }
-        .nav-link:hover::after { width: 100%; }
     </style>
 </head>
-<body class="font-baloo bg-slate-50 text-slate-800 dark:bg-[#0F172A] dark:text-[#F8FAFC] transition-colors duration-500 overflow-x-hidden">
+<body>
 
-    <header class="fixed top-0 w-full z-40 transition-all duration-300 glass py-4 px-6 md:px-12 flex justify-between items-center">
-        <div class="text-3xl font-fredoka font-bold text-gradient tracking-wider">AP.</div>
-        
-        <nav class="hidden md:flex space-x-8 font-medium items-center">
-            <a href="#about" class="nav-link hover:text-accent transition-colors">About</a>
-            <a href="#projects" class="nav-link hover:text-accent transition-colors">Projects</a>
-            <a href="#skills" class="nav-link hover:text-accent transition-colors">Skills</a>
-            <a href="#contact" class="nav-link hover:text-accent transition-colors">Contact</a>
-            
-            <button id="themeToggle" class="ml-4 p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors focus:outline-none text-slate-600 dark:text-slate-300">
-                <svg id="sunIcon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
-                <svg id="moonIcon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
-            </button>
-        </nav>
-
-        <div class="md:hidden flex items-center space-x-4">
-            <button id="mobileThemeToggle" class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors focus:outline-none text-slate-600 dark:text-slate-300">
-                <svg id="mobileSunIcon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
-                <svg id="mobileMoonIcon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
-            </button>
-            <button id="menuBtn" class="focus:outline-none text-slate-800 dark:text-white">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
-            </button>
-        </div>
-    </header>
-
-    <div id="mobileMenu" class="fixed inset-0 z-40 hidden glass flex-col items-center justify-center space-y-8 text-2xl font-fredoka bg-slate-50/95 dark:bg-[#0F172A]/95">
-        <a href="#about" onclick="toggleMenu()" class="hover:text-accent transition-colors text-slate-800 dark:text-white">About</a>
-        <a href="#projects" onclick="toggleMenu()" class="hover:text-accent transition-colors text-slate-800 dark:text-white">Projects</a>
-        <a href="#skills" onclick="toggleMenu()" class="hover:text-accent transition-colors text-slate-800 dark:text-white">Skills</a>
-        <a href="#contact" onclick="toggleMenu()" class="hover:text-accent transition-colors text-slate-800 dark:text-white">Contact</a>
+    <div class="nav-buttons">
+        <button class="active" onclick="showPage('section-1')">1. Overview (Blue)</button>
+        <button onclick="showPage('section-2')">2. Budget (Green)</button>
+        <button onclick="showPage('section-3')">3. Connect (Purple)</button>
+        <button onclick="showPage('section-4')">4. Analytics (Yellow)</button>
     </div>
 
-    <section class="relative min-h-screen flex items-center justify-center pt-20 px-6 overflow-hidden">
-        <div class="blob top-[-10%] left-[-10%] animate-float"></div>
-        <div class="blob bottom-[-10%] right-[-10%] animate-float" style="animation-delay: -3s;"></div>
-        
-        <div class="max-w-4xl text-center z-10">
-            <h1 class="font-fredoka text-6xl md:text-8xl font-bold mb-6 tracking-tight reveal">
-                Arpit <span class="text-gradient">Pandey</span>
-            </h1>
-            <p class="text-xl md:text-3xl text-slate-600 dark:text-slate-300 mb-10 font-medium reveal" style="transition-delay: 200ms;">
-                Crafting Intuitive and Powerful Applications.
-            </p>
-            <div class="flex flex-col md:flex-row gap-4 justify-center items-center reveal" style="transition-delay: 400ms;">
-                <a href="#contact" class="px-8 py-4 bg-accent text-white hover:bg-opacity-90 rounded-full font-fredoka text-lg font-semibold transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg shadow-purple-500/30">
-                    Get in Touch
-                </a>
-                <a href="#projects" class="px-8 py-4 bg-white dark:bg-transparent border border-slate-300 dark:border-slate-700 hover:border-accent dark:hover:border-accent text-slate-800 dark:text-white rounded-full font-fredoka text-lg font-semibold transition-all duration-300 hover:bg-accent/5 dark:hover:bg-accent/10 shadow-sm">
-                    View Portfolio
-                </a>
+    <div id="section-1" class="page-section active">
+        <div class="grid-1">
+            <div class="bento-box box-1-1">
+                <h3>Total Balance</h3>
+                <div class="amount">€4,250.00</div>
+                <p>+15% from last month</p>
+            </div>
+            <div class="bento-box box-1-2">
+                <div>
+                    <h2>Easy Money Management</h2>
+                    <img src="https://placehold.co/200x400/1976D2/FFFFFF?text=Mobile+Mockup\n200x400" alt="Mobile App Placeholder" class="placeholder-img">
+                </div>
+            </div>
+            <div class="bento-box box-1-3">
+                <h3>Spent this week</h3>
+                <div class="amount">€120.50</div>
+                <div class="progress-bar"><div class="progress-fill-blue" style="background:#fff; width: 45%;"></div></div>
+            </div>
+            <div class="bento-box box-1-4">
+                <h3>Recent Transactions</h3>
+                <img src="https://placehold.co/300x100/eeeeee/333333?text=List+UI+Element\n300x100" alt="List Placeholder" class="placeholder-img">
             </div>
         </div>
-        
-        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce opacity-60 text-slate-500 dark:text-slate-400">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
-        </div>
-    </section>
+    </div>
 
-    <section id="about" class="py-24 px-6 md:px-12 max-w-7xl mx-auto">
-        <div class="grid md:grid-cols-2 gap-16 items-center">
-            <div class="reveal">
-                <h2 class="font-fredoka text-4xl md:text-5xl font-bold mb-8 flex items-center text-slate-800 dark:text-white">
-                    <span class="w-12 h-1 bg-accent mr-4 rounded-full"></span>
-                    About Me
-                </h2>
-                <div class="space-y-6 text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
-                    <p>
-                        I am a dedicated app developer with a passion for creating innovative and user-centric digital experiences. My expertise spans mobile and web ecosystems, focusing on building robust and scalable applications that solve real-world problems.
-                    </p>
-                    <p>
-                        With a keen eye for detail and a deep understanding of modern UI/UX principles, I bridge the gap between complex backend logic and beautiful, functional frontend interfaces. I believe that every line of code should contribute to a seamless user journey.
-                    </p>
-                </div>
+    <div id="section-2" class="page-section">
+        <div class="grid-2">
+            <div class="bento-box box-2-1">
+                <h2>Monthly Budget</h2>
+                <div class="amount">€225</div>
+                <img src="https://placehold.co/180x180/C8E6C9/2E7D32?text=Donut+Chart\n180x180" alt="Chart Placeholder" class="placeholder-img" style="border-radius: 50%;">
             </div>
-            <div class="relative reveal" style="transition-delay: 300ms;">
-                <div class="aspect-square glass rounded-[2.5rem] overflow-hidden flex items-center justify-center p-8">
-                    <div class="w-full h-full rounded-3xl bg-gradient-to-br from-accent/20 to-secondary/20 flex items-center justify-center border border-slate-200 dark:border-white/10 shadow-inner">
-                         <svg class="w-32 h-32 text-accent/60" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-                    </div>
+            <div class="bento-box box-2-2">
+                <h2>Tools to help you</h2>
+                <img src="https://placehold.co/400x250/ffffff/2E7D32?text=Dashboard+Widget\n400x250" alt="Widget Placeholder" class="placeholder-img">
+                <p style="margin-top: 10px;">Track your financially healthy choices.</p>
+            </div>
+            <div class="bento-box box-2-3">
+                <div>
+                    <h2 style="color: white;">Left for 14 days</h2>
+                    <div class="amount">€500</div>
                 </div>
-                <div class="absolute -top-6 -right-6 w-32 h-32 bg-secondary/30 rounded-full blur-3xl animate-pulse-slow"></div>
-                <div class="absolute -bottom-6 -left-6 w-40 h-40 bg-accent/30 rounded-full blur-3xl animate-pulse-slow" style="animation-delay: 2s;"></div>
+                <img src="https://placehold.co/120x80/ffffff/2E7D32?text=Graph\n120x80" alt="Mini Graph" class="placeholder-img" style="margin:0;">
             </div>
         </div>
-    </section>
+    </div>
 
-    <section id="projects" class="py-24 bg-slate-100/50 dark:bg-slate-900/50 transition-colors duration-500">
-        <div class="max-w-7xl mx-auto px-6 md:px-12">
-            <div class="text-center mb-16 reveal">
-                <h2 class="font-fredoka text-4xl md:text-5xl font-bold mb-4 text-slate-800 dark:text-white">My Work</h2>
-                <p class="text-slate-500 dark:text-slate-400 text-lg">A selection of recent applications and platforms.</p>
+    <div id="section-3" class="page-section">
+        <div class="grid-3">
+            <div class="bento-box box-3-1">
+                <h2>Connect any bank account</h2>
+                <img src="https://placehold.co/350x150/ffffff/4A148C?text=Bank+Logos+Integration\n350x150" alt="Integration UI" class="placeholder-img">
+                <p>Sync all your expenses seamlessly.</p>
             </div>
-
-            <div class="grid lg:grid-cols-2 gap-12">
-                <div class="reveal group h-full cursor-pointer" onclick="openProjectModal('alpha')">
-                    <div class="glass rounded-3xl p-8 h-full flex flex-col transition-all duration-500 hover:border-accent/50 hover:-translate-y-2 hover:shadow-2xl hover:shadow-accent/20">
-                        <div class="mb-8 device-frame aspect-video bg-slate-200 dark:bg-slate-800 flex items-center justify-center group-hover:scale-[1.03] transition-transform duration-500">
-                            <div class="w-full h-full bg-gradient-to-br from-indigo-500 to-purple-600 dark:from-indigo-900 dark:to-purple-900 flex flex-col items-center justify-center p-6 text-center">
-                                <div class="p-4 bg-white/20 dark:bg-white/10 backdrop-blur-sm rounded-2xl mb-4 shadow-lg">
-                                    <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                                </div>
-                                <span class="font-fredoka text-2xl font-bold text-white tracking-wide">Project Alpha</span>
-                            </div>
-                        </div>
-                        <h3 class="font-fredoka text-2xl font-bold mb-4 text-slate-800 dark:text-white">Project Alpha</h3>
-                        <p class="text-slate-600 dark:text-slate-300 mb-8 flex-grow">
-                            A robust mobile application designed to streamline healthcare management. Built with React Native and Node.js.
-                        </p>
-                        <div class="flex items-center justify-between mt-auto">
-                            <div class="flex space-x-2">
-                                <span class="px-3 py-1 bg-slate-200 dark:bg-white/10 text-slate-600 dark:text-slate-300 rounded-full text-xs font-medium">React Native</span>
-                            </div>
-                            <span class="flex items-center text-accent font-semibold hover:text-purple-500 transition-colors group">
-                                View Details
-                                <svg class="ml-2 w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="reveal group h-full cursor-pointer" style="transition-delay: 200ms;" onclick="openProjectModal('beta')">
-                    <div class="glass rounded-3xl p-8 h-full flex flex-col transition-all duration-500 hover:border-secondary/50 hover:-translate-y-2 hover:shadow-2xl hover:shadow-secondary/20">
-                        <div class="mb-8 device-frame aspect-video bg-slate-200 dark:bg-slate-800 flex items-center justify-center group-hover:scale-[1.03] transition-transform duration-500">
-                             <div class="w-full h-full bg-gradient-to-br from-teal-500 to-blue-600 dark:from-teal-900 dark:to-blue-900 flex flex-col items-center justify-center p-6 text-center">
-                                <div class="p-4 bg-white/20 dark:bg-white/10 backdrop-blur-sm rounded-2xl mb-4 shadow-lg">
-                                    <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-                                </div>
-                                <span class="font-fredoka text-2xl font-bold text-white tracking-wide">Project Beta</span>
-                            </div>
-                        </div>
-                        <h3 class="font-fredoka text-2xl font-bold mb-4 text-slate-800 dark:text-white">Project Beta</h3>
-                        <p class="text-slate-600 dark:text-slate-300 mb-8 flex-grow">
-                            An innovative web platform offering automated financial analytics. Utilizes machine learning models integrated with Vue.js.
-                        </p>
-                        <div class="flex items-center justify-between mt-auto">
-                            <div class="flex space-x-2">
-                                <span class="px-3 py-1 bg-slate-200 dark:bg-white/10 text-slate-600 dark:text-slate-300 rounded-full text-xs font-medium">Vue.js</span>
-                            </div>
-                            <span class="flex items-center text-secondary font-semibold hover:text-cyan-400 transition-colors group">
-                                View Details
-                                <svg class="ml-2 w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
-                            </span>
-                        </div>
-                    </div>
-                </div>
+            <div class="bento-box box-3-2">
+                <h3>Savings Goal</h3>
+                <div class="amount">€1,078</div>
+                <div class="progress-bar"><div class="progress-fill-blue" style="background:#4A148C; width: 85%;"></div></div>
+            </div>
+            <div class="bento-box box-3-3">
+                <h3>Income</h3>
+                <div class="amount">€1,600</div>
+                <p>↑ €200 vs last week</p>
             </div>
         </div>
-    </section>
+    </div>
 
-    <section id="skills" class="py-24 px-6 md:px-12 max-w-7xl mx-auto">
-        <div class="reveal">
-            <h2 class="font-fredoka text-4xl md:text-5xl font-bold mb-16 text-center text-slate-800 dark:text-white">My Expertise</h2>
-            
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="glass p-8 rounded-3xl text-center hover:bg-white/80 dark:hover:bg-white/5 transition-all duration-300 hover:-translate-y-1 group">
-                    <div class="w-20 h-20 mx-auto mb-6 bg-accent/10 dark:bg-accent/20 rounded-[1.5rem] flex items-center justify-center text-accent group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300">
-                        <svg class="w-10 h-10" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
-                    </div>
-                    <h4 class="font-fredoka font-bold text-xl mb-2 text-slate-800 dark:text-white">Languages</h4>
-                    <p class="text-slate-500 dark:text-slate-400 text-sm font-medium">JS, Python, Swift</p>
-                </div>
-                <div class="glass p-8 rounded-3xl text-center hover:bg-white/80 dark:hover:bg-white/5 transition-all duration-300 hover:-translate-y-1 group">
-                    <div class="w-20 h-20 mx-auto mb-6 bg-secondary/10 dark:bg-secondary/20 rounded-[1.5rem] flex items-center justify-center text-secondary group-hover:scale-110 group-hover:-rotate-3 transition-transform duration-300">
-                        <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2 1 3 3 3h10c2 0 3-1 3-3V7c0-2-1-3-3-3H7c-2 0-3 1-3 3zM9 11l3 3 3-3"></path></svg>
-                    </div>
-                    <h4 class="font-fredoka font-bold text-xl mb-2 text-slate-800 dark:text-white">Frameworks</h4>
-                    <p class="text-slate-500 dark:text-slate-400 text-sm font-medium">React Native, Flutter</p>
-                </div>
-                <div class="glass p-8 rounded-3xl text-center hover:bg-white/80 dark:hover:bg-white/5 transition-all duration-300 hover:-translate-y-1 group">
-                    <div class="w-20 h-20 mx-auto mb-6 bg-purple-500/10 dark:bg-purple-500/20 rounded-[1.5rem] flex items-center justify-center text-purple-600 dark:text-purple-400 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300">
-                        <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
-                    </div>
-                    <h4 class="font-fredoka font-bold text-xl mb-2 text-slate-800 dark:text-white">Tools</h4>
-                    <p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Git, Docker, Figma</p>
-                </div>
-                <div class="glass p-8 rounded-3xl text-center hover:bg-white/80 dark:hover:bg-white/5 transition-all duration-300 hover:-translate-y-1 group">
-                    <div class="w-20 h-20 mx-auto mb-6 bg-blue-500/10 dark:bg-blue-500/20 rounded-[1.5rem] flex items-center justify-center text-blue-600 dark:text-blue-400 group-hover:scale-110 group-hover:-rotate-3 transition-transform duration-300">
-                        <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-7 0V4"></path></svg>
-                    </div>
-                    <h4 class="font-fredoka font-bold text-xl mb-2 text-slate-800 dark:text-white">Backend</h4>
-                    <p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Node.js, AWS, SQL</p>
-                </div>
+    <div id="section-4" class="page-section">
+        <div class="grid-4">
+            <div class="bento-box box-4-1">
+                <h3>Groceries</h3>
+                <img src="https://placehold.co/200x120/ffffff/FF8F00?text=Bar+Chart\n200x120" alt="Bar Chart" class="placeholder-img">
             </div>
-        </div>
-    </section>
-
-    <section id="contact" class="py-24 px-6 md:px-12 mb-10">
-        <div class="max-w-4xl mx-auto glass p-12 rounded-[3rem] text-center reveal border-t border-white/40 dark:border-white/10 shadow-xl">
-            <h2 class="font-fredoka text-4xl md:text-5xl font-bold mb-6 text-slate-800 dark:text-white">Connect With Me</h2>
-            <p class="text-slate-600 dark:text-slate-300 text-lg mb-10 max-w-2xl mx-auto">Have a project in mind or just want to say hi? I'm always open to new opportunities and exciting collaborations.</p>
-            
-            <div class="flex flex-col md:flex-row gap-6 justify-center items-center mb-12">
-                <a href="mailto:contact@arpitpandey.dev" class="flex items-center space-x-3 text-2xl font-fredoka font-semibold text-white bg-accent px-8 py-4 rounded-full hover:bg-purple-600 hover:scale-105 transition-all duration-300 shadow-lg shadow-purple-500/30">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-                    <span>Say Hello</span>
-                </a>
+            <div class="bento-box box-4-2">
+                <h3>Auto & Transport</h3>
+                <div class="amount">€160.35</div>
+                <p style="color: #d32f2f;">€56 over budget</p>
             </div>
-
-            <div class="flex justify-center space-x-6">
-                <a href="https://linkedin.com" target="_blank" class="p-4 bg-slate-200 dark:bg-white/5 rounded-full hover:bg-blue-100 hover:text-blue-600 dark:hover:bg-accent/20 dark:hover:text-accent transition-all duration-300 text-slate-500 dark:text-slate-400">
-                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-                </a>
-                <a href="https://github.com" target="_blank" class="p-4 bg-slate-200 dark:bg-white/5 rounded-full hover:bg-slate-300 hover:text-slate-900 dark:hover:bg-accent/20 dark:hover:text-accent transition-all duration-300 text-slate-500 dark:text-slate-400">
-                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-                </a>
+            <div class="bento-box box-4-3">
+                <h3>Household</h3>
+                <div class="amount">€100</div>
+                <p style="color: #388e3c;">€400 left</p>
             </div>
-        </div>
-    </section>
-
-    <div id="projectModal" class="fixed inset-0 z-50 hidden opacity-0 transition-opacity duration-300">
-        <div class="absolute inset-0 bg-slate-900/60 dark:bg-black/70 backdrop-blur-xl transition-all" onclick="closeProjectModal()"></div>
-        
-        <div class="absolute inset-0 overflow-y-auto pointer-events-none p-4 md:p-8 flex justify-center items-start pt-20">
-            
-            <div id="modalBody" class="pointer-events-auto bg-white dark:bg-slate-900 w-full max-w-6xl rounded-[2.5rem] shadow-2xl border border-slate-200 dark:border-slate-700 overflow-hidden relative transform scale-95 origin-top transition-all duration-400 opacity-0 animate-modal-enter">
-                
-                <button onclick="closeProjectModal()" class="absolute top-6 right-6 z-30 p-3 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 rounded-full text-slate-600 dark:text-slate-300 transition-colors">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                </button>
-
-                <div class="h-64 md:h-80 w-full bg-gradient-to-r from-accent to-secondary relative flex items-center justify-center">
-                    <div class="absolute inset-0 bg-black/20"></div>
-                    <h2 class="font-fredoka text-5xl md:text-7xl font-bold text-white z-10 tracking-wider shadow-sm text-center px-4">Project Details</h2>
-                </div>
-
-                <div class="p-8 md:p-14">
-                    <div class="mb-12">
-                        <h3 class="font-fredoka text-4xl md:text-5xl font-bold text-slate-800 dark:text-white mb-4">
-                            <span id="modalProjTitle">Project Name</span>
-                            <span id="modalProjTagline" class="text-accent text-2xl font-medium ml-2 block md:inline mt-2 md:mt-0">- Tagline</span>
-                        </h3>
-                        <div id="modalProjTags" class="flex flex-wrap gap-3">
-                            </div>
-                    </div>
-
-                    <div id="modalProjMainDesc" class="text-lg text-slate-600 dark:text-slate-400 mb-16 leading-relaxed max-w-4xl">
-                        Main project description goes here...
-                    </div>
-
-                    <div class="grid md:grid-cols-2 gap-12 items-center mb-24">
-                        <div>
-                            <h4 id="modalF1Title" class="font-fredoka text-3xl font-bold text-slate-800 dark:text-white mb-4 flex items-center">
-                                <span class="w-8 h-1 bg-accent mr-3 rounded-full"></span>
-                                Feature 1
-                            </h4>
-                            <p id="modalF1Desc" class="text-slate-600 dark:text-slate-400 text-lg leading-relaxed mb-4">
-                                Feature 1 description...
-                            </p>
-                            <p class="text-sm text-accent font-semibold flex items-center">
-                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"></path></svg>
-                                Click the images to swap views
-                            </p>
-                        </div>
-                        
-                        <div class="group/collage relative h-[350px] w-full flex items-center justify-center cursor-pointer hover:scale-[1.02] transition-transform duration-500" onclick="this.classList.toggle('swapped')">
-                            <div id="modalF1Card1" class="absolute transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] rounded-2xl border-4 border-white dark:border-slate-700 overflow-hidden bg-slate-200 dark:bg-slate-800
-                                z-10 -rotate-6 -translate-x-12 translate-y-4 opacity-80 w-48 h-64 md:w-56 md:h-72 shadow-xl
-                                group-[.swapped]/collage:z-20 group-[.swapped]/collage:rotate-3 group-[.swapped]/collage:translate-x-8 group-[.swapped]/collage:-translate-y-4 group-[.swapped]/collage:opacity-100 group-[.swapped]/collage:w-56 group-[.swapped]/collage:h-72 group-[.swapped]/collage:md:w-64 group-[.swapped]/collage:md:h-80 group-[.swapped]/collage:shadow-2xl group-[.swapped]/collage:border-slate-600">
-                            </div>
-                            <div id="modalF1Card2" class="absolute transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] rounded-2xl border-4 border-white dark:border-slate-600 overflow-hidden bg-slate-300 dark:bg-slate-700
-                                z-20 rotate-3 translate-x-8 -translate-y-4 opacity-100 w-56 h-72 md:w-64 md:h-80 shadow-2xl
-                                group-[.swapped]/collage:z-10 group-[.swapped]/collage:-rotate-6 group-[.swapped]/collage:-translate-x-12 group-[.swapped]/collage:translate-y-4 group-[.swapped]/collage:opacity-80 group-[.swapped]/collage:w-48 group-[.swapped]/collage:h-64 group-[.swapped]/collage:md:w-56 group-[.swapped]/collage:md:h-72 group-[.swapped]/collage:shadow-xl group-[.swapped]/collage:border-slate-700">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="grid md:grid-cols-2 gap-12 items-center mb-16">
-                        <div class="group/collage relative h-[350px] w-full flex items-center justify-center cursor-pointer order-2 md:order-1 hover:scale-[1.02] transition-transform duration-500" onclick="this.classList.toggle('swapped')">
-                            <div id="modalF2Card1" class="absolute transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] rounded-2xl border-4 border-white dark:border-slate-700 overflow-hidden bg-slate-200 dark:bg-slate-800
-                                z-10 rotate-6 translate-x-10 translate-y-6 opacity-80 w-48 h-64 md:w-56 md:h-72 shadow-xl
-                                group-[.swapped]/collage:z-20 group-[.swapped]/collage:-rotate-3 group-[.swapped]/collage:-translate-x-12 group-[.swapped]/collage:-translate-y-2 group-[.swapped]/collage:opacity-100 group-[.swapped]/collage:w-56 group-[.swapped]/collage:h-72 group-[.swapped]/collage:md:w-64 group-[.swapped]/collage:md:h-80 group-[.swapped]/collage:shadow-2xl group-[.swapped]/collage:border-slate-600">
-                            </div>
-                            <div id="modalF2Card2" class="absolute transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] rounded-2xl border-4 border-white dark:border-slate-600 overflow-hidden bg-slate-300 dark:bg-slate-700
-                                z-20 -rotate-3 -translate-x-12 -translate-y-2 opacity-100 w-56 h-72 md:w-64 md:h-80 shadow-2xl
-                                group-[.swapped]/collage:z-10 group-[.swapped]/collage:rotate-6 group-[.swapped]/collage:translate-x-10 group-[.swapped]/collage:translate-y-6 group-[.swapped]/collage:opacity-80 group-[.swapped]/collage:w-48 group-[.swapped]/collage:h-64 group-[.swapped]/collage:md:w-56 group-[.swapped]/collage:md:h-72 group-[.swapped]/collage:shadow-xl group-[.swapped]/collage:border-slate-700">
-                            </div>
-                        </div>
-
-                        <div class="order-1 md:order-2">
-                            <h4 id="modalF2Title" class="font-fredoka text-3xl font-bold text-slate-800 dark:text-white mb-4 flex items-center">
-                                <span class="w-8 h-1 bg-secondary mr-3 rounded-full"></span>
-                                Feature 2
-                            </h4>
-                            <p id="modalF2Desc" class="text-slate-600 dark:text-slate-400 text-lg leading-relaxed mb-4">
-                                Feature 2 description...
-                            </p>
-                            <p class="text-sm text-secondary font-semibold flex items-center">
-                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"></path></svg>
-                                Click the images to swap views
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="mt-16 pt-8 border-t border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row gap-4 justify-center">
-                        <a id="modalLiveBtn" href="#" target="_blank" class="px-8 py-4 bg-accent text-white hover:bg-purple-600 rounded-full font-fredoka text-lg font-semibold transition-all duration-300 hover:-translate-y-1 shadow-lg shadow-purple-500/30 text-center">
-                            Live Demo
-                        </a>
-                        <a id="modalGithubBtn" href="#" target="_blank" class="px-8 py-4 bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-white hover:bg-slate-200 dark:hover:bg-slate-700 rounded-full font-fredoka text-lg font-semibold transition-all duration-300 border border-slate-300 dark:border-slate-600 hover:-translate-y-1 text-center">
-                            View on GitHub
-                        </a>
-                    </div>
-                </div>
+            <div class="bento-box box-4-4">
+                <h2>Pick a budget</h2>
+                <img src="https://placehold.co/200x60/ffffff/FF8F00?text=Slider+Control\n200x60" alt="Slider UI" class="placeholder-img">
+            </div>
+            <div class="bento-box box-4-5">
+                <h2>Take control of your money today</h2>
+                <img src="https://placehold.co/600x200/ffffff/FF8F00?text=Wide+Analytics+Dashboard\n600x200" alt="Wide Dashboard" class="placeholder-img">
             </div>
         </div>
     </div>
 
     <script>
-        // JS Data Object for Projects
-        const projectsData = {
-            alpha: {
-                title: "Project Alpha",
-                tagline: "- Healthcare App",
-                tags: ["React Native", "Node.js", "Firebase", "UI/UX Design"],
-                mainDesc: "A comprehensive mobile application built to bridge the gap between patients and healthcare providers. The app features secure real-time messaging, appointment scheduling, and automated prescription reminders. Our primary focus was ensuring a highly intuitive UI for elderly users while maintaining a robust, HIPAA-compliant backend.",
-                feature1: {
-                    title: "User Dashboard",
-                    desc: "The dashboard is designed to provide immediate access to vital health stats. By utilizing custom charts and a clean card-based UI, users can quickly glance at their daily activity, upcoming appointments, and recent test results without feeling overwhelmed.",
-                    // NOTE: To use real images instead of gradients, replace the HTML string below with: `<img src="your-image.jpg" class="w-full h-full object-cover">`
-                    card1HTML: `<div class="w-full h-full bg-gradient-to-br from-indigo-400 to-purple-500 flex items-end p-4 text-white font-bold text-xl">View 1</div>`,
-                    card2HTML: `<div class="w-full h-full bg-gradient-to-tr from-accent to-secondary flex items-end p-4 text-white font-bold text-xl">View 2</div>`
-                },
-                feature2: {
-                    title: "Real-time Analytics",
-                    desc: "Integrated with powerful backend services, the app processes thousands of data points seamlessly. The overlapping architecture shown here highlights our mobile-first approach, ensuring the application remains lightweight while delivering heavy-duty performance.",
-                    card1HTML: `<div class="w-full h-full bg-gradient-to-bl from-cyan-400 to-blue-500 flex items-end p-4 text-white font-bold text-xl">Analytics</div>`,
-                    card2HTML: `<div class="w-full h-full bg-gradient-to-t from-purple-500 to-pink-500 flex items-end p-4 text-white font-bold text-xl">Reports</div>`
-                },
-                links: { live: "#", github: "#" }
-            },
-            beta: {
-                title: "Project Beta",
-                tagline: "- FinTech Dashboard",
-                tags: ["Vue.js", "Python", "Machine Learning", "Tailwind CSS"],
-                mainDesc: "An innovative web platform offering automated financial analytics. Utilizes custom machine learning models integrated with a high-performance Vue.js dashboard to provide users with real-time, actionable insights regarding their asset portfolio.",
-                feature1: {
-                    title: "Financial Overview",
-                    desc: "Get a bird's-eye view of all your assets in real-time. The interface prioritizes clarity, allowing users to track multiple revenue streams, detect anomalies, and export data with a single click.",
-                    card1HTML: `<div class="w-full h-full bg-gradient-to-br from-teal-400 to-emerald-500 flex items-end p-4 text-white font-bold text-xl">Dashboard</div>`,
-                    card2HTML: `<div class="w-full h-full bg-gradient-to-tr from-blue-400 to-cyan-500 flex items-end p-4 text-white font-bold text-xl">Stats</div>`
-                },
-                feature2: {
-                    title: "ML Predictions",
-                    desc: "Our custom predictive models analyze historical data to forecast future market trends. This feature empowers users to make data-driven decisions confidently without needing a background in data science.",
-                    card1HTML: `<div class="w-full h-full bg-gradient-to-bl from-orange-400 to-red-500 flex items-end p-4 text-white font-bold text-xl">Forecast</div>`,
-                    card2HTML: `<div class="w-full h-full bg-gradient-to-t from-yellow-400 to-orange-500 flex items-end p-4 text-white font-bold text-xl">Data View</div>`
-                },
-                links: { live: "#", github: "#" }
-            }
-        };
-
-        // Delay adding smooth scroll to prevent jump-on-load
-        setTimeout(() => {
-            document.documentElement.classList.add('scroll-smooth');
-        }, 100);
-
-        // Theme Toggle Logic
-        const html = document.documentElement;
-        const themeToggles = [document.getElementById('themeToggle'), document.getElementById('mobileThemeToggle')];
-        const sunIcons = [document.getElementById('sunIcon'), document.getElementById('mobileSunIcon')];
-        const moonIcons = [document.getElementById('moonIcon'), document.getElementById('mobileMoonIcon')];
-
-        if (localStorage.theme === 'light' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: light)').matches)) {
-            html.classList.remove('dark');
-            updateIcons('light');
-        } else {
-            html.classList.add('dark');
-            updateIcons('dark');
-        }
-
-        function updateIcons(theme) {
-            if (theme === 'dark') {
-                sunIcons.forEach(icon => icon.classList.remove('hidden'));
-                moonIcons.forEach(icon => icon.classList.add('hidden'));
-            } else {
-                sunIcons.forEach(icon => icon.classList.add('hidden'));
-                moonIcons.forEach(icon => icon.classList.remove('hidden'));
-            }
-        }
-
-        themeToggles.forEach(toggle => {
-            toggle.addEventListener('click', () => {
-                if (html.classList.contains('dark')) {
-                    html.classList.remove('dark');
-                    localStorage.theme = 'light';
-                    updateIcons('light');
-                } else {
-                    html.classList.add('dark');
-                    localStorage.theme = 'dark';
-                    updateIcons('dark');
-                }
+        function showPage(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.page-section').forEach(el => {
+                el.classList.remove('active');
             });
-        });
-
-        // Intersection Observer
-        const observerOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                    observer.unobserve(entry.target); 
-                }
+            
+            // Remove active class from all buttons
+            document.querySelectorAll('.nav-buttons button').forEach(btn => {
+                btn.classList.remove('active');
             });
-        }, observerOptions);
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-        // Mobile Menu
-        const menuBtn = document.getElementById('menuBtn');
-        const mobileMenu = document.getElementById('mobileMenu');
-        function toggleMenu() {
-            mobileMenu.classList.toggle('hidden');
-            mobileMenu.classList.toggle('flex');
-            document.body.classList.toggle('overflow-hidden');
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Set active button
+            event.currentTarget.classList.add('active');
         }
-        menuBtn.addEventListener('click', toggleMenu);
-
-        // Header Scroll
-        window.addEventListener('scroll', () => {
-            const header = document.querySelector('header');
-            if (window.scrollY > 50) {
-                header.classList.add('py-2', 'shadow-md');
-                header.classList.remove('py-4');
-            } else {
-                header.classList.add('py-4');
-                header.classList.remove('py-2', 'shadow-md');
-            }
-        });
-
-        // ==========================================
-        // Dynamic Modal Logic
-        // ==========================================
-        const modal = document.getElementById('projectModal');
-        
-        function openProjectModal(projectId) {
-            const data = projectsData[projectId];
-            if(!data) return; // Exit if project not found
-
-            // 1. Reset Collage Swaps
-            document.querySelectorAll('.group\\/collage').forEach(el => el.classList.remove('swapped'));
-
-            // 2. Populate Header & Main Details
-            document.getElementById('modalProjTitle').innerText = data.title;
-            document.getElementById('modalProjTagline').innerText = data.tagline;
-            document.getElementById('modalProjMainDesc').innerText = data.mainDesc;
-
-            // 3. Populate Tags
-            const tagsHTML = data.tags.map(tag => 
-                `<span class="px-4 py-2 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-full text-sm font-semibold border border-slate-200 dark:border-slate-700">${tag}</span>`
-            ).join('');
-            document.getElementById('modalProjTags').innerHTML = tagsHTML;
-
-            // 4. Populate Feature 1
-            document.getElementById('modalF1Title').innerHTML = `<span class="w-8 h-1 bg-accent mr-3 rounded-full"></span>${data.feature1.title}`;
-            document.getElementById('modalF1Desc').innerText = data.feature1.desc;
-            document.getElementById('modalF1Card1').innerHTML = data.feature1.card1HTML;
-            document.getElementById('modalF1Card2').innerHTML = data.feature1.card2HTML;
-
-            // 5. Populate Feature 2
-            document.getElementById('modalF2Title').innerHTML = `<span class="w-8 h-1 bg-secondary mr-3 rounded-full"></span>${data.feature2.title}`;
-            document.getElementById('modalF2Desc').innerText = data.feature2.desc;
-            document.getElementById('modalF2Card1').innerHTML = data.feature2.card1HTML;
-            document.getElementById('modalF2Card2').innerHTML = data.feature2.card2HTML;
-
-            // 6. Populate Links
-            document.getElementById('modalLiveBtn').href = data.links.live;
-            document.getElementById('modalGithubBtn').href = data.links.github;
-
-            // 7. Show Modal
-            modal.classList.remove('hidden');
-            setTimeout(() => {
-                modal.classList.remove('opacity-0');
-                modal.classList.add('opacity-100');
-            }, 10);
-            document.body.classList.add('overflow-hidden');
-        }
-
-        function closeProjectModal() {
-            modal.classList.remove('opacity-100');
-            modal.classList.add('opacity-0');
-            setTimeout(() => {
-                modal.classList.add('hidden');
-            }, 300);
-            document.body.classList.remove('overflow-hidden');
-        }
-
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
-                closeProjectModal();
-            }
-        });
     </script>
 </body>
 </html>
