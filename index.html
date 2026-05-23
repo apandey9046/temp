@@ -3,24 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>App Showcase Grid Builder</title>
+    <title>Premium App Showcase Grid</title>
     <style>
         :root {
-            --bg-color: #0b0b0b;
+            --bg-color: #050505;
+            --panel-bg: rgba(255, 255, 255, 0.03);
+            --border-light: rgba(255, 255, 255, 0.08);
             --card-purple: #e3d5ff;
             --card-green-light: #d0f4de;
-            --card-green-dark: #2dc653;
             --card-yellow: #fefae0;
-            --gap: 16px;
-            --radius: 24px;
+            --card-mint: #bbf7d0;
+            --gap: 20px;
+            --radius: 32px; /* Smoother Apple-style radius */
+            --smooth-bezier: cubic-bezier(0.25, 0.8, 0.25, 1);
+            --accent: #00bef8;
         }
 
         body {
             margin: 0;
-            padding: 20px;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 30px 20px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             background-color: var(--bg-color);
-            color: #fff;
+            color: #ececec;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -29,70 +33,131 @@
 
         header {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
         }
 
-        /* Control Panel Styles */
+        header h1 {
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+            background: linear-gradient(90deg, #fff, #aaa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        header p {
+            color: #888;
+            font-size: 15px;
+        }
+
+        /* --- Premium Control Panel --- */
         .controls {
-            background: #1e1e1e;
-            padding: 20px;
-            border-radius: 16px;
-            margin-bottom: 30px;
+            background: var(--panel-bg);
+            border: 1px solid var(--border-light);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 24px;
+            border-radius: 24px;
+            margin-bottom: 40px;
             width: 100%;
             max-width: 1200px;
             box-sizing: border-box;
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
         }
 
         .layout-selector {
             display: flex;
-            gap: 10px;
+            gap: 12px;
             align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .layout-selector strong {
+            margin-right: 10px;
+            color: #bbb;
         }
 
         button {
-            background: #333;
-            color: white;
-            border: 1px solid #444;
-            padding: 10px 20px;
-            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+            border: 1px solid var(--border-light);
+            padding: 12px 24px;
+            border-radius: 12px;
             cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s var(--smooth-bezier);
         }
 
-        button:hover, button.active {
-            background: #00bef8;
-            color: black;
-            border-color: #00bef8;
+        button:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
         }
 
+        button.active {
+            background: var(--accent);
+            color: #000;
+            border-color: var(--accent);
+            box-shadow: 0 8px 16px rgba(0, 190, 248, 0.3);
+        }
+
+        /* --- Sleek Upload Zone --- */
         .upload-zone {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 10px;
-            background: #252525;
-            padding: 15px;
-            border-radius: 8px;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 12px;
         }
 
         .upload-box {
+            position: relative;
             display: flex;
             flex-direction: column;
-            gap: 5px;
-            font-size: 12px;
-            background: #111;
-            padding: 8px;
-            border-radius: 6px;
-            border: 1px dashed #555;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border-light);
+            padding: 16px 10px;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            overflow: hidden;
         }
 
-        .upload-box input {
+        .upload-box:hover {
+            border-color: var(--accent);
+            background: rgba(0, 190, 248, 0.05);
+        }
+
+        .upload-box input[type="file"] {
+            position: absolute;
             width: 100%;
-            color: #aaa;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+        }
+
+        .upload-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #ccc;
+            pointer-events: none;
+        }
+
+        .file-name {
             font-size: 11px;
+            color: var(--accent);
+            margin-top: 6px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
+            pointer-events: none;
         }
 
         /* --- Dynamic Grid System --- */
@@ -101,10 +166,10 @@
             width: 100%;
             max-width: 1200px;
             gap: var(--gap);
-            transition: all 0.5s ease;
+            transition: all 0.6s var(--smooth-bezier);
         }
 
-        /* Base Grid Cell Styles */
+        /* Premium Base Grid Cell Styles */
         .grid-item {
             border-radius: var(--radius);
             position: relative;
@@ -115,36 +180,56 @@
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            min-height: 150px;
-            transition: all 0.4s ease-in-out;
+            min-height: 180px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border: 1px solid var(--border-light);
+            /* Smooth transitions for shuffling and hovering */
+            transition: transform 0.4s var(--smooth-bezier), 
+                        box-shadow 0.4s var(--smooth-bezier), 
+                        grid-column 0.6s var(--smooth-bezier), 
+                        grid-row 0.6s var(--smooth-bezier);
         }
 
-        /* Frame Numbering Badge */
+        /* Hover Lift Effect */
+        .grid-item:hover {
+            transform: translateY(-6px) scale(1.01);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.8);
+            z-index: 2;
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Glassmorphism Frame Numbering Badge */
         .frame-number {
             position: absolute;
-            top: 15px;
-            left: 15px;
-            background: rgba(0, 0, 0, 0.75);
+            top: 20px;
+            left: 20px;
+            background: rgba(20, 20, 20, 0.4);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             color: #fff;
-            width: 28px;
-            height: 28px;
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: bold;
+            font-weight: 700;
             font-size: 14px;
-            border: 1px solid rgba(255,255,255,0.4);
+            border: 1px solid rgba(255,255,255,0.15);
             z-index: 10;
             pointer-events: none;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
 
-        /* Default Placeholder Text when no image is uploaded */
         .placeholder-text {
-            color: rgba(0,0,0,0.5);
-            font-weight: 600;
+            color: rgba(0,0,0,0.4);
+            font-weight: 700;
+            font-size: 14px;
             text-align: center;
             padding: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            pointer-events: none;
         }
 
         /* -------------------------------------------
@@ -152,7 +237,7 @@
         ---------------------------------------------- */
         .layout-style-1 {
             grid-template-columns: repeat(4, 1fr);
-            grid-auto-rows: minmax(140px, auto);
+            grid-auto-rows: minmax(160px, auto);
         }
         .layout-style-1 .item-1 { grid-column: 1 / 2; grid-row: span 1; background-color: var(--card-purple); }
         .layout-style-1 .item-2 { grid-column: 2 / 3; grid-row: span 2; background-color: var(--card-green-light); }
@@ -161,7 +246,7 @@
         .layout-style-1 .item-5 { grid-column: 1 / 2; grid-row: span 2; background-color: var(--card-purple); }
         .layout-style-1 .item-6 { grid-column: 3 / 4; grid-row: span 1; background-color: var(--card-green-light); }
         .layout-style-1 .item-7 { grid-column: 4 / 5; grid-row: span 2; background-color: var(--card-yellow); }
-        .layout-style-1 .item-8 { grid-column: 2 / 4; grid-row: span 2; background-color: #bbf7d0; }
+        .layout-style-1 .item-8 { grid-column: 2 / 4; grid-row: span 2; background-color: var(--card-mint); }
         .layout-style-1 .item-9 { grid-column: 1 / 2; grid-row: span 1; background-color: var(--card-purple); }
 
         /* -------------------------------------------
@@ -169,13 +254,13 @@
         ---------------------------------------------- */
         .layout-style-2 {
             grid-template-columns: repeat(3, 1fr);
-            grid-auto-rows: minmax(180px, auto);
+            grid-auto-rows: minmax(200px, auto);
         }
         .layout-style-2 .item-1 { grid-column: 1 / 3; background-color: var(--card-green-light); }
         .layout-style-2 .item-2 { grid-column: 3 / 4; grid-row: span 2; background-color: var(--card-yellow); }
         .layout-style-2 .item-3 { grid-column: 1 / 2; background-color: var(--card-purple); }
         .layout-style-2 .item-4 { grid-column: 2 / 3; background-color: var(--card-green-light); }
-        .layout-style-2 .item-5 { grid-column: 1 / 3; grid-row: span 2; background-color: #bbf7d0; }
+        .layout-style-2 .item-5 { grid-column: 1 / 3; grid-row: span 2; background-color: var(--card-mint); }
         .layout-style-2 .item-6 { grid-column: 3 / 4; background-color: var(--card-purple); }
         .layout-style-2 .item-7 { grid-column: 3 / 4; background-color: var(--card-yellow); }
         .layout-style-2 .item-8 { grid-column: 1 / 2; background-color: var(--card-green-light); }
@@ -186,7 +271,7 @@
         ---------------------------------------------- */
         .layout-style-3 {
             grid-template-columns: repeat(4, 1fr);
-            grid-auto-rows: minmax(160px, auto);
+            grid-auto-rows: minmax(180px, auto);
         }
         .layout-style-3 .item-1 { grid-column: 1 / 3; grid-row: span 2; background-color: var(--card-yellow); }
         .layout-style-3 .item-2 { grid-column: 3 / 4; background-color: var(--card-purple); }
@@ -194,72 +279,88 @@
         .layout-style-3 .item-4 { grid-column: 3 / 5; background-color: var(--card-purple); }
         .layout-style-3 .item-5 { grid-column: 1 / 2; background-color: var(--card-green-light); }
         .layout-style-3 .item-6 { grid-column: 2 / 3; background-color: var(--card-yellow); }
-        .layout-style-3 .item-7 { grid-column: 3 / 5; grid-row: span 2; background-color: #bbf7d0; }
+        .layout-style-3 .item-7 { grid-column: 3 / 5; grid-row: span 2; background-color: var(--card-mint); }
         .layout-style-3 .item-8 { grid-column: 1 / 3; background-color: var(--card-purple); }
-        .layout-style-3 .item-9 { grid-column: 1 / 5; min-height: 80px; background-color: var(--card-green-light); }
+        .layout-style-3 .item-9 { grid-column: 1 / 5; min-height: 120px; background-color: var(--card-green-light); }
 
+        /* Responsive */
+        @media (max-width: 768px) {
+            .layout-style-1, .layout-style-2, .layout-style-3 {
+                grid-template-columns: repeat(2, 1fr);
+                grid-auto-rows: minmax(140px, auto);
+            }
+            .grid-item {
+                grid-column: span 1 !important;
+                grid-row: span 1 !important;
+            }
+            /* Keep hero cards slightly bigger on mobile */
+            .item-1, .item-5, .item-8 { grid-column: span 2 !important; }
+        }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>Mobile App Bento Grid Showcase</h1>
-        <p>Select a layout style, then upload your images into corresponding numbered slots.</p>
+        <h1>Premium App Showcase</h1>
+        <p>Upload UI screens to frames and shuffle layouts instantly.</p>
     </header>
 
     <div class="controls">
         <div class="layout-selector">
-            <strong>Choose Grid Layout Style:</strong>
-            <button onclick="changeLayout(1)" id="btn-1" class="active">Style 1 (Sample Bento)</button>
-            <button onclick="changeLayout(2)" id="btn-2">Style 2 (Asymmetric Columns)</button>
-            <button onclick="changeLayout(3)" id="btn-3">Style 3 (Hero Block Mix)</button>
+            <strong>Layout Mode:</strong>
+            <button onclick="changeLayout(1)" id="btn-1" class="active">Bento Classic</button>
+            <button onclick="changeLayout(2)" id="btn-2">Asymmetric</button>
+            <button onclick="changeLayout(3)" id="btn-3">Hero Focus</button>
         </div>
         
-        <hr style="border-color: #333; width: 100%;">
+        <div style="height: 1px; background: var(--border-light); width: 100%;"></div>
         
-        <strong>Upload Images to Frame Numbers:</strong>
         <div class="upload-zone" id="uploadZone">
             </div>
     </div>
 
     <div class="grid-container layout-style-1" id="showcaseGrid">
-        <div class="grid-item item-1" id="frame-1"><span class="frame-number">1</span><div class="placeholder-text">Frame 1 Dimension</div></div>
-        <div class="grid-item item-2" id="frame-2"><span class="frame-number">2</span><div class="placeholder-text">Frame 2 Dimension</div></div>
-        <div class="grid-item item-3" id="frame-3"><span class="frame-number">3</span><div class="placeholder-text">Frame 3 Dimension</div></div>
-        <div class="grid-item item-4" id="frame-4"><span class="frame-number">4</span><div class="placeholder-text">Frame 4 Dimension</div></div>
-        <div class="grid-item item-5" id="frame-5"><span class="frame-number">5</span><div class="placeholder-text">Frame 5 Dimension</div></div>
-        <div class="grid-item item-6" id="frame-6"><span class="frame-number">6</span><div class="placeholder-text">Frame 6 Dimension</div></div>
-        <div class="grid-item item-7" id="frame-7"><span class="frame-number">7</span><div class="placeholder-text">Frame 7 Dimension</div></div>
-        <div class="grid-item item-8" id="frame-8"><span class="frame-number">8</span><div class="placeholder-text">Frame 8 Dimension</div></div>
-        <div class="grid-item item-9" id="frame-9"><span class="frame-number">9</span><div class="placeholder-text">Frame 9 Dimension</div></div>
+        <div class="grid-item item-1" id="frame-1"><span class="frame-number">1</span><div class="placeholder-text">Frame 1</div></div>
+        <div class="grid-item item-2" id="frame-2"><span class="frame-number">2</span><div class="placeholder-text">Frame 2</div></div>
+        <div class="grid-item item-3" id="frame-3"><span class="frame-number">3</span><div class="placeholder-text">Frame 3</div></div>
+        <div class="grid-item item-4" id="frame-4"><span class="frame-number">4</span><div class="placeholder-text">Frame 4</div></div>
+        <div class="grid-item item-5" id="frame-5"><span class="frame-number">5</span><div class="placeholder-text">Frame 5</div></div>
+        <div class="grid-item item-6" id="frame-6"><span class="frame-number">6</span><div class="placeholder-text">Frame 6</div></div>
+        <div class="grid-item item-7" id="frame-7"><span class="frame-number">7</span><div class="placeholder-text">Frame 7</div></div>
+        <div class="grid-item item-8" id="frame-8"><span class="frame-number">8</span><div class="placeholder-text">Frame 8</div></div>
+        <div class="grid-item item-9" id="frame-9"><span class="frame-number">9</span><div class="placeholder-text">Frame 9</div></div>
     </div>
 
     <script>
         const totalFrames = 9;
 
-        // Automatically build the control dashboard inputs
+        // Build premium control dashboard inputs
         const uploadZone = document.getElementById('uploadZone');
         for (let i = 1; i <= totalFrames; i++) {
             const box = document.createElement('div');
             box.className = 'upload-box';
             box.innerHTML = `
-                <strong>Frame ${i} Image:</strong>
+                <span class="upload-label">Frame ${i}</span>
+                <span class="file-name" id="filename-${i}">Click to upload</span>
                 <input type="file" accept="image/*" onchange="handleImageUpload(event, ${i})">
             `;
             uploadZone.appendChild(box);
         }
 
-        // Handle Image Previews locally inside the frames
+        // Handle Image Previews
         function handleImageUpload(event, frameId) {
             const file = event.target.files[0];
             if (file) {
+                // Update file name in UI
+                document.getElementById(`filename-${frameId}`).textContent = file.name;
+
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     const targetFrame = document.getElementById(`frame-${frameId}`);
-                    // Apply image as background cover
+                    // Apply image 
                     targetFrame.style.backgroundImage = `url('${e.target.result}')`;
                     
-                    // Remove or hide placeholder text since image is present
+                    // Hide placeholder text
                     const pText = targetFrame.querySelector('.placeholder-text');
                     if (pText) pText.style.display = 'none';
                 }
@@ -267,17 +368,14 @@
             }
         }
 
-        // Function to shuffle/change between layout designs
+        // Shuffle layouts with smooth transitions
         function changeLayout(styleNum) {
             const grid = document.getElementById('showcaseGrid');
             
-            // Remove all layout classes
             grid.classList.remove('layout-style-1', 'layout-style-2', 'layout-style-3');
-            
-            // Add selected layout class
             grid.classList.add(`layout-style-${styleNum}`);
 
-            // Update active buttons
+            // Toggle active button states
             document.querySelectorAll('.layout-selector button').forEach(btn => btn.classList.remove('active'));
             document.getElementById(`btn-${styleNum}`).classList.add('active');
         }
