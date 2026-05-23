@@ -3,293 +3,283 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bento Grid UI - 4 Unique Sections</title>
+    <title>App Showcase Grid Builder</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Inter', sans-serif;
+        :root {
+            --bg-color: #0b0b0b;
+            --card-purple: #e3d5ff;
+            --card-green-light: #d0f4de;
+            --card-green-dark: #2dc653;
+            --card-yellow: #fefae0;
+            --gap: 16px;
+            --radius: 24px;
         }
 
         body {
-            background-color: #121212; /* Dark theme background for contrast */
-            color: #333;
+            margin: 0;
             padding: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
         }
 
-        /* --- Navigation --- */
-        .nav-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* Control Panel Styles */
+        .controls {
+            background: #1e1e1e;
+            padding: 20px;
+            border-radius: 16px;
             margin-bottom: 30px;
-            flex-wrap: wrap;
+            width: 100%;
+            max-width: 1200px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .layout-selector {
+            display: flex;
+            gap: 10px;
+            align-items: center;
         }
 
         button {
-            padding: 12px 24px;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            font-weight: 600;
             background: #333;
-            color: #fff;
-            transition: 0.3s;
+            color: white;
+            border: 1px solid #444;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
         }
 
-        button.active {
-            background: #fff;
-            color: #000;
+        button:hover, button.active {
+            background: #00bef8;
+            color: black;
+            border-color: #00bef8;
         }
 
-        .page-section {
-            display: none;
-            max-width: 1200px;
-            margin: 0 auto;
-            animation: fadeIn 0.5s ease;
+        .upload-zone {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 10px;
+            background: #252525;
+            padding: 15px;
+            border-radius: 8px;
         }
 
-        .page-section.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* --- Common Bento Box Style --- */
-        .bento-box {
-            border-radius: 24px;
-            padding: 24px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        .upload-box {
             display: flex;
             flex-direction: column;
+            gap: 5px;
+            font-size: 12px;
+            background: #111;
+            padding: 8px;
+            border-radius: 6px;
+            border: 1px dashed #555;
         }
 
-        h2 { font-size: 1.5rem; margin-bottom: 15px; font-weight: 700; }
-        h3 { font-size: 1.2rem; margin-bottom: 10px; opacity: 0.8;}
-        .amount { font-size: 2.5rem; font-weight: 700; margin: 10px 0; }
-
-        /* =========================================
-           Section 1: Overview (Pastel Blue Palette)
-           Layout: 3-column asymmetric grid
-           ========================================= */
-        #section-1 {
-            background: #E3F2FD;
-            padding: 30px;
-            border-radius: 30px;
+        .upload-box input {
+            width: 100%;
+            color: #aaa;
+            font-size: 11px;
         }
-        .grid-1 {
+
+        /* --- Dynamic Grid System --- */
+        .grid-container {
             display: grid;
-            grid-template-columns: 1fr 1fr 1.5fr;
-            grid-template-rows: auto auto;
-            gap: 20px;
+            width: 100%;
+            max-width: 1200px;
+            gap: var(--gap);
+            transition: all 0.5s ease;
         }
-        .box-1-1 { grid-column: span 2; background: #FFFFFF; }
-        .box-1-2 { grid-column: span 1; grid-row: span 2; background: #BBDEFB; display: flex; align-items: center; justify-content: center; text-align: center;}
-        .box-1-3 { background: #1976D2; color: #fff; }
-        .box-1-4 { background: #FFFFFF; }
-        .progress-bar { width: 100%; height: 8px; background: #e0e0e0; border-radius: 4px; margin-top: 10px; overflow: hidden;}
-        .progress-fill-blue { width: 70%; height: 100%; background: #1976D2; }
 
-        /* =========================================
-           Section 2: Budgeting (Mint Green Palette)
-           Layout: 2-column masonry feel
-           ========================================= */
-        #section-2 {
-            background: #E8F5E9;
-            padding: 30px;
-            border-radius: 30px;
+        /* Base Grid Cell Styles */
+        .grid-item {
+            border-radius: var(--radius);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            min-height: 150px;
+            transition: all 0.4s ease-in-out;
         }
-        .grid-2 {
-            display: grid;
-            grid-template-columns: 1.2fr 2fr;
-            gap: 20px;
-        }
-        .box-2-1 { background: #FFFFFF; text-align: center; }
-        .box-2-2 { background: #C8E6C9; }
-        .box-2-3 { grid-column: span 2; background: #2E7D32; color: white; display: flex; justify-content: space-between; align-items: center;}
-        
-        /* =========================================
-           Section 3: Connections (Lilac/Purple Palette)
-           Layout: Big Hero + Side cards
-           ========================================= */
-        #section-3 {
-            background: #F3E5F5;
-            padding: 30px;
-            border-radius: 30px;
-        }
-        .grid-3 {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 20px;
-        }
-        .box-3-1 { background: #E1BEE7; display: flex; flex-direction: column; align-items: center; text-align: center;}
-        .box-3-2 { background: #FFFFFF; }
-        .box-3-3 { background: #4A148C; color: white; }
 
-        /* =========================================
-           Section 4: Analytics (Warm Yellow/Peach Palette)
-           Layout: 4 equal cards + 1 wide bottom card
-           ========================================= */
-        #section-4 {
-            background: #FFF8E1;
-            padding: 30px;
-            border-radius: 30px;
+        /* Frame Numbering Badge */
+        .frame-number {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(0, 0, 0, 0.75);
+            color: #fff;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+            border: 1px solid rgba(255,255,255,0.4);
+            z-index: 10;
+            pointer-events: none;
         }
-        .grid-4 {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-        .box-4-1 { background: #FFECB3; }
-        .box-4-2 { background: #FFFFFF; }
-        .box-4-3 { background: #FFFFFF; }
-        .box-4-4 { background: #FFCC80; }
-        .box-4-5 { grid-column: span 2; background: #FF8F00; color: white; text-align: center;}
 
-        /* Image Placeholders styling */
-        .placeholder-img {
-            max-width: 100%;
-            border-radius: 12px;
-            object-fit: cover;
-            display: block;
-            margin: 15px auto;
+        /* Default Placeholder Text when no image is uploaded */
+        .placeholder-text {
+            color: rgba(0,0,0,0.5);
+            font-weight: 600;
+            text-align: center;
+            padding: 20px;
         }
-        
-        /* Responsive tweaks */
-        @media (max-width: 768px) {
-            .grid-1, .grid-2, .grid-3, .grid-4 {
-                grid-template-columns: 1fr;
-            }
-            .box-1-1, .box-1-2, .box-2-3, .box-4-5 { grid-column: span 1; }
+
+        /* -------------------------------------------
+           LAYOUT 1: Inspired by your Bento Sample
+        ---------------------------------------------- */
+        .layout-style-1 {
+            grid-template-columns: repeat(4, 1fr);
+            grid-auto-rows: minmax(140px, auto);
         }
+        .layout-style-1 .item-1 { grid-column: 1 / 2; grid-row: span 1; background-color: var(--card-purple); }
+        .layout-style-1 .item-2 { grid-column: 2 / 3; grid-row: span 2; background-color: var(--card-green-light); }
+        .layout-style-1 .item-3 { grid-column: 3 / 4; grid-row: span 1; background-color: var(--card-green-light); }
+        .layout-style-1 .item-4 { grid-column: 4 / 5; grid-row: span 1; background-color: var(--card-yellow); }
+        .layout-style-1 .item-5 { grid-column: 1 / 2; grid-row: span 2; background-color: var(--card-purple); }
+        .layout-style-1 .item-6 { grid-column: 3 / 4; grid-row: span 1; background-color: var(--card-green-light); }
+        .layout-style-1 .item-7 { grid-column: 4 / 5; grid-row: span 2; background-color: var(--card-yellow); }
+        .layout-style-1 .item-8 { grid-column: 2 / 4; grid-row: span 2; background-color: #bbf7d0; }
+        .layout-style-1 .item-9 { grid-column: 1 / 2; grid-row: span 1; background-color: var(--card-purple); }
+
+        /* -------------------------------------------
+           LAYOUT 2: Horizontal Focus / Alternate 
+        ---------------------------------------------- */
+        .layout-style-2 {
+            grid-template-columns: repeat(3, 1fr);
+            grid-auto-rows: minmax(180px, auto);
+        }
+        .layout-style-2 .item-1 { grid-column: 1 / 3; background-color: var(--card-green-light); }
+        .layout-style-2 .item-2 { grid-column: 3 / 4; grid-row: span 2; background-color: var(--card-yellow); }
+        .layout-style-2 .item-3 { grid-column: 1 / 2; background-color: var(--card-purple); }
+        .layout-style-2 .item-4 { grid-column: 2 / 3; background-color: var(--card-green-light); }
+        .layout-style-2 .item-5 { grid-column: 1 / 3; grid-row: span 2; background-color: #bbf7d0; }
+        .layout-style-2 .item-6 { grid-column: 3 / 4; background-color: var(--card-purple); }
+        .layout-style-2 .item-7 { grid-column: 3 / 4; background-color: var(--card-yellow); }
+        .layout-style-2 .item-8 { grid-column: 1 / 2; background-color: var(--card-green-light); }
+        .layout-style-2 .item-9 { grid-column: 2 / 4; background-color: var(--card-purple); }
+
+        /* -------------------------------------------
+           LAYOUT 3: Split Columns (Left vs Right)
+        ---------------------------------------------- */
+        .layout-style-3 {
+            grid-template-columns: repeat(4, 1fr);
+            grid-auto-rows: minmax(160px, auto);
+        }
+        .layout-style-3 .item-1 { grid-column: 1 / 3; grid-row: span 2; background-color: var(--card-yellow); }
+        .layout-style-3 .item-2 { grid-column: 3 / 4; background-color: var(--card-purple); }
+        .layout-style-3 .item-3 { grid-column: 4 / 5; background-color: var(--card-green-light); }
+        .layout-style-3 .item-4 { grid-column: 3 / 5; background-color: var(--card-purple); }
+        .layout-style-3 .item-5 { grid-column: 1 / 2; background-color: var(--card-green-light); }
+        .layout-style-3 .item-6 { grid-column: 2 / 3; background-color: var(--card-yellow); }
+        .layout-style-3 .item-7 { grid-column: 3 / 5; grid-row: span 2; background-color: #bbf7d0; }
+        .layout-style-3 .item-8 { grid-column: 1 / 3; background-color: var(--card-purple); }
+        .layout-style-3 .item-9 { grid-column: 1 / 5; min-height: 80px; background-color: var(--card-green-light); }
+
     </style>
 </head>
 <body>
 
-    <div class="nav-buttons">
-        <button class="active" onclick="showPage('section-1')">1. Overview (Blue)</button>
-        <button onclick="showPage('section-2')">2. Budget (Green)</button>
-        <button onclick="showPage('section-3')">3. Connect (Purple)</button>
-        <button onclick="showPage('section-4')">4. Analytics (Yellow)</button>
+    <header>
+        <h1>Mobile App Bento Grid Showcase</h1>
+        <p>Select a layout style, then upload your images into corresponding numbered slots.</p>
+    </header>
+
+    <div class="controls">
+        <div class="layout-selector">
+            <strong>Choose Grid Layout Style:</strong>
+            <button onclick="changeLayout(1)" id="btn-1" class="active">Style 1 (Sample Bento)</button>
+            <button onclick="changeLayout(2)" id="btn-2">Style 2 (Asymmetric Columns)</button>
+            <button onclick="changeLayout(3)" id="btn-3">Style 3 (Hero Block Mix)</button>
+        </div>
+        
+        <hr style="border-color: #333; width: 100%;">
+        
+        <strong>Upload Images to Frame Numbers:</strong>
+        <div class="upload-zone" id="uploadZone">
+            </div>
     </div>
 
-    <div id="section-1" class="page-section active">
-        <div class="grid-1">
-            <div class="bento-box box-1-1">
-                <h3>Total Balance</h3>
-                <div class="amount">€4,250.00</div>
-                <p>+15% from last month</p>
-            </div>
-            <div class="bento-box box-1-2">
-                <div>
-                    <h2>Easy Money Management</h2>
-                    <img src="https://placehold.co/200x400/1976D2/FFFFFF?text=Mobile+Mockup\n200x400" alt="Mobile App Placeholder" class="placeholder-img">
-                </div>
-            </div>
-            <div class="bento-box box-1-3">
-                <h3>Spent this week</h3>
-                <div class="amount">€120.50</div>
-                <div class="progress-bar"><div class="progress-fill-blue" style="background:#fff; width: 45%;"></div></div>
-            </div>
-            <div class="bento-box box-1-4">
-                <h3>Recent Transactions</h3>
-                <img src="https://placehold.co/300x100/eeeeee/333333?text=List+UI+Element\n300x100" alt="List Placeholder" class="placeholder-img">
-            </div>
-        </div>
-    </div>
-
-    <div id="section-2" class="page-section">
-        <div class="grid-2">
-            <div class="bento-box box-2-1">
-                <h2>Monthly Budget</h2>
-                <div class="amount">€225</div>
-                <img src="https://placehold.co/180x180/C8E6C9/2E7D32?text=Donut+Chart\n180x180" alt="Chart Placeholder" class="placeholder-img" style="border-radius: 50%;">
-            </div>
-            <div class="bento-box box-2-2">
-                <h2>Tools to help you</h2>
-                <img src="https://placehold.co/400x250/ffffff/2E7D32?text=Dashboard+Widget\n400x250" alt="Widget Placeholder" class="placeholder-img">
-                <p style="margin-top: 10px;">Track your financially healthy choices.</p>
-            </div>
-            <div class="bento-box box-2-3">
-                <div>
-                    <h2 style="color: white;">Left for 14 days</h2>
-                    <div class="amount">€500</div>
-                </div>
-                <img src="https://placehold.co/120x80/ffffff/2E7D32?text=Graph\n120x80" alt="Mini Graph" class="placeholder-img" style="margin:0;">
-            </div>
-        </div>
-    </div>
-
-    <div id="section-3" class="page-section">
-        <div class="grid-3">
-            <div class="bento-box box-3-1">
-                <h2>Connect any bank account</h2>
-                <img src="https://placehold.co/350x150/ffffff/4A148C?text=Bank+Logos+Integration\n350x150" alt="Integration UI" class="placeholder-img">
-                <p>Sync all your expenses seamlessly.</p>
-            </div>
-            <div class="bento-box box-3-2">
-                <h3>Savings Goal</h3>
-                <div class="amount">€1,078</div>
-                <div class="progress-bar"><div class="progress-fill-blue" style="background:#4A148C; width: 85%;"></div></div>
-            </div>
-            <div class="bento-box box-3-3">
-                <h3>Income</h3>
-                <div class="amount">€1,600</div>
-                <p>↑ €200 vs last week</p>
-            </div>
-        </div>
-    </div>
-
-    <div id="section-4" class="page-section">
-        <div class="grid-4">
-            <div class="bento-box box-4-1">
-                <h3>Groceries</h3>
-                <img src="https://placehold.co/200x120/ffffff/FF8F00?text=Bar+Chart\n200x120" alt="Bar Chart" class="placeholder-img">
-            </div>
-            <div class="bento-box box-4-2">
-                <h3>Auto & Transport</h3>
-                <div class="amount">€160.35</div>
-                <p style="color: #d32f2f;">€56 over budget</p>
-            </div>
-            <div class="bento-box box-4-3">
-                <h3>Household</h3>
-                <div class="amount">€100</div>
-                <p style="color: #388e3c;">€400 left</p>
-            </div>
-            <div class="bento-box box-4-4">
-                <h2>Pick a budget</h2>
-                <img src="https://placehold.co/200x60/ffffff/FF8F00?text=Slider+Control\n200x60" alt="Slider UI" class="placeholder-img">
-            </div>
-            <div class="bento-box box-4-5">
-                <h2>Take control of your money today</h2>
-                <img src="https://placehold.co/600x200/ffffff/FF8F00?text=Wide+Analytics+Dashboard\n600x200" alt="Wide Dashboard" class="placeholder-img">
-            </div>
-        </div>
+    <div class="grid-container layout-style-1" id="showcaseGrid">
+        <div class="grid-item item-1" id="frame-1"><span class="frame-number">1</span><div class="placeholder-text">Frame 1 Dimension</div></div>
+        <div class="grid-item item-2" id="frame-2"><span class="frame-number">2</span><div class="placeholder-text">Frame 2 Dimension</div></div>
+        <div class="grid-item item-3" id="frame-3"><span class="frame-number">3</span><div class="placeholder-text">Frame 3 Dimension</div></div>
+        <div class="grid-item item-4" id="frame-4"><span class="frame-number">4</span><div class="placeholder-text">Frame 4 Dimension</div></div>
+        <div class="grid-item item-5" id="frame-5"><span class="frame-number">5</span><div class="placeholder-text">Frame 5 Dimension</div></div>
+        <div class="grid-item item-6" id="frame-6"><span class="frame-number">6</span><div class="placeholder-text">Frame 6 Dimension</div></div>
+        <div class="grid-item item-7" id="frame-7"><span class="frame-number">7</span><div class="placeholder-text">Frame 7 Dimension</div></div>
+        <div class="grid-item item-8" id="frame-8"><span class="frame-number">8</span><div class="placeholder-text">Frame 8 Dimension</div></div>
+        <div class="grid-item item-9" id="frame-9"><span class="frame-number">9</span><div class="placeholder-text">Frame 9 Dimension</div></div>
     </div>
 
     <script>
-        function showPage(sectionId) {
-            // Hide all sections
-            document.querySelectorAll('.page-section').forEach(el => {
-                el.classList.remove('active');
-            });
-            
-            // Remove active class from all buttons
-            document.querySelectorAll('.nav-buttons button').forEach(btn => {
-                btn.classList.remove('active');
-            });
+        const totalFrames = 9;
 
-            // Show selected section
-            document.getElementById(sectionId).classList.add('active');
+        // Automatically build the control dashboard inputs
+        const uploadZone = document.getElementById('uploadZone');
+        for (let i = 1; i <= totalFrames; i++) {
+            const box = document.createElement('div');
+            box.className = 'upload-box';
+            box.innerHTML = `
+                <strong>Frame ${i} Image:</strong>
+                <input type="file" accept="image/*" onchange="handleImageUpload(event, ${i})">
+            `;
+            uploadZone.appendChild(box);
+        }
+
+        // Handle Image Previews locally inside the frames
+        function handleImageUpload(event, frameId) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const targetFrame = document.getElementById(`frame-${frameId}`);
+                    // Apply image as background cover
+                    targetFrame.style.backgroundImage = `url('${e.target.result}')`;
+                    
+                    // Remove or hide placeholder text since image is present
+                    const pText = targetFrame.querySelector('.placeholder-text');
+                    if (pText) pText.style.display = 'none';
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Function to shuffle/change between layout designs
+        function changeLayout(styleNum) {
+            const grid = document.getElementById('showcaseGrid');
             
-            // Set active button
-            event.currentTarget.classList.add('active');
+            // Remove all layout classes
+            grid.classList.remove('layout-style-1', 'layout-style-2', 'layout-style-3');
+            
+            // Add selected layout class
+            grid.classList.add(`layout-style-${styleNum}`);
+
+            // Update active buttons
+            document.querySelectorAll('.layout-selector button').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`btn-${styleNum}`).classList.add('active');
         }
     </script>
 </body>
