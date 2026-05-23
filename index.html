@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Premium App Showcase Grid</title>
+    <title>Premium Bento App Showcase</title>
     <style>
         :root {
             --bg-color: #050505;
@@ -14,7 +14,8 @@
             --card-yellow: #fefae0;
             --card-mint: #bbf7d0;
             --gap: 20px;
-            --radius: 32px; /* Smoother Apple-style radius */
+            --radius: 32px; 
+            --inner-radius: 16px;
             --smooth-bezier: cubic-bezier(0.25, 0.8, 0.25, 1);
             --accent: #00bef8;
         }
@@ -169,7 +170,7 @@
             transition: all 0.6s var(--smooth-bezier);
         }
 
-        /* Premium Base Grid Cell Styles */
+        /* Premium Base Grid Cell Styles (The Color Trays) */
         .grid-item {
             border-radius: var(--radius);
             position: relative;
@@ -177,25 +178,39 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            min-height: 180px;
+            min-height: 200px;
+            padding: 24px; /* INNER PADDING: Keeps images away from the edges */
+            box-sizing: border-box;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
             border: 1px solid var(--border-light);
-            /* Smooth transitions for shuffling and hovering */
             transition: transform 0.4s var(--smooth-bezier), 
                         box-shadow 0.4s var(--smooth-bezier), 
                         grid-column 0.6s var(--smooth-bezier), 
                         grid-row 0.6s var(--smooth-bezier);
         }
 
+        /* Inner Image Wrapper (Where the upload actually goes) */
+        .image-wrapper {
+            width: 100%;
+            height: 100%;
+            border-radius: var(--inner-radius);
+            background-size: contain; /* Prevents app screens from cropping */
+            background-position: center;
+            background-repeat: no-repeat;
+            z-index: 2;
+            transition: all 0.4s ease;
+        }
+
         /* Hover Lift Effect */
         .grid-item:hover {
             transform: translateY(-6px) scale(1.01);
             box-shadow: 0 20px 40px rgba(0,0,0,0.8);
-            z-index: 2;
+            z-index: 5;
             border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .grid-item:hover .image-wrapper {
+            transform: scale(1.03); /* Subtle inner image zoom */
         }
 
         /* Glassmorphism Frame Numbering Badge */
@@ -222,14 +237,15 @@
         }
 
         .placeholder-text {
+            position: absolute;
             color: rgba(0,0,0,0.4);
             font-weight: 700;
             font-size: 14px;
             text-align: center;
-            padding: 20px;
             text-transform: uppercase;
             letter-spacing: 1px;
             pointer-events: none;
+            z-index: 1;
         }
 
         /* -------------------------------------------
@@ -292,8 +308,8 @@
             .grid-item {
                 grid-column: span 1 !important;
                 grid-row: span 1 !important;
+                padding: 12px; /* Less padding on mobile */
             }
-            /* Keep hero cards slightly bigger on mobile */
             .item-1, .item-5, .item-8 { grid-column: span 2 !important; }
         }
     </style>
@@ -315,20 +331,55 @@
         
         <div style="height: 1px; background: var(--border-light); width: 100%;"></div>
         
-        <div class="upload-zone" id="uploadZone">
-            </div>
+        <div class="upload-zone" id="uploadZone"></div>
     </div>
 
     <div class="grid-container layout-style-1" id="showcaseGrid">
-        <div class="grid-item item-1" id="frame-1"><span class="frame-number">1</span><div class="placeholder-text">Frame 1</div></div>
-        <div class="grid-item item-2" id="frame-2"><span class="frame-number">2</span><div class="placeholder-text">Frame 2</div></div>
-        <div class="grid-item item-3" id="frame-3"><span class="frame-number">3</span><div class="placeholder-text">Frame 3</div></div>
-        <div class="grid-item item-4" id="frame-4"><span class="frame-number">4</span><div class="placeholder-text">Frame 4</div></div>
-        <div class="grid-item item-5" id="frame-5"><span class="frame-number">5</span><div class="placeholder-text">Frame 5</div></div>
-        <div class="grid-item item-6" id="frame-6"><span class="frame-number">6</span><div class="placeholder-text">Frame 6</div></div>
-        <div class="grid-item item-7" id="frame-7"><span class="frame-number">7</span><div class="placeholder-text">Frame 7</div></div>
-        <div class="grid-item item-8" id="frame-8"><span class="frame-number">8</span><div class="placeholder-text">Frame 8</div></div>
-        <div class="grid-item item-9" id="frame-9"><span class="frame-number">9</span><div class="placeholder-text">Frame 9</div></div>
+        <div class="grid-item item-1" id="frame-1">
+            <span class="frame-number">1</span>
+            <div class="placeholder-text">Frame 1</div>
+            <div class="image-wrapper"></div>
+        </div>
+        <div class="grid-item item-2" id="frame-2">
+            <span class="frame-number">2</span>
+            <div class="placeholder-text">Frame 2</div>
+            <div class="image-wrapper"></div>
+        </div>
+        <div class="grid-item item-3" id="frame-3">
+            <span class="frame-number">3</span>
+            <div class="placeholder-text">Frame 3</div>
+            <div class="image-wrapper"></div>
+        </div>
+        <div class="grid-item item-4" id="frame-4">
+            <span class="frame-number">4</span>
+            <div class="placeholder-text">Frame 4</div>
+            <div class="image-wrapper"></div>
+        </div>
+        <div class="grid-item item-5" id="frame-5">
+            <span class="frame-number">5</span>
+            <div class="placeholder-text">Frame 5</div>
+            <div class="image-wrapper"></div>
+        </div>
+        <div class="grid-item item-6" id="frame-6">
+            <span class="frame-number">6</span>
+            <div class="placeholder-text">Frame 6</div>
+            <div class="image-wrapper"></div>
+        </div>
+        <div class="grid-item item-7" id="frame-7">
+            <span class="frame-number">7</span>
+            <div class="placeholder-text">Frame 7</div>
+            <div class="image-wrapper"></div>
+        </div>
+        <div class="grid-item item-8" id="frame-8">
+            <span class="frame-number">8</span>
+            <div class="placeholder-text">Frame 8</div>
+            <div class="image-wrapper"></div>
+        </div>
+        <div class="grid-item item-9" id="frame-9">
+            <span class="frame-number">9</span>
+            <div class="placeholder-text">Frame 9</div>
+            <div class="image-wrapper"></div>
+        </div>
     </div>
 
     <script>
@@ -357,8 +408,10 @@
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     const targetFrame = document.getElementById(`frame-${frameId}`);
-                    // Apply image 
-                    targetFrame.style.backgroundImage = `url('${e.target.result}')`;
+                    
+                    // APPLY IMAGE TO THE WRAPPER, NOT THE COLORED CARD
+                    const imageWrapper = targetFrame.querySelector('.image-wrapper');
+                    imageWrapper.style.backgroundImage = `url('${e.target.result}')`;
                     
                     // Hide placeholder text
                     const pText = targetFrame.querySelector('.placeholder-text');
