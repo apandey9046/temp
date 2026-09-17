@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Plus, Clock, ArrowRight, Star } from 'lucide-react';
@@ -18,6 +18,35 @@ const LandingPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isCommandOpen, setIsCommandOpen] = useState(false);
+
+  const handleNewNote = useCallback(async () => {
+    if (!user) return;
+    const id = Math.random().toString(36).substring(2, 11);
+    const newNote: Note = {
+      id,
+      userId: user.id,
+      title: '',
+      content: '',
+      preview: '',
+      isFavorite: false,
+      isPinned: false,
+      isArchived: false,
+      isDeleted: false,
+      createdAt: Date.now(),
+      updatedAt: Date.now(),
+      lastOpenedAt: Date.now(),
+      wordCount: 0,
+      characterCount: 0,
+      readingTime: 0,
+      syncStatus: 'dirty',
+      localVersion: 1,
+      remoteVersion: 0,
+      tags: [],
+      isDirty: true,
+    };
+    await noteRepository.save(newNote);
+    navigate(`/note/${id}`);
+  }, [user, navigate]);
 
   useEffect(() => {
     if (!user) return;
@@ -46,36 +75,7 @@ const LandingPage: React.FC = () => {
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [user]);
-
-  const handleNewNote = async () => {
-    if (!user) return;
-    const id = Math.random().toString(36).substring(2, 11);
-    const newNote: Note = {
-      id,
-      userId: user.id,
-      title: '',
-      content: '',
-      preview: '',
-      isFavorite: false,
-      isPinned: false,
-      isArchived: false,
-      isDeleted: false,
-      createdAt: Date.now(),
-      updatedAt: Date.now(),
-      lastOpenedAt: Date.now(),
-      wordCount: 0,
-      characterCount: 0,
-      readingTime: 0,
-      syncStatus: 'dirty',
-      localVersion: 1,
-      remoteVersion: 0,
-      tags: [],
-      isDirty: true,
-    };
-    await noteRepository.save(newNote);
-    navigate(`/note/${id}`);
-  };
+  }, [handleNewNote]);
 
   return (
     <div className="min-h-screen bg-background pb-20">
